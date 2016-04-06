@@ -16,16 +16,20 @@ data:extend({
    count = 1000,
    ingredients =
    {
-    {"alien-science-pack", 2},
     {"science-pack-1", 2},
     {"science-pack-2", 2},
-    {"science-pack-3", 2}
+    {"science-pack-3", 2},
+    {"alien-science-pack", 2},
    },
    time = 60
   },
   order = "k-a"
- }
+ },
 })
+
+if data.raw["item"]["science-pack-4"] and enableBobUpdates then
+	data.raw["technology"]["orbital-ion-cannon"].unit.ingredients[4] = {"science-pack-4", 2}
+end
 
 if data.raw["item"]["bob-laser-turret-5"] and enableBobUpdates then
 	data.raw["technology"]["orbital-ion-cannon"].prerequisites = {"rocket-silo", "laser-turret-damage-6", "bob-laser-turrets-5"}

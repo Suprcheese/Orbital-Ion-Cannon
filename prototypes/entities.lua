@@ -147,7 +147,6 @@ data:extend({
 		  },
 		},
 	  },
-
 	  {
 		type = "explosion",
 		name = "klaxon",

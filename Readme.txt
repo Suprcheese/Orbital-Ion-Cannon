@@ -1,7 +1,7 @@
-Orbital Ion Cannon 1.0.6
+Orbital Ion Cannon 1.0.7
 ========================
 
-Version 1.0.6 was released January 9, 2016, was tested using Factorio v0.12.21, and was authored by Supercheese.
+Version 1.0.7 was released February 20, 2016, was tested using Factorio v0.12.22, and was authored by Supercheese.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
@@ -10,7 +10,7 @@ Simply click anywhere with your targeting device and watch the total annihilatio
 
 You can click on the button added at the top of your screen to check on the status of your ion cannons in orbit.
 
-This mod is aware of Bob's mods and will update its recipes and technology requirements if Bob's Warfare and/or Bob's Power mods are installed.
+This mod is aware of Bob's mods and will update its recipes and technology requirements if Bob's Electronics, Tech, Warfare, and/or Power mods are installed.
 
 This mod also has configuration options available in config.lua. Here you may adjust parameters such as:
 
@@ -46,7 +46,7 @@ Several portions of the control.lua code (et al.) were inspired by code from the
 
 My thanks to these talented modders for their great mods.
 
-Thanks to the #factorio IRC denizens for advice & bugtesting.
+Thanks to the forum and #factorio IRC denizens for advice & bugtesting.
 
 
 See also the associated forum thread to give feedback, view screenshots, etc.:

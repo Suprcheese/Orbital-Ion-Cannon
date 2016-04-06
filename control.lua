@@ -2,10 +2,10 @@ require "util"
 require "defines"
 require ("config")
 
-script.on_init(function() On_Load() end)
-script.on_configuration_changed(function() On_Load() end)
+script.on_init(function() On_Init() end)
+script.on_configuration_changed(function() On_Init() end)
 
-function On_Load()
+function On_Init()
 	if not global.forces_ion_cannon_table then
 		global.forces_ion_cannon_table = {"player"}
 		global.forces_ion_cannon_table["player"] = {}
@@ -33,12 +33,15 @@ function On_Load()
 end
 
 script.on_event(defines.events.on_force_created, function(event)
+	if not global.forces_ion_cannon_table then
+		On_Init()
+	end
 	table.insert(global.forces_ion_cannon_table, event.force.name)
 	global.forces_ion_cannon_table[event.force.name] = {}
 end)
 
 script.on_event(defines.events.on_forces_merging, function(event)
-	table.remove(global.forces_ion_cannon_table, event.source.name)
+	global.forces_ion_cannon_table[event.source.name] = nil
 	for i, player in ipairs(game.players) do
 		init_GUI(player)
 	end
@@ -157,6 +160,7 @@ script.on_event(defines.events.on_gui_click, function(event)
 	local name = event.element.name
 	if (name == "ion-cannon-button") then
 		open_GUI(player)
+		return
 	end
 end)
 
@@ -165,18 +169,20 @@ script.on_event(defines.events.on_player_created, function(event)
 end)
 
 script.on_event(defines.events.on_tick, function(event)
-    if game.tick % 60 == 37 then
+    if game.tick % 60 == 47 then
 		ReduceIonCannonCooldowns()
 		for i, force in pairs(game.forces) do
-			if not (global.forces_ion_cannon_table[force.name] == nil) then
-				if isIonCannonReady(force) and playVoices then
-					playSoundForForce("ion-cannon-ready", force)
+			if global.forces_ion_cannon_table[force.name] then
+				if isIonCannonReady(force) then
+					if playVoices then
+						playSoundForForce("ion-cannon-ready", force)
+					end
 				end
 			end
 		end
 		for i, player in ipairs(game.players) do
 			update_GUI(player)
-			if isHolding({name="ion-cannon-targeter", count=1}, player) and not global.SelectTarget[player.index] and #global.forces_ion_cannon_table[player.force.name] > 0 and playVoices and not isAllIonCannonOnCooldown(player) then
+			if player.connected and playVoices and #global.forces_ion_cannon_table[player.force.name] > 0 and isHolding({name="ion-cannon-targeter", count=1}, player) and not global.SelectTarget[player.index] and not isAllIonCannonOnCooldown(player) then
 				playSoundForPlayer("select-target", player)
 				global.SelectTarget[player.index] = true
 			end
@@ -189,7 +195,7 @@ end)
 
 function ReduceIonCannonCooldowns()
 	for i, force in pairs(game.forces) do
-		if not (global.forces_ion_cannon_table[force.name] == nil) then
+		if global.forces_ion_cannon_table[force.name] then
 			for i, cooldown in ipairs(global.forces_ion_cannon_table[force.name]) do
 				if cooldown[1] > 0 then
 					global.forces_ion_cannon_table[force.name][i][1] = global.forces_ion_cannon_table[force.name][i][1] - 1
@@ -220,13 +226,17 @@ end
 
 function messageAll(mes)
   for i, player in ipairs(game.players) do
-    player.print(mes)
+	if player.connected then
+		player.print(mes)
+	end
   end
 end
 
 function messageForce(mes, force)
   for i, player in ipairs(force.players) do
-    player.print(mes)
+	if player.connected then
+		player.print(mes)
+	end
   end
 end
 
@@ -236,7 +246,7 @@ end
 
 function anyFriendlyCanReach(entity, force)
 	for i, player in ipairs(force.players) do
-		if player.can_reach_entity(entity) then
+		if player.connected and player.can_reach_entity(entity) then
 			return true
 		end
 	end
@@ -249,13 +259,17 @@ end
 
 function playSoundForForce(sound, force)
 	for i, player in ipairs(force.players) do
-		player.surface.create_entity({name = sound, position = player.position})
+		if player.connected then
+			player.surface.create_entity({name = sound, position = player.position})
+		end
 	end
 end
 
 function playSoundForAllPlayers(sound)
 	for i, player in ipairs(game.players) do
-		player.surface.create_entity({name = sound, position = player.position})
+		if player.connected then
+			player.surface.create_entity({name = sound, position = player.position})
+		end
 	end
 end
 
@@ -297,11 +311,11 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 end)
 
 script.on_event(defines.events.on_built_entity, function(event)
-  local player = game.get_player(event.player_index)
-  if event.created_entity.name == "ion-cannon-targeter" then
-    player.insert({name="ion-cannon-targeter", count=1})
-    return event.created_entity.destroy()
-  end
+	local player = game.get_player(event.player_index)
+	if event.created_entity.name == "ion-cannon-targeter" then
+		player.insert({name="ion-cannon-targeter", count=1})
+		return event.created_entity.destroy()
+	end
 end)
 
 script.on_event(defines.events.on_put_item, function(event)
