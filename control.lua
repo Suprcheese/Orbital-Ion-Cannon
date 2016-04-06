@@ -4,8 +4,19 @@ require ("config")
 
 script.on_init(function() On_Init() end)
 script.on_configuration_changed(function() On_Init() end)
+script.on_load(function() On_Load() end)
+
+remote.add_interface("orbital_ion_cannon",
+	{
+		on_ion_cannon_fired = function() return getIonCannonFiredEventID() end
+	}
+)
 
 function On_Init()
+	getIonCannonFiredEventID()
+	if not global.IonCannonLaunched then
+		global.IonCannonLaunched = false
+	end
 	if not global.forces_ion_cannon_table then
 		global.forces_ion_cannon_table = {"player"}
 		global.forces_ion_cannon_table["player"] = {}
@@ -30,16 +41,27 @@ function On_Init()
 			global.goToFull[player.index] = true
 		end
 	end
-	if not global.IonCannonExists then
-		global.IonCannonExists = false
-		for i, force in pairs(game.forces) do
-			if global.forces_ion_cannon_table[force.name] and #global.forces_ion_cannon_table[force.name] > 0 then
-				global.IonCannonExists = true
-				script.on_event(defines.events.on_tick, process_tick)
-				break
-			end
+	for i, force in pairs(game.forces) do
+		if global.forces_ion_cannon_table[force.name] and #global.forces_ion_cannon_table[force.name] > 0 then
+			global.IonCannonLaunched = true
+			script.on_event(defines.events.on_tick, process_tick)
+			break
 		end
 	end
+end
+
+function On_Load()
+	getIonCannonFiredEventID()
+	if global.IonCannonLaunched then
+		script.on_event(defines.events.on_tick, process_tick)
+	end
+end
+
+function getIonCannonFiredEventID()
+	if not when_ion_cannon_fired then
+		when_ion_cannon_fired = script.generate_event_name()
+	end
+	return when_ion_cannon_fired
 end
 
 script.on_event(defines.events.on_force_created, function(event)
@@ -295,6 +317,9 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 	local force = event.rocket.force
 	if event.rocket.get_item_count("orbital-ion-cannon") > 0 then
 	  table.insert(global.forces_ion_cannon_table[force.name], {ionCannonCooldownSeconds, 0})
+	  if not global.IonCannonLaunched then
+		global.IonCannonLaunched = true
+	  end
 	  script.on_event(defines.events.on_tick, process_tick)
 		if #global.forces_ion_cannon_table[force.name] == 1 then
 			force.recipes["ion-cannon-targeter"].enabled = true
@@ -364,6 +389,7 @@ script.on_event(defines.events.on_put_item, function(event)
 				global.forces_ion_cannon_table[player.force.name][cannonNum][1] = ionCannonCooldownSeconds
 				global.forces_ion_cannon_table[player.force.name][cannonNum][2] = 0
 				messageForce({"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds}, player.force)
+				game.raise_event(when_ion_cannon_fired, {force = player.force, player_index = event.player_index, position = TargetPosition})		-- Passes event.force, event.player_index, and event.position
 			end
 		end
 	end

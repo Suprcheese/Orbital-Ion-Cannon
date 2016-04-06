@@ -25,7 +25,7 @@ ionCannonExplosionDamage = 500
 HeatupTimeMultiplier = 1
 
 -- When designating an ion cannon target, perform a check to see if any friendly character is too close to the target zone.
--- It is recommended to disable this check if you are using the "Long Reach" mod, since a side effect of that mod causes the radius of this check to excessively increase.
+-- It is strongly recommended to disable this check if you are using the "Long Reach" mod, since a side effect of that mod causes the radius of this check to excessively increase.
 proximityCheck = true
 
 -- The number of gameticks that must pass between designating consecutive ion cannon targets. There are 60 ticks per second, so the default 10 ticks would be 1/6th of a second.

@@ -1,7 +1,7 @@
-Orbital Ion Cannon 1.0.8
+Orbital Ion Cannon 1.0.9
 ========================
 
-Version 1.0.8 was released February 26, 2016, was tested using Factorio v0.12.24, and was authored by Supercheese.
+Version 1.0.9 was released March 1, 2016, was tested using Factorio v0.12.24, and was authored by Supercheese.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
@@ -19,6 +19,22 @@ This mod also has configuration options available in config.lua. Here you may ad
 -The time it takes between designating a target and the ion cannon firing
 -Force off the friendly character proximity check or the recipe updates for Bob's mods
 -The minimum time between targeting multiple ion cannons
+
+
+Modding Details:
+----------------
+This mod implements a custom event, on_ion_cannon_fired, which can function just like other lua events (https://wiki.factorio.com/index.php?title=Lua/Events).
+In order to use this event in another mod, you should use the following code:
+
+script.on_event(remote.call("orbital_ion_cannon", "on_ion_cannon_fired"), function(event)
+	...
+end)
+
+Where the ... can be any code of your choosing. The following variables are available when using this custom event:
+
+	event.force				The force whose ion cannon is firing
+	event.player_index		The player index of who fired the ion cannon
+	event.position			The position the ion cannon is firing at
 
 
 Credits:
