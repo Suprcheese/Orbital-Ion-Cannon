@@ -1,0 +1,4 @@
+Version 1.0.0 - November 20, 2015
+----------------------------------
+
+Initial release, featuring orbital ion cannons that can pretty much obliterate anything you might come across.

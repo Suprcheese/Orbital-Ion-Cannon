@@ -1,50 +1,37 @@
-data:extend
-(
-{
+data:extend({
 	{
 	type = "item",
 	name = "orbital-ion-cannon",
 	icon = "__Orbital Ion Cannon__/graphics/icon.png",
 	flags = {"goes-to-main-inventory"},
-	subgroup = "intermediate-product",
+	subgroup = "defensive-structure",
 	order = "e[orbital-ion-cannon]",
 	stack_size = 1
 	},
 	{
-	type = "capsule",
+	type = "item",
 	name = "ion-cannon-targeter",
 	icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
 	flags = {"goes-to-quickbar"},
-    capsule_action =
-    {
-      type = "throw",
-      attack_parameters =
-      {
-        type = "projectile",
-        ammo_category = "capsule",
-        cooldown = 90,
-        projectile_creation_distance = 0.6,
-        range = 100,
-        ammo_type =
-        {
-          category = "capsule",
-          target_type = "position",
-          action =
-          {
-            type = "direct",
-            action_delivery =
-            {
-              type = "projectile",
-              projectile = "crosshairs",
-              starting_speed = 0.6
-            }
-          }
-        }
-      }
-    },
+    place_result = "ion-cannon-targeter",
 	subgroup = "capsule",
-	order = "b[target]",
-	stack_size = 100
+	order = "c[target]",
+	stack_size = 1,
 	},
-}
-)
+  {
+    type = "container",
+    name = "ion-cannon-targeter",
+    icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
+    flags = {"placeable-neutral", "player-creation","placeable-off-grid"},
+    max_health = 1,
+    corpse = "small-remnants",
+    inventory_size = 1,
+    picture =
+    {
+      filename = "__Orbital Ion Cannon__/graphics/crosshairs64.png",
+      width = 64,
+      height = 64,
+      shift = {0, 0}
+    }
+  },
+})
