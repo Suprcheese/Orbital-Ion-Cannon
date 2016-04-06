@@ -3,13 +3,21 @@ Version 1.0.0 - November 20, 2015
 
 Initial release, featuring orbital ion cannons that can pretty much obliterate anything you might come across.
 
+
 Version 1.0.1 - November 20, 2015
 ----------------------------------
 
 "Select Target" no longer plays when all ion cannons are on cooldown.
 Added damage amount for each ion cannon blast to config.lua.
 
+
 Version 1.0.2 - November 22, 2015
 ----------------------------------
 
 Ion Cannons can now be crafted in vanilla Assembling Machine 3s, if there are no other mods installed which enable higher tiers of assembling machines.
+
+
+Version 1.0.3 - November 22, 2015
+----------------------------------
+
+Fixed a bug in multiplayer mode.

@@ -144,7 +144,7 @@ end
 
 function isHolding(stack, player)
   local holding = player.cursor_stack
-  if holding.valid_for_read and (holding.name == stack.name) and (holding.count >= stack.count) then
+  if holding and holding.valid_for_read and (holding.name == stack.name) and (holding.count >= stack.count) then
     return true
   end
   return false
