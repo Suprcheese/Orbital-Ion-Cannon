@@ -1,0 +1,9 @@
+{
+  "name": "Orbital Ion Cannon",
+  "version": "1.0.0",
+  "title": "Orbital Ion Cannon",
+  "author": "Supercheese",
+  "homepage": "http://www.factorioforums.com",
+  "description": "When you need to call down the thunder to deal with those pesky biters, launch a rocket with an ion cannon into orbit and show the bugs who's boss.",
+  "dependencies": ["base >= 0.12.11"],
+}
