@@ -3,7 +3,7 @@ data:extend({
     type = "projectile",
     name = "crosshairs",
     flags = {"not-on-map"},
-    acceleration = 0.001,
+    acceleration = .0009 / (HeatupTimeMultiplier * HeatupTimeMultiplier),
 	action =
 	{
 		{
@@ -53,7 +53,7 @@ data:extend({
 			}
 		}
 	},
-    light = {intensity = 0.1, size = 1},
+    light = {intensity = 0, size = 0},
     animation =
 	   {
         filename = "__Orbital Ion Cannon__/graphics/null.png",
@@ -262,7 +262,7 @@ data:extend({
 			animation_speed = 0.5
 			},
 		},
-		light = {intensity = 1, size = 50},
+		light = {intensity = 2, size = ionCannonRadius * 3},
 		sound =
 		{
 		  {
@@ -315,7 +315,7 @@ data:extend({
 			frame_count = 1,
 			direction_count = 1,
 			filename = "__base__/graphics/entity/scorchmark/small-scorchmark.png",
-			scale = 5,
+			scale = ionCannonRadius / 4,
 			variation_count = 3
 		  }
 		},
@@ -329,7 +329,7 @@ data:extend({
 			direction_count = 1,
 			x = 110 * 2,
 			filename = "__base__/graphics/entity/scorchmark/small-scorchmark.png",
-			scale = 5,
+			scale = ionCannonRadius / 4,
 			variation_count = 3
 		  }
 		},
@@ -343,7 +343,7 @@ data:extend({
 			direction_count = 1,
 			x = 110,
 			filename = "__base__/graphics/entity/scorchmark/small-scorchmark.png",
-			scale = 5,
+			scale = ionCannonRadius / 4,
 			variation_count = 3
 		  }
 		}
