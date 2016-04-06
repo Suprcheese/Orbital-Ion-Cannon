@@ -241,7 +241,9 @@ script.on_event(defines.events.on_built_entity, function(event)
 end)
 
 script.on_event(defines.events.on_put_item, function(event)
-	if global.tick ~= nil and global.tick > event.tick then return end
+	if global.tick ~= nil and global.tick > event.tick then
+		return
+	end
 	global.tick = event.tick + 5
 	local player = game.get_player(event.player_index)
 	if isHolding({name="ion-cannon-targeter", count=1}, player) then
@@ -265,9 +267,11 @@ script.on_event(defines.events.on_put_item, function(event)
 			else
 				local CrosshairsPosition = event.position
 				CrosshairsPosition.y = CrosshairsPosition.y - 20
-				player.surface.create_entity({name = "crosshairs", target = IonTarget, force = game.forces.player, position = CrosshairsPosition, speed = 0.0001})
+				player.surface.create_entity({name = "crosshairs", target = IonTarget, force = game.forces.player, position = CrosshairsPosition, speed = 0})
 				message("Target acquired, beginning firing sequence...")
-				playSoundForAllPlayers("klaxon")
+				if playKlaxon then
+					playSoundForAllPlayers("klaxon")
+				end
 				global.ion_cannon_table[cannonNum][1] = ionCannonCooldownSeconds
 				global.ion_cannon_table[cannonNum][2] = 0
 				message("Ion cannon #" .. cannonNum .. " will be ready to fire again in " .. ionCannonCooldownSeconds .. " seconds.")

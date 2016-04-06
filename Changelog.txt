@@ -28,3 +28,12 @@ Version 1.0.4 - November 23, 2015
 
 Added a third GUI state; now, clicking the main Ion Cannon button cycles through Closed, Open (Full), and Open (Compact).
 This is helpful if you happen to have lots of ion cannons in orbit and would rather not have the GUI take up half of your screen!
+
+
+Version 1.0.5 - December 2, 2015
+---------------------------------
+
+Added an option in config.lua to enable/disable the klaxon sound that plays whenever an ion cannon target is designated.
+Added an option in config.lua to adjust ion cannons' heatup time, i.e. the time between target designation and ion cannon blast impact.
+Slightly increased the default value of the ion cannon blast radius. (You can of course still change it in config.lua if you want.)
+Adjusted minimum base version requirement to >=0.12.17, due to graphical oddities present in lower versions.
