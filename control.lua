@@ -10,6 +10,9 @@ function On_Load()
 	  global.ion_cannon_table = {}
 	end
 	SelectTarget = false
+	if goToFull == nil then
+		goToFull = true
+	end
 end
 
 function init_GUI(player)
@@ -23,18 +26,37 @@ end
 
 function open_GUI(player)
 	local frame = player.gui.top["ion-cannon-stats"]
-	if (frame) then
+	if (frame) and goToFull then
 		frame.destroy()
 	else
-		frame = player.gui.top.add{type="frame", name="ion-cannon-stats", direction="vertical"}
-		frame.add{type="label", caption={"ion-cannon-details"}}
-		frame.add{type="table", colspan=2, name="ion-cannon-table"}
-		for i = 1, #global.ion_cannon_table do
-			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannon-num", i}}
-			if global.ion_cannon_table[i][2] == 1 then
-				frame["ion-cannon-table"].add{type = "label", caption = {"ready"}}
-			else
-				frame["ion-cannon-table"].add{type = "label", caption = {"cooldown", global.ion_cannon_table[i][1]}}
+		if goToFull then
+			goToFull = false
+			if (frame) then
+				frame.destroy()
+			end
+			frame = player.gui.top.add{type="frame", name="ion-cannon-stats", direction="vertical"}
+			frame.add{type="label", caption={"ion-cannon-details-full"}}
+			frame.add{type="table", colspan=2, name="ion-cannon-table"}
+			for i = 1, #global.ion_cannon_table do
+				frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannon-num", i}}
+				if global.ion_cannon_table[i][2] == 1 then
+					frame["ion-cannon-table"].add{type = "label", caption = {"ready"}}
+				else
+					frame["ion-cannon-table"].add{type = "label", caption = {"cooldown", global.ion_cannon_table[i][1]}}
+				end
+			end
+		else
+			goToFull = true
+			if (frame) then
+				frame.destroy()
+			end
+			frame = player.gui.top.add{type="frame", name="ion-cannon-stats", direction="vertical"}
+			frame.add{type="label", caption={"ion-cannon-details-compact"}}
+			frame.add{type="table", colspan=1, name="ion-cannon-table"}
+			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.ion_cannon_table}}
+			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady()}}
+			if countIonCannonsReady() < #global.ion_cannon_table then
+				frame["ion-cannon-table"].add{type = "label", caption = {"time-until-next-ready", timeUntilnextReady()}}
 			end
 		end
 	end
@@ -44,7 +66,7 @@ function update_GUI()
 	for i, player in pairs(game.players) do
 		local frame = player.gui.top["ion-cannon-stats"]
 		if (frame) then
-			if frame["ion-cannon-table"] then
+			if frame["ion-cannon-table"] and not goToFull then
 				frame["ion-cannon-table"].destroy()
 				frame.add{type="table", colspan=2, name="ion-cannon-table"}
 				for i = 1, #global.ion_cannon_table do
@@ -56,8 +78,37 @@ function update_GUI()
 					end
 				end
 			end
+			if frame["ion-cannon-table"] and goToFull then
+				frame["ion-cannon-table"].destroy()
+				frame.add{type="table", colspan=1, name="ion-cannon-table"}
+				frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.ion_cannon_table}}
+				frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady()}}
+				if countIonCannonsReady() < #global.ion_cannon_table then
+					frame["ion-cannon-table"].add{type = "label", caption = {"time-until-next-ready", timeUntilnextReady()}}
+				end
+			end
 		end
 	end
+end
+
+function countIonCannonsReady()
+    local ionCannonsReady = 0
+	for i, cooldown in ipairs(global.ion_cannon_table) do
+		if cooldown[2] == 1 then
+			ionCannonsReady = ionCannonsReady + 1
+		end
+	end
+	return ionCannonsReady
+end
+
+function timeUntilnextReady()
+	local shortestCooldown = ionCannonCooldownSeconds
+	for i, cooldown in ipairs(global.ion_cannon_table) do
+		if cooldown[1] < shortestCooldown and cooldown[2] == 0 then
+			shortestCooldown = cooldown[1]
+		end
+	end
+	return shortestCooldown
 end
 
 script.on_event(defines.events.on_gui_click, function(event)
@@ -115,6 +166,7 @@ function isIonCannonReady()
 			return true
 		end
 	end
+	return false
 end
 
 function message(mes)
