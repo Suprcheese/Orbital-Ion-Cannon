@@ -30,6 +30,16 @@ function On_Init()
 			global.goToFull[player.index] = true
 		end
 	end
+	if not global.IonCannonExists then
+		global.IonCannonExists = false
+		for i, force in pairs(game.forces) do
+			if global.forces_ion_cannon_table[force.name] and #global.forces_ion_cannon_table[force.name] > 0 then
+				global.IonCannonExists = true
+				script.on_event(defines.events.on_tick, process_tick)
+				break
+			end
+		end
+	end
 end
 
 script.on_event(defines.events.on_force_created, function(event)
@@ -98,7 +108,7 @@ function open_GUI(player)
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[player.force.name]}}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(player)}}
 			if countIonCannonsReady(player) < #global.forces_ion_cannon_table[player.force.name] then
-				frame["ion-cannon-table"].add{type = "label", caption = {"time-until-next-ready", timeUntilnextReady(player)}}
+				frame["ion-cannon-table"].add{type = "label", caption = {"time-until-next-ready", timeUntilNextReady(player)}}
 			end
 		end
 	end
@@ -129,7 +139,7 @@ function update_GUI(player)
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[player.force.name]}}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(player)}}
 			if countIonCannonsReady(player) < #global.forces_ion_cannon_table[player.force.name] then
-				frame["ion-cannon-table"].add{type = "label", caption = {"time-until-next-ready", timeUntilnextReady(player)}}
+				frame["ion-cannon-table"].add{type = "label", caption = {"time-until-next-ready", timeUntilNextReady(player)}}
 			end
 		end
 	end
@@ -145,7 +155,7 @@ function countIonCannonsReady(player)
 	return ionCannonsReady
 end
 
-function timeUntilnextReady(player)
+function timeUntilNextReady(player)
 	local shortestCooldown = ionCannonCooldownSeconds
 	for i, cooldown in ipairs(global.forces_ion_cannon_table[player.force.name]) do
 		if cooldown[1] < shortestCooldown and cooldown[2] == 0 then
@@ -168,7 +178,7 @@ script.on_event(defines.events.on_player_created, function(event)
 	init_GUI(game.players[event.player_index])
 end)
 
-script.on_event(defines.events.on_tick, function(event)
+function process_tick()
     if game.tick % 60 == 47 then
 		ReduceIonCannonCooldowns()
 		for i, force in pairs(game.forces) do
@@ -191,7 +201,7 @@ script.on_event(defines.events.on_tick, function(event)
 			end
 		end
 	end
-end)
+end
 
 function ReduceIonCannonCooldowns()
 	for i, force in pairs(game.forces) do
@@ -274,17 +284,18 @@ function playSoundForAllPlayers(sound)
 end
 
 function isHolding(stack, player)
-  local holding = player.cursor_stack
-  if holding and holding.valid_for_read and (holding.name == stack.name) and (holding.count >= stack.count) then
-    return true
-  end
-  return false
+	local holding = player.cursor_stack
+	if holding and holding.valid_for_read and (holding.name == stack.name) and (holding.count >= stack.count) then
+		return true
+	end
+	return false
 end
 
 script.on_event(defines.events.on_rocket_launched, function(event)
 	local force = event.rocket.force
 	if event.rocket.get_item_count("orbital-ion-cannon") > 0 then
 	  table.insert(global.forces_ion_cannon_table[force.name], {ionCannonCooldownSeconds, 0})
+	  script.on_event(defines.events.on_tick, process_tick)
 		if #global.forces_ion_cannon_table[force.name] == 1 then
 			force.recipes["ion-cannon-targeter"].enabled = true
 			for i, player in pairs(force.players) do

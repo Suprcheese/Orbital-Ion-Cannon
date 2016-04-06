@@ -50,3 +50,9 @@ Version 1.0.7 - February 20, 2016
 Fixed a bug when another mod created a new force in init.
 Updated recipes & technologies to use more new ingredients if Bob's Tech and/or Bob's Electronics mods are installed.
 Fixed a rare bug when forces merged.
+
+
+Version 1.0.8 - February 26, 2016
+---------------------------------
+Added Russian translation (thanks to apriori).
+To increase performance, the on_tick function is now only registered upon first launching an ion cannon into orbit - there was no need to run this function in the early game before any ion cannons have been launched.
