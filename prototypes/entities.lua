@@ -16,11 +16,11 @@ data:extend({
 				{
 					{
 					type = "damage",
-					damage = {amount = 1000, type = "laser"}
+					damage = {amount = ionCannonLaserDamage, type = "laser"}
 					},
 					{
 					type = "damage",
-					damage = {amount = 500, type = "explosion"}
+					damage = {amount = ionCannonExplosionDamage, type = "explosion"}
 					}
 				}
 			}

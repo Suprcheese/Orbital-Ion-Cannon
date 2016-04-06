@@ -10,9 +10,6 @@ function On_Load()
 	  global.ion_cannon_table = {}
 	end
 	SelectTarget = false
-	-- for i, player in ipairs(game.players) do
-		-- init_GUI(player)
-	-- end
 end
 
 function init_GUI(player)
@@ -39,7 +36,6 @@ function open_GUI(player)
 			else
 				frame["ion-cannon-table"].add{type = "label", caption = {"cooldown", global.ion_cannon_table[i][1]}}
 			end
-			-- frame["ion-cannon-table"].add{type = "progressbar", size = 100, value = (1 - (((global.ion_cannon_table[i][1] / ionCannonCooldownSeconds) * 100) / 100)),  name = "ion-cannon-" .. i .. "-progressbar", style = "bluebar"}
 		end
 	end
 end
@@ -58,13 +54,7 @@ function update_GUI()
 					else
 						frame["ion-cannon-table"].add{type = "label", caption = {"cooldown", global.ion_cannon_table[i][1]}}
 					end
-					-- message((1 - (((global.ion_cannon_table[i][1] / ionCannonCooldownSeconds) * 100) / 100)))
-					-- frame["ion-cannon-table"].add{type = "progressbar", size = 100, value = (1 - (((global.ion_cannon_table[i][1] / ionCannonCooldownSeconds) * 100) / 100)),  name = "ion-cannon-" .. i .. "-progressbar", style = "bluebar"}
 				end
-			-- for i = 1, #global.ion_cannon_table do
-				-- local bar = "ion-cannon-" .. i .. "-progressbar"
-				-- frame["ion-cannon-table"][i][2].value = 1 - (((global.ion_cannon_table[i][1] / ionCannonCooldownSeconds) * 50) / 50)
-			-- end
 			end
 		end
 	end
@@ -90,7 +80,7 @@ script.on_event(defines.events.on_tick, function(event)
 			playSoundForAllPlayers("ion-cannon-ready")
 		end
 		for i, player in ipairs(game.players) do
-			if isHolding({name="ion-cannon-targeter", count=1}, player) and not SelectTarget and #global.ion_cannon_table > 0 and playVoices then
+			if isHolding({name="ion-cannon-targeter", count=1}, player) and not SelectTarget and #global.ion_cannon_table > 0 and playVoices and not isAllIonCannonOnCooldown() then
 				playSoundForPlayer("select-target", player)
 				SelectTarget = true
 			end
@@ -107,6 +97,15 @@ function ReduceIonCannonCooldowns()
 			global.ion_cannon_table[i][1] = global.ion_cannon_table[i][1] - 1
 		end
 	end
+end
+
+function isAllIonCannonOnCooldown()
+    for i, cooldown in ipairs(global.ion_cannon_table) do
+		if cooldown[2] == 1 then
+			return false
+		end
+	end
+	return true
 end
 
 function isIonCannonReady()

@@ -1,7 +1,7 @@
-Orbital Ion Cannon 1.0.0
+Orbital Ion Cannon 1.0.2
 ========================
 
-Version 1.0.0 was released November 20, 2015, was tested using Factorio v0.12.17, and was authored by Supercheese.
+Version 1.0.2 was released November 22, 2015, was tested using Factorio v0.12.17, and was authored by Supercheese.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
@@ -12,7 +12,7 @@ You can click on the button added at the top of your screen to check on the stat
 
 This mod is aware of Bob's mods and will update its recipes and technology requirements if Bob's Warfare and/or Bob's Power mods are installed.
 
-This mod also has configuration options available in config.lua. Here you may adjust the cooldown time for the ion cannons, their damage radius, toggle the "Ion cannon ready" etc. voices on/off, and choose to force off the recipe updates for Bob's mods.
+This mod also has configuration options available in config.lua. Here you may adjust the cooldown time for the ion cannons, their damage amounts and blast radii, toggle the "Ion cannon ready" etc. voices on/off, and choose to force off the recipe updates for Bob's mods.
 
 
 Credits:
@@ -31,13 +31,15 @@ It was uploade by the user Tatermand under the CC-BY-SA license.
 
 Several portions of the control.lua code were inspired by code from the following mods:
 
--Supreme Warfare by SpeedyBrain
--YARM by Narc
--EvoGUI by Narc
--Blueprint String by DaveMcW
--Test Mode by rk84
+	-Supreme Warfare by SpeedyBrain
+	-YARM by Narc
+	-EvoGUI by Narc
+	-Blueprint String by DaveMcW
+	-Test Mode by rk84
 
 My thanks to these talented modders for their great mods.
+
+Thanks to the #factorio IRC denizens for advice & bugtesting.
 
 
 See also the associated forum thread to give feedback, view screenshots, etc.:
