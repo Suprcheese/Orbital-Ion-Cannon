@@ -1,5 +1,6 @@
 require "util"
 require "defines"
+require "stdlib/game"
 require ("config")
 
 script.on_init(function() On_Init() end)
@@ -256,26 +257,6 @@ function isIonCannonReady(force)
 	return false
 end
 
-function messageAll(mes)
-  for i, player in ipairs(game.players) do
-	if player.connected then
-		player.print(mes)
-	end
-  end
-end
-
-function messageForce(mes, force)
-  for i, player in ipairs(force.players) do
-	if player.connected then
-		player.print(mes)
-	end
-  end
-end
-
-function messagePlayer(mes, player)
-    player.print(mes)
-end
-
 function anyFriendlyCanReach(entity, force)
 	for i, player in ipairs(force.players) do
 		if player.connected and player.can_reach_entity(entity) then
@@ -326,19 +307,19 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 			for i, player in pairs(force.players) do
 				init_GUI(player)
 			end
-			messageForce({"congratulations-first"}, force)
-			messageForce({"first-help"}, force)
-			messageForce({"second-help"}, force)
-			messageForce({"third-help"}, force)
+			Game.print_force(force, {"congratulations-first"})
+			Game.print_force(force, {"first-help"})
+			Game.print_force(force, {"second-help"})
+			Game.print_force(force, {"third-help"})
 			if playVoices then
 				playSoundForForce("ion-cannon-charging", force)
 			end
 		else
 			if #global.forces_ion_cannon_table[force.name] > 1 then
-				messageForce({"congratulations-additional"}, force)
+				Game.print_force(force, {"congratulations-additional"})
 			end
-			messageForce({"ion-cannons-in-orbit" , #global.forces_ion_cannon_table[force.name]}, force)
-			messageForce({"time-to-ready" , #global.forces_ion_cannon_table[force.name] , ionCannonCooldownSeconds}, force)
+			Game.print_force(force, {"ion-cannons-in-orbit" , #global.forces_ion_cannon_table[force.name]})
+			Game.print_force(force, {"time-to-ready" , #global.forces_ion_cannon_table[force.name] , ionCannonCooldownSeconds})
 			if playVoices then
 				playSoundForForce("ion-cannon-charging", force)
 			end
@@ -369,26 +350,26 @@ script.on_event(defines.events.on_put_item, function(event)
 			end
 		end
 		if cannonNum == 0 then
-			messagePlayer({"unable-to-fire"}, player)
+			player.print({"unable-to-fire"})
 		else
-			messagePlayer({"targeting-ion-cannon" , cannonNum}, player)
+			player.print({"targeting-ion-cannon" , cannonNum})
 			local TargetPosition = event.position
 			TargetPosition.y = TargetPosition.y + 1
 			local IonTarget=player.surface.create_entity({name = "ion-cannon-target", position = TargetPosition, force = game.forces.enemy})
 			if anyFriendlyCanReach(IonTarget, player.force) and proximityCheck then
-				messagePlayer({"proximity-alert"}, player)
+				player.print({"proximity-alert"})
 				IonTarget.destroy()
 			else
 				local CrosshairsPosition = event.position
 				CrosshairsPosition.y = CrosshairsPosition.y - 20
 				player.surface.create_entity({name = "crosshairs", target = IonTarget, force = player.force, position = CrosshairsPosition, speed = 0})
-				messageForce({"target-acquired"}, player.force)
+				Game.print_force(player.force, {"target-acquired"})
 				if playKlaxon then
 					playSoundForAllPlayers("klaxon")
 				end
 				global.forces_ion_cannon_table[player.force.name][cannonNum][1] = ionCannonCooldownSeconds
 				global.forces_ion_cannon_table[player.force.name][cannonNum][2] = 0
-				messageForce({"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds}, player.force)
+				Game.print_force(player.force, {"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds})
 				game.raise_event(when_ion_cannon_fired, {force = player.force, player_index = event.player_index, position = TargetPosition})		-- Passes event.force, event.player_index, and event.position
 			end
 		end
