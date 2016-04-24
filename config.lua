@@ -1,8 +1,16 @@
 -- The Cooldown time for each orbital ion cannon, in seconds.
 ionCannonCooldownSeconds = 180
 
--- Play the EVA voices from Command and Conquer - recommended for the GDI enthusiast.
+-- Play the announcer voices from Command & Conquer.
 playVoices = true
+
+-- Choose which announcer voice you would like. Your options are:
+--
+-- "CommandAndConquer" - the original C&C from 1995.
+-- "TiberianSunEVA" - C&C: Tiberian Sun EVA
+-- "TiberianSunCABAL" - C&C: Tiberian Sun CABAL
+
+voiceStyle = "TiberianSunEVA"
 
 -- Play a klaxon sound for all players whenever a target for an ion cannon is designated.
 playKlaxon = true

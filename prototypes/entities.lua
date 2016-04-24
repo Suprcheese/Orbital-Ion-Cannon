@@ -1,153 +1,78 @@
 data:extend({
-  {
-    type = "projectile",
-    name = "crosshairs",
-    flags = {"not-on-map"},
-    acceleration = .0009 / (HeatupTimeMultiplier * HeatupTimeMultiplier),
-	action =
 	{
+		type = "projectile",
+		name = "crosshairs",
+		flags = {"not-on-map"},
+		acceleration = .0009 / (HeatupTimeMultiplier * HeatupTimeMultiplier),
+		action =
 		{
-			type = "area",
-			perimeter = ionCannonRadius,
-			action_delivery =
 			{
-				type = "instant",
-				target_effects =
+				type = "area",
+				perimeter = ionCannonRadius,
+				action_delivery =
 				{
+					type = "instant",
+					target_effects =
 					{
-					type = "damage",
-					damage = {amount = ionCannonLaserDamage, type = "laser"}
-					},
+						{
+						type = "damage",
+						damage = {amount = ionCannonLaserDamage, type = "laser"}
+						},
+						{
+						type = "damage",
+						damage = {amount = ionCannonExplosionDamage, type = "explosion"}
+						}
+					}
+				}
+			},
+			{
+				type = "direct",
+				action_delivery =
+				{
+					type = "instant",
+					target_effects =
 					{
-					type = "damage",
-					damage = {amount = ionCannonExplosionDamage, type = "explosion"}
+						{
+						type = "create-entity",
+						entity_name = "huge-explosion"
+						},
+						{
+						type = "create-entity",
+						entity_name = "ion-cannon-beam"
+						},
+						{
+						type = "create-entity",
+						entity_name = "enormous-scorchmark",
+						check_buildability = true
+						},
+						{
+						type = "create-entity",
+						entity_name = "ion-cannon-explosion",
+						}
 					}
 				}
 			}
 		},
-		{
-			type = "direct",
-			action_delivery =
-			{
-				type = "instant",
-				target_effects =
-				{
-					{
-					type = "create-entity",
-					entity_name = "huge-explosion"
-					},
-					{
-					type = "create-entity",
-					entity_name = "ion-cannon-beam"
-					},
-					{
-					type = "create-entity",
-					entity_name = "enormous-scorchmark",
-					check_buildability = true
-					},
-					{
-					type = "create-entity",
-					entity_name = "ion-cannon-explosion",
-					}
-				}
-			}
-		}
+		light = {intensity = 0, size = 0},
+		animation =
+		 {
+			filename = "__Orbital Ion Cannon__/graphics/null.png",
+			priority = "low",
+			width = 32,
+			height = 32,
+			frame_count = 1
+		 },
+		shadow =
+	  {
+			filename = "__Orbital Ion Cannon__/graphics/null.png",
+			priority = "low",
+			width = 32,
+			height = 32,
+			frame_count = 1
+	  }
 	},
-    light = {intensity = 0, size = 0},
-    animation =
-	   {
-        filename = "__Orbital Ion Cannon__/graphics/null.png",
-        priority = "low",
-        width = 32,
-        height = 32,
-        frame_count = 1
-	   },
-    shadow =
-    {
-        filename = "__Orbital Ion Cannon__/graphics/null.png",
-        priority = "low",
-        width = 32,
-        height = 32,
-        frame_count = 1
-    }
-  },
 
-	  {
-		type = "explosion",
-		name = "ion-cannon-ready",
-		flags = {"not-on-map"},
-		animations =
-		{
-			{
-				filename = "__Orbital Ion Cannon__/graphics/null.png",
-				priority = "low",
-				width = 32,
-				height = 32,
-				frame_count = 1,
-				line_length = 1,
-				animation_speed = 1
-			},
-		},
-		light = {intensity = 0, size = 0},
-		sound =
-		{
-		  {
-			filename = "__Orbital Ion Cannon__/sound/IonCannonReady.ogg",
-			volume = 0.75
-		  },
-		},
-	  },
-	  {
-		type = "explosion",
-		name = "ion-cannon-charging",
-		flags = {"not-on-map"},
-		animations =
-		{
-			{
-				filename = "__Orbital Ion Cannon__/graphics/null.png",
-				priority = "low",
-				width = 32,
-				height = 32,
-				frame_count = 1,
-				line_length = 1,
-				animation_speed = 1
-			},
-		},
-		light = {intensity = 0, size = 0},
-		sound =
-		{
-		  {
-			filename = "__Orbital Ion Cannon__/sound/IonCannonCharging.ogg",
-			volume = 0.75
-		  },
-		},
-	  },
-	  {
-		type = "explosion",
-		name = "select-target",
-		flags = {"not-on-map"},
-		animations =
-		{
-			{
-				filename = "__Orbital Ion Cannon__/graphics/null.png",
-				priority = "low",
-				width = 32,
-				height = 32,
-				frame_count = 1,
-				line_length = 1,
-				animation_speed = 1
-			},
-		},
-		light = {intensity = 0, size = 0},
-		sound =
-		{
-		  {
-			filename = "__Orbital Ion Cannon__/sound/SelectTarget.ogg",
-			volume = 0.75
-		  },
-		},
-	  },
-	  {
+	{
 		type = "explosion",
 		name = "klaxon",
 		flags = {"not-on-map"},
@@ -166,14 +91,14 @@ data:extend({
 		light = {intensity = 0, size = 0},
 		sound =
 		{
-		  {
+		{
 			filename = "__Orbital Ion Cannon__/sound/Klaxon.ogg",
 			volume = 0.75
-		  },
 		},
-	  },
+		},
+	},
 
-   {
+	{
 		type = "simple-entity",
 		name = "ion-cannon-target",
 		flags = {"placeable-off-grid", "not-on-map"},
@@ -183,7 +108,7 @@ data:extend({
 		resistances = {},
 		pictures =
 		{
-		   {
+		 {
 				filename = "__Orbital Ion Cannon__/graphics/CrosshairsEntity.png",
 				priority = "extra-high",
 				width = 64,
@@ -191,9 +116,9 @@ data:extend({
 				scale = 1,
 				shift = {0, -1},
 				frame_count = 1
-		   },
+		 },
 		}
-   },
+	},
 
 	{
 		type = "smoke-with-trigger",
@@ -216,7 +141,7 @@ data:extend({
 		cyclic = false,
 		duration = 60 * 5,
 		spread_duration = 10,
-	  },
+	},
 
 	{
 		type = "smoke-with-trigger",
@@ -241,9 +166,9 @@ data:extend({
 		duration = 60 * 2,
 		fade_away_duration = 60 * 1,
 		spread_duration = 10,
-	  },
+	},
 
-	  {
+	{
 		type = "explosion",
 		name = "huge-explosion",
 		flags = {"not-on-map"},
@@ -264,20 +189,20 @@ data:extend({
 		light = {intensity = 2, size = ionCannonRadius * 3},
 		sound =
 		{
-		  {
+		{
 			filename = "__Orbital Ion Cannon__/sound/OrbitalIonCannon.ogg",
 			volume = 2.0
-		  },
+		},
 		},
 		created_effect =
 		{
 		  type = "direct",
 		  action_delivery =
-		  {
+		{
 			type = "instant",
 			target_effects =
 			{
-			  {
+			{
 				type = "create-particle",
 				repeat_count = 60,
 				entity_name = "explosion-remnants-particle",
@@ -287,12 +212,12 @@ data:extend({
 				initial_vertical_speed = 0.1,
 				initial_vertical_speed_deviation = 0.15,
 				offset_deviation = {{-0.2, -0.2}, {0.2, 0.2}}
-			  }
 			}
-		  }
+			}
 		}
-	  },
-	  {
+		}
+	},
+	{
 		type = "corpse",
 		name = "enormous-scorchmark",
 		icon = "__base__/graphics/icons/small-scorchmark.png",
@@ -308,7 +233,7 @@ data:extend({
 		animation =
 		{
 		  sheet=
-		  {
+		{
 			width = 110,
 			height = 90,
 			frame_count = 1,
@@ -316,12 +241,12 @@ data:extend({
 			filename = "__base__/graphics/entity/scorchmark/small-scorchmark.png",
 			scale = ionCannonRadius / 4,
 			variation_count = 3
-		  }
+		}
 		},
 		ground_patch =
 		{
 		  sheet =
-		  {
+		{
 			width = 110,
 			height = 90,
 			frame_count = 1,
@@ -330,12 +255,12 @@ data:extend({
 			filename = "__base__/graphics/entity/scorchmark/small-scorchmark.png",
 			scale = ionCannonRadius / 4,
 			variation_count = 3
-		  }
+		}
 		},
 		ground_patch_higher =
 		{
 		  sheet =
-		  {
+		{
 			width = 110,
 			height = 90,
 			frame_count = 1,
@@ -344,8 +269,7 @@ data:extend({
 			filename = "__base__/graphics/entity/scorchmark/small-scorchmark.png",
 			scale = ionCannonRadius / 4,
 			variation_count = 3
-		  }
 		}
-	  }
+		}
 	}
-)
+})
