@@ -1,7 +1,7 @@
-Orbital Ion Cannon 1.0.9
+Orbital Ion Cannon 1.1.0
 ========================
 
-Version 1.0.9 was released March 1, 2016, was tested using Factorio v0.12.24, and was authored by Supercheese.
+Version 1.1.0 was released April 26, 2016, was tested using Factorio v0.12.30, and was authored by Supercheese.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
@@ -15,6 +15,7 @@ This mod is aware of Bob's mods and will update its recipes and technology requi
 This mod also has configuration options available in config.lua. Here you may adjust parameters such as:
 
 -The cooldown time for the ion cannons, their damage amounts and blast radii
+-Select which announcer voice you want (Original C&C, Tiberian Sun EVA, or Tiberian Sun CABAL)
 -Toggle the "Ion cannon ready" etc. voices and klaxon sounds on/off
 -The time it takes between designating a target and the ion cannon firing
 -Force off the friendly character proximity check or the recipe updates for Bob's mods
@@ -45,10 +46,12 @@ It was uploaded by the user "jobro" under the CC-0 (Creative Commons 0) license.
 
 The explosion graphic was obtained from the Supreme Warfare mod, authored by SpeedyBrain (graphics by YuokiTani).
 
-The "Ion Cannon Charging", "Ion Cannon Ready", and "Select Target" voices are from the video game "Command & Conquer" by Westwood Studios, as are the Ion Cannon icons.
-This video game was released as freeware in 2007.
+The "Ion Cannon Charging"/"Ion Cannon Deployed", "Ion Cannon Ready", and "Select Target" voices are from the "Command & Conquer" series of games by Westwood Studios, as are the Ion Cannon icons.
+Command and Conquer: Tiberian Dawn was released as freeware in 2007.
+Command and Conquer: Red Alert was released as freeware in 2008.
+Command and Conquer: Tiberian Sun was released as freeware in 2010.
 
-The ion beam that appears was obtained from: http://opengameart.org/content/top-down-sci-fi-shooter-pack
+The ion beam that the ion cannon fires was obtained from: http://opengameart.org/content/top-down-sci-fi-shooter-pack
 It was uploaded by the user Tatermand under the CC-BY-SA license.
 
 Several portions of the control.lua code (et al.) were inspired by code from the following mods:

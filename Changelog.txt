@@ -64,3 +64,9 @@ Properly fixed the technology to include Bob's Science Pack 4 if bobtech is load
 Fixed that the mod's on_tick function wasn't getting re-registered when loading a saved game.
 Added a remote interface to allow other mods to detect when an ion cannon is targeted.
 
+
+Version 1.1.0 - April 26, 2016
+------------------------------
+The mod is now using the Factorio Standard Library (https://github.com/Afforess/Factorio-Stdlib/wiki).
+Added German translation (courtesy of bNarFProfCrazy).
+Added two new Announcer voice styles to choose from (similar to the Red Alerts mod): Tiberian Sun EVA & Tiberian Sun CABAL. Select your favorite voice in config.lua.
