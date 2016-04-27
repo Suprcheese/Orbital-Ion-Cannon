@@ -54,6 +54,8 @@ Command and Conquer: Tiberian Sun was released as freeware in 2010.
 The ion beam that the ion cannon fires was obtained from: http://opengameart.org/content/top-down-sci-fi-shooter-pack
 It was uploaded by the user Tatermand under the CC-BY-SA license.
 
+This mod makes use of the Factorio Standard Library by Afforess (https://github.com/Afforess/Factorio-Stdlib).
+
 Several portions of the control.lua code (et al.) were inspired by code from the following mods:
 
 	-Supreme Warfare by SpeedyBrain
