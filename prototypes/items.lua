@@ -2,7 +2,7 @@ data:extend({
 	{
 	type = "item",
 	name = "orbital-ion-cannon",
-	icon = "__Orbital Ion Cannon__/graphics/icon.png",
+	icon = "__Orbital Ion Cannon__/graphics/Icon.png",
 	flags = {"goes-to-main-inventory"},
 	subgroup = "defensive-structure",
 	order = "e[orbital-ion-cannon]",

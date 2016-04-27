@@ -109,7 +109,7 @@ data:extend({
 		pictures =
 		{
 		 {
-				filename = "__Orbital Ion Cannon__/graphics/CrosshairsEntity.png",
+				filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
 				priority = "extra-high",
 				width = 64,
 				height = 64,
