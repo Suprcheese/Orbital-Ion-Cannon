@@ -22,6 +22,11 @@ This mod also has configuration options available in config.lua. Here you may ad
 -The minimum time between targeting multiple ion cannons
 
 
+Important Notice:
+-----------------
+The Long Reach mod (and other such reach mods) breaks the proximity check feature of this mod. If you want to use Long Reach along with this mod, please go into Orbital Ion Cannon's config.lua file and disable the proximity check.
+
+
 Modding Details:
 ----------------
 This mod implements a custom event, on_ion_cannon_fired, which can function just like other lua events (https://wiki.factorio.com/index.php?title=Lua/Events).
