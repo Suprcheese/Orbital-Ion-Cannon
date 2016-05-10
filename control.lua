@@ -1,6 +1,7 @@
 require "util"
 require "defines"
 require "stdlib/game"
+require "stdlib/event/event"
 require ("config")
 
 script.on_init(function() On_Init() end)
@@ -43,7 +44,7 @@ function On_Init()
 	for i, force in pairs(game.forces) do
 		if global.forces_ion_cannon_table[force.name] and #global.forces_ion_cannon_table[force.name] > 0 then
 			global.IonCannonLaunched = true
-			script.on_event(defines.events.on_tick, process_tick)
+			Event.register(defines.events.on_tick, process_tick)
 			break
 		end
 	end
@@ -52,7 +53,7 @@ end
 function On_Load()
 	getIonCannonFiredEventID()
 	if global.IonCannonLaunched then
-		script.on_event(defines.events.on_tick, process_tick)
+		Event.register(defines.events.on_tick, process_tick)
 	end
 end
 
@@ -341,7 +342,7 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 	  if not global.IonCannonLaunched then
 		global.IonCannonLaunched = true
 	  end
-	  script.on_event(defines.events.on_tick, process_tick)
+	  Event.register(defines.events.on_tick, process_tick)
 		if #global.forces_ion_cannon_table[force.name] == 1 then
 			force.recipes["ion-cannon-targeter"].enabled = true
 			for i, player in pairs(force.players) do
