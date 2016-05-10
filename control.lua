@@ -9,7 +9,9 @@ script.on_load(function() On_Load() end)
 
 remote.add_interface("orbital_ion_cannon",
 	{
-		on_ion_cannon_fired = function() return getIonCannonFiredEventID() end
+		on_ion_cannon_fired = function() return getIonCannonFiredEventID() end,
+
+		fire_ion_cannon = function(force, position, triggeringEntity) return targetIonCannon(force, position, triggeringEntity) end
 	}
 )
 
@@ -22,12 +24,8 @@ function On_Init()
 		global.forces_ion_cannon_table = {"player"}
 		global.forces_ion_cannon_table["player"] = {}
 	end
-	if not global.SelectTarget then
-		global.SelectTarget = {}
-	end
-	if not global.goToFull then
-		global.goToFull = {}
-	end
+	global.SelectTarget = global.SelectTarget or {}
+	global.goToFull = global.goToFull or {}
 	if global.ion_cannon_table then
 		global.forces_ion_cannon_table["player"] = global.ion_cannon_table 	-- Migrate ion cannon tables from version 1.0.5 and lower
 		global.ion_cannon_table = nil 										-- Remove old ion cannon table
@@ -294,6 +292,48 @@ function isHolding(stack, player)
 	return false
 end
 
+function targetIonCannon(force, position, triggeringEntity)
+	local cannonNum = 0
+	for i, cooldown in ipairs(global.forces_ion_cannon_table[force.name]) do
+		if cooldown[2] == 1 then
+			cannonNum = i
+			break
+		end
+	end
+	if cannonNum == 0 then
+		if triggeringEntity.type == "player" then
+			player.print({"unable-to-fire"})
+		end
+		return false
+	else
+		if triggeringEntity.type == "player" then
+			player.print({"targeting-ion-cannon" , cannonNum})
+		end
+		local TargetPosition = position
+		TargetPosition.y = TargetPosition.y + 1
+		local IonTarget = triggeringEntity.surface.create_entity({name = "ion-cannon-target", position = TargetPosition, force = game.forces.enemy})
+		if anyFriendlyCanReach(IonTarget, force) and proximityCheck then
+			if triggeringEntity.type == "player" then
+				player.print({"proximity-alert"})
+			end
+			IonTarget.destroy()
+			return false
+		else
+			local CrosshairsPosition = position
+			CrosshairsPosition.y = CrosshairsPosition.y - 20
+			triggeringEntity.surface.create_entity({name = "crosshairs", target = IonTarget, force = force, position = CrosshairsPosition, speed = 0})
+			Game.print_force(force, {"target-acquired"})
+			if playKlaxon then
+				playSoundForAllPlayers("klaxon")
+			end
+			global.forces_ion_cannon_table[force.name][cannonNum][1] = ionCannonCooldownSeconds
+			global.forces_ion_cannon_table[force.name][cannonNum][2] = 0
+			Game.print_force(force, {"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds})
+			return true
+		end
+	end
+end
+
 script.on_event(defines.events.on_rocket_launched, function(event)
 	local force = event.rocket.force
 	if event.rocket.get_item_count("orbital-ion-cannon") > 0 then
@@ -342,36 +382,9 @@ script.on_event(defines.events.on_put_item, function(event)
 	global.tick = event.tick + lockoutTicks
 	local player = game.get_player(event.player_index)
 	if isHolding({name="ion-cannon-targeter", count=1}, player) then
-		local cannonNum = 0
-		for i, cooldown in ipairs(global.forces_ion_cannon_table[player.force.name]) do
-			if cooldown[2] == 1 then
-				cannonNum = i
-				break
-			end
-		end
-		if cannonNum == 0 then
-			player.print({"unable-to-fire"})
-		else
-			player.print({"targeting-ion-cannon" , cannonNum})
-			local TargetPosition = event.position
-			TargetPosition.y = TargetPosition.y + 1
-			local IonTarget=player.surface.create_entity({name = "ion-cannon-target", position = TargetPosition, force = game.forces.enemy})
-			if anyFriendlyCanReach(IonTarget, player.force) and proximityCheck then
-				player.print({"proximity-alert"})
-				IonTarget.destroy()
-			else
-				local CrosshairsPosition = event.position
-				CrosshairsPosition.y = CrosshairsPosition.y - 20
-				player.surface.create_entity({name = "crosshairs", target = IonTarget, force = player.force, position = CrosshairsPosition, speed = 0})
-				Game.print_force(player.force, {"target-acquired"})
-				if playKlaxon then
-					playSoundForAllPlayers("klaxon")
-				end
-				global.forces_ion_cannon_table[player.force.name][cannonNum][1] = ionCannonCooldownSeconds
-				global.forces_ion_cannon_table[player.force.name][cannonNum][2] = 0
-				Game.print_force(player.force, {"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds})
-				game.raise_event(when_ion_cannon_fired, {force = player.force, player_index = event.player_index, position = TargetPosition})		-- Passes event.force, event.player_index, and event.position
-			end
+		local fired = targetIonCannon(player.force, event.position, player)
+		if fired then
+			game.raise_event(when_ion_cannon_fired, {force = player.force, player_index = event.player_index, position = event.position})		-- Passes event.force, event.player_index, and event.position
 		end
 	end
 end)
