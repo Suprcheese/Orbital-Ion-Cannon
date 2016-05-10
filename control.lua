@@ -330,7 +330,6 @@ function targetIonCannon(force, position, surface, player)
 			global.forces_ion_cannon_table[force.name][cannonNum][1] = ionCannonCooldownSeconds
 			global.forces_ion_cannon_table[force.name][cannonNum][2] = 0
 			Game.print_force(force, {"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds})
-			game.raise_event(when_ion_cannon_fired, {force = force, player_index = player.index, position = position})		-- Passes force, player.index, and position as arguments
 			return true
 		end
 	end
@@ -384,6 +383,9 @@ script.on_event(defines.events.on_put_item, function(event)
 	global.tick = event.tick + lockoutTicks
 	local player = game.get_player(event.player_index)
 	if isHolding({name="ion-cannon-targeter", count=1}, player) then
-		targetIonCannon(player.force, event.position, player.surface, player)
+		local fired = targetIonCannon(player.force, event.position, player)
+		if fired then
+			game.raise_event(when_ion_cannon_fired, {force = player.force, player_index = event.player_index, position = event.position})		-- Passes event.force, event.player_index, and event.position
+		end
 	end
 end)
