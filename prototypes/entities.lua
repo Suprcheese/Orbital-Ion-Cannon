@@ -110,7 +110,7 @@ data:extend({
 		{
 		 {
 				filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
-				priority = "extra-high",
+				priority = "low",
 				width = 64,
 				height = 64,
 				scale = 1,
@@ -128,7 +128,7 @@ data:extend({
 		animation =
 		{
 		  filename = "__Orbital Ion Cannon__/graphics/explosion.png",
-		  priority = "extra-high",
+		  priority = "low",
 		  width = 192,
 		  height = 192,
 		  frame_count = 20,
@@ -151,7 +151,7 @@ data:extend({
 		animation =
 		{
 		  filename = "__Orbital Ion Cannon__/graphics/IonBeam.png",
-		  priority = "extra-high",
+		  priority = "low",
 		  width = 110,
 		  height = 1871,
 		  frame_count = 1,
