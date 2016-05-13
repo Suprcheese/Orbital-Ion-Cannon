@@ -1,5 +1,5 @@
 -- The Cooldown time for each orbital ion cannon, in seconds.
-ionCannonCooldownSeconds = 180
+ionCannonCooldownSeconds = 300
 
 -- Play the announcer voices from Command & Conquer.
 playVoices = true
@@ -10,7 +10,7 @@ playVoices = true
 -- "TiberianSunEVA" - C&C: Tiberian Sun EVA
 -- "TiberianSunCABAL" - C&C: Tiberian Sun CABAL
 
-voiceStyle = "TiberianSunEVA"
+voiceStyle = "CommandAndConquer"
 
 -- Play a klaxon sound for all players whenever a target for an ion cannon is designated.
 playKlaxon = true
@@ -23,8 +23,8 @@ ionCannonRadius = 20
 enableBobUpdates = true
 
 -- These allow you to configure how much damage (of each type) is dealt in one ion cannon blast.
-ionCannonLaserDamage = 2000
-ionCannonExplosionDamage = 500
+ionCannonLaserDamage = 2500
+ionCannonExplosionDamage = 1000
 
 -- This multiplier affects how long it takes for an ion cannon to fire after a target has been designated.
 -- The default value of 1 results in approximately 3.5 seconds between target designation and ion cannon blast.
@@ -34,7 +34,7 @@ HeatupTimeMultiplier = 1
 
 -- When designating an ion cannon target, perform a check to see if any friendly character is too close to the target zone.
 -- It is strongly recommended to disable this check if you are using the "Long Reach" mod, since a side effect of that mod causes the radius of this check to excessively increase.
-proximityCheck = true
+proximityCheck = false
 
 -- The number of gameticks that must pass between designating consecutive ion cannon targets. There are 60 ticks per second, so the default 10 ticks would be 1/6th of a second.
 -- For example, setting this value to 120 would mean that there is always a minimum of two seconds between ion cannon blasts; any attempt to target the ion cannon in the two seconds following a prior targeting would fail.
