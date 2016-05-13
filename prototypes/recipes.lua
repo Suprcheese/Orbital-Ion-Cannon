@@ -11,8 +11,8 @@ data:extend({
    {"basic-accumulator", 200},
    {"radar", 10},
    {"processing-unit", 200},
-   {"electric-engine-unit", 10},
-   {"laser-turret", 25},
+   {"electric-engine-unit", 25},
+   {"laser-turret", 50},
    {"rocket-fuel", 50}
   },
   result = "orbital-ion-cannon"
@@ -38,7 +38,7 @@ if data.raw["item"]["advanced-processing-unit"] and enableBobUpdates then
 end
 
 if data.raw["item"]["bob-laser-turret-5"] and enableBobUpdates then
-	data.raw["recipe"]["orbital-ion-cannon"].ingredients[7] = {"bob-laser-turret-5", 25}
+	data.raw["recipe"]["orbital-ion-cannon"].ingredients[7] = {"bob-laser-turret-5", 50}
 end
 
 if data.raw["item"]["fast-accumulator-3"] and data.raw["item"]["solar-panel-large-3"] and enableBobUpdates then
