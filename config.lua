@@ -9,7 +9,6 @@ playVoices = true
 -- "CommandAndConquer" - the original C&C from 1995.
 -- "TiberianSunEVA" - C&C: Tiberian Sun EVA
 -- "TiberianSunCABAL" - C&C: Tiberian Sun CABAL
-
 voiceStyle = "CommandAndConquer"
 
 -- Play a klaxon sound for all players whenever a target for an ion cannon is designated.
