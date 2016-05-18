@@ -1,7 +1,7 @@
-Orbital Ion Cannon 1.1.0
+Orbital Ion Cannon 1.2.0
 ========================
 
-Version 1.1.0 was released April 26, 2016, was tested using Factorio v0.12.31, and was authored by Supercheese.
+Version 1.2.0 was released May 18, 2016, was tested using Factorio v0.12.33, and was authored by Supercheese.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
@@ -9,6 +9,8 @@ Simply click anywhere with your targeting device and watch the total annihilatio
 (If you've played the Command & Conquer series of games, you're bound to recognize many features similar to the GDI's Ion Cannons.)
 
 You can click on the button added at the top of your screen to check on the status of your ion cannons in orbit.
+
+If you like, you can even automate the destruction of enemy nests by researching and building Auto-Targeting Stations, which will periodically scan for spawners and automatically fire an ion cannon if it detects one.
 
 This mod is aware of Bob's mods and will update its recipes and technology requirements if Bob's Electronics, Tech, Warfare, and/or Power mods are installed.
 
@@ -18,8 +20,9 @@ This mod also has configuration options available in config.lua. Here you may ad
 -Select which announcer voice you want (Original C&C, Tiberian Sun EVA, or Tiberian Sun CABAL)
 -Toggle the "Ion cannon ready" etc. voices and klaxon sounds on/off
 -The time it takes between designating a target and the ion cannon firing
--Force off the friendly character proximity check or the recipe updates for Bob's mods
+-Enable/Disable the friendly character proximity check or the recipe updates for Bob's mods
 -The minimum time between targeting multiple ion cannons
+-The range of the Auto-Targeting Station
 
 
 Important Notice:
@@ -32,15 +35,22 @@ Modding Details:
 This mod implements a custom event, on_ion_cannon_fired, which can function just like other lua events (https://wiki.factorio.com/index.php?title=Lua/Events).
 In order to use this event in another mod, you should use the following code:
 
-script.on_event(remote.call("orbital_ion_cannon", "on_ion_cannon_fired"), function(event)
-	...
-end)
+	script.on_event(remote.call("orbital_ion_cannon", "on_ion_cannon_fired"), function(event)
+		...
+	end)
 
 Where the ... can be any code of your choosing. The following variables are available when using this custom event:
 
 	event.force				The force whose ion cannon is firing
 	event.player_index		The player index of who fired the ion cannon
 	event.position			The position the ion cannon is firing at
+
+
+There is also a remote call that fires the ion cannon:
+
+	remote.call("orbital_ion_cannon", "fire_ion_cannon", force, position, surface, player)
+
+You must supply a force, position, and surface, but the final argument -- player -- is optional; if you include it, some extra information will be messaged to the player.
 
 
 Credits:
@@ -68,6 +78,7 @@ Several portions of the control.lua code (et al.) were inspired by code from the
 	-EvoGUI by Narc
 	-Blueprint String by DaveMcW
 	-Test Mode by rk84
+	-Smart Display by binbinhfr
 	-Useful Space Industry and Solar Satellites by jorgenRe and CookieGamerTV, respectively.
 
 My thanks to these talented modders for their great mods.
