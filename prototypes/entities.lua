@@ -1,4 +1,31 @@
+crosshairsPicture =	{
+		filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
+		priority = "low",
+		width = 64,
+		height = 64,
+		scale = 1,
+		shift = {0, -1},
+		frame_count = 1
+ }
+
 data:extend({
+	{
+		type = "container",
+		name = "ion-cannon-targeter",
+		icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
+		flags = {"placeable-neutral", "player-creation","placeable-off-grid"},
+		max_health = 0,
+		corpse = "small-remnants",
+		inventory_size = 1,
+		picture =
+		{
+			filename = "__Orbital Ion Cannon__/graphics/crosshairs64.png",
+			width = 64,
+			height = 64,
+			shift = {0, 0}
+		}
+	},
+
 	{
 		type = "projectile",
 		name = "crosshairs",
@@ -63,13 +90,13 @@ data:extend({
 			frame_count = 1
 		 },
 		shadow =
-	  {
+		{
 			filename = "__Orbital Ion Cannon__/graphics/null.png",
 			priority = "low",
 			width = 32,
 			height = 32,
 			frame_count = 1
-	  }
+		}
 	},
 
 	{
@@ -98,26 +125,58 @@ data:extend({
 		},
 	},
 
+	-- {
+		-- type = "simple-entity",
+		-- name = "ion-cannon-target",
+		-- flags = {"placeable-off-grid", "not-on-map"},
+		-- max_health = 1,
+		-- render_layer = "air-object",
+		-- final_render_layer = "air-object",
+		-- resistances = {},
+		-- pictures =
+		-- {
+		 -- {
+				-- filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
+				-- priority = "low",
+				-- width = 64,
+				-- height = 64,
+				-- scale = 1,
+				-- shift = {0, -1},
+				-- frame_count = 1
+		 -- },
+		-- }
+	-- },
+
 	{
-		type = "simple-entity",
+		type = "train-stop",
 		name = "ion-cannon-target",
-		flags = {"placeable-off-grid", "not-on-map"},
-		max_health = 1,
+		icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
+		flags = {"placeable-off-grid", "placeable-neutral", "player-creation", "filter-directions"},
+		order = "y",
+		selectable_in_game = false,
+		minable = {mining_time = 1, result = "train-stop"},
+		max_health = 0,
 		render_layer = "air-object",
 		final_render_layer = "air-object",
-		resistances = {},
-		pictures =
+		-- corpse = "small-remnants",
+		collision_box = {{0,0}, {0,0}},
+		selection_box = {{0,0}, {0,0}},
+		drawing_box = {{0,0}, {0,0}},
+		tile_width = 1,
+		tile_height = 1,
+		animation_ticks_per_frame = 60,
+		animations =
 		{
-		 {
-				filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
-				priority = "low",
-				width = 64,
-				height = 64,
-				scale = 1,
-				shift = {0, -1},
-				frame_count = 1
-		 },
-		}
+			north = crosshairsPicture,
+			east = crosshairsPicture,
+			south = crosshairsPicture,
+			west = crosshairsPicture,
+		},
+		vehicle_impact_sound =	{ filename = "__base__/sound/car-metal-impact.ogg", volume = 0 },
+		working_sound =
+		{
+			sound = { filename = "__base__/sound/train-stop.ogg", volume = 0 }
+		},
 	},
 
 	{
@@ -127,14 +186,14 @@ data:extend({
 		show_when_smoke_off = true,
 		animation =
 		{
-		  filename = "__Orbital Ion Cannon__/graphics/explosion.png",
-		  priority = "low",
-		  width = 192,
-		  height = 192,
-		  frame_count = 20,
-		  animation_speed = 0.2,
-		  line_length = 5,
-		  scale = 5 * (ionCannonRadius / 15),
+			filename = "__Orbital Ion Cannon__/graphics/explosion.png",
+			priority = "low",
+			width = 192,
+			height = 192,
+			frame_count = 20,
+			animation_speed = 0.2,
+			line_length = 5,
+			scale = 5 * (ionCannonRadius / 15),
 		},
 		slow_down_factor = 0,
 		affected_by_wind = false,
@@ -150,15 +209,15 @@ data:extend({
 		show_when_smoke_off = true,
 		animation =
 		{
-		  filename = "__Orbital Ion Cannon__/graphics/IonBeam.png",
-		  priority = "low",
-		  width = 110,
-		  height = 1871,
-		  frame_count = 1,
-		  animation_speed = 0.01,
-		  line_length = 1,
-		  shift = {-0.1, -27.5},
-		  scale = 1,
+			filename = "__Orbital Ion Cannon__/graphics/IonBeam.png",
+			priority = "low",
+			width = 110,
+			height = 1871,
+			frame_count = 1,
+			animation_speed = 0.01,
+			line_length = 1,
+			shift = {-0.1, -27.5},
+			scale = 1,
 		},
 		slow_down_factor = 0,
 		affected_by_wind = false,
@@ -196,8 +255,8 @@ data:extend({
 		},
 		created_effect =
 		{
-		  type = "direct",
-		  action_delivery =
+			type = "direct",
+			action_delivery =
 		{
 			type = "instant",
 			target_effects =
@@ -232,7 +291,7 @@ data:extend({
 		order="d[remnants]-b[scorchmark]-a[small]",
 		animation =
 		{
-		  sheet=
+			sheet=
 		{
 			width = 110,
 			height = 90,
@@ -245,7 +304,7 @@ data:extend({
 		},
 		ground_patch =
 		{
-		  sheet =
+			sheet =
 		{
 			width = 110,
 			height = 90,
@@ -259,7 +318,7 @@ data:extend({
 		},
 		ground_patch_higher =
 		{
-		  sheet =
+			sheet =
 		{
 			width = 110,
 			height = 90,
@@ -273,3 +332,15 @@ data:extend({
 		}
 	}
 })
+
+local auto_targeter = util.table.deepcopy(data.raw["radar"]["radar"])
+
+auto_targeter.name = "auto-targeter"
+auto_targeter.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
+auto_targeter.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter"}
+auto_targeter.pictures.tint = { r = 0.0, g = 1.0, b = 1.0, a = 1.0 }
+auto_targeter.energy_per_sector = "5MJ"
+auto_targeter.max_distance_of_nearby_sector_revealed = 1
+auto_targeter.energy_usage = "500kW"
+
+data:extend({auto_targeter})
