@@ -83,3 +83,8 @@ Changed the default config.lua settings:
 Increased the cost of the ion cannon recipe.
 The target location for all ion cannons is now shown on the map (when you press M). This is helpful to identify which spawner an Auto-Targeting Station is firing at -- or to detect enemy target locations in PvP!
 
+
+Version 1.2.1 - May 20, 2016
+----------------------------
+Revert use of the Standard Library's event registry function, as it did not behave as I intended.
+Use improved graphics for the Auto-Targeting Station, courtesy of the excellent ExtraChests mod by Qumojo (https://forums.factorio.com/viewtopic.php?f=91&t=19970)
