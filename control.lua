@@ -44,7 +44,7 @@ function On_Init()
 		force.reset_recipes()
 		if global.forces_ion_cannon_table[force.name] and #global.forces_ion_cannon_table[force.name] > 0 then
 			global.IonCannonLaunched = true
-			Event.register(defines.events.on_tick, process_tick)
+			script.on_event(defines.events.on_tick, process_tick)
 			break
 		end
 	end
@@ -53,7 +53,7 @@ end
 function On_Load()
 	getIonCannonFiredEventID()
 	if global.IonCannonLaunched then
-		Event.register(defines.events.on_tick, process_tick)
+		script.on_event(defines.events.on_tick, process_tick)
 	end
 end
 
@@ -343,7 +343,7 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 	if event.rocket.get_item_count("orbital-ion-cannon") > 0 then
 		table.insert(global.forces_ion_cannon_table[force.name], {ionCannonCooldownSeconds, 0})
 		global.IonCannonLaunched = true
-		Event.register(defines.events.on_tick, process_tick)
+		script.on_event(defines.events.on_tick, process_tick)
 		if #global.forces_ion_cannon_table[force.name] == 1 then
 			force.recipes["ion-cannon-targeter"].enabled = true
 			for i, player in pairs(force.players) do
