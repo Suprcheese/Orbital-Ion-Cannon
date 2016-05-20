@@ -338,7 +338,17 @@ local auto_targeter = util.table.deepcopy(data.raw["radar"]["radar"])
 auto_targeter.name = "auto-targeter"
 auto_targeter.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
 auto_targeter.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter"}
-auto_targeter.pictures.tint = { r = 0.0, g = 1.0, b = 1.0, a = 1.0 }
+auto_targeter.pictures =
+    {
+      filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
+      priority = "low",
+      width = 153,
+      height = 131,
+      apply_projection = false,
+      direction_count = 64,
+      line_length = 8,
+      shift = {0.875, -0.34375}
+    }
 auto_targeter.energy_per_sector = "5MJ"
 auto_targeter.max_distance_of_nearby_sector_revealed = 1
 auto_targeter.energy_usage = "500kW"
