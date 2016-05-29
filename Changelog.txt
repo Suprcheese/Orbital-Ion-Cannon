@@ -88,3 +88,8 @@ Version 1.2.1 - May 20, 2016
 ----------------------------
 Revert use of the Standard Library's event registry function, as it did not behave as I intended.
 Use improved graphics for the Auto-Targeting Station, courtesy of the excellent ExtraChests mod by Qumojo (https://forums.factorio.com/viewtopic.php?f=91&t=19970)
+
+
+Version 1.2.2 - May 29, 2016
+----------------------------
+Fix compatibility with mods that add an Assembling Machine 4 but don't increase the ingredient_count.
