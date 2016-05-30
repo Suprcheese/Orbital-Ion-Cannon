@@ -1,22 +1,25 @@
 require "stdlib/area/position"
 
-function findSpawnerNear(entity)
+function findNestNear(entity)
 	local search = Position.expand_to_area(entity.position, autoTargetRange)
 	local spawners = entity.surface.find_entities_filtered{area = search, type = "unit-spawner"}
-	if spawners then
+	if #spawners > 0 then
 		return spawners[1]
-	else
-		return false
 	end
+	local worms = entity.surface.find_entities_filtered{area = search, type = "turret"}
+	if #worms > 0 then
+		return worms[1]
+	end
+	return false
 end
 
 script.on_event(defines.events.on_sector_scanned, function(event)
 	local radar = event.radar
 	if radar.name == "auto-targeter" then
-		local spawner = findSpawnerNear(radar)
-		if spawner then
-			Game.print_force(radar.force, {"auto-target-designated", radar.backer_name, spawner.position.x, spawner.position.y})
-			targetIonCannon(radar.force, spawner.position, radar.surface)
+		local target = findNestNear(radar)
+		if target then
+			Game.print_force(radar.force, {"auto-target-designated", radar.backer_name, target.position.x, target.position.y})
+			targetIonCannon(radar.force, target.position, radar.surface)
 		end
 	end
 end)
