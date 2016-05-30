@@ -93,3 +93,9 @@ Use improved graphics for the Auto-Targeting Station, courtesy of the excellent 
 Version 1.2.2 - May 29, 2016
 ----------------------------
 Fix compatibility with mods that add an Assembling Machine 4 but don't increase the ingredient_count.
+
+
+Version 1.2.3 - May 31, 2016
+----------------------------
+Increase default Auto-Targeter range to 250 tiles.
+Add Worms as valid targets for Auto-Targeters; Spawners are primary targets, Worms secondary.
