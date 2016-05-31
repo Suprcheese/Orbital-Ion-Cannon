@@ -325,14 +325,18 @@ function targetIonCannon(force, position, surface, player)
 			local CrosshairsPosition = position
 			CrosshairsPosition.y = CrosshairsPosition.y - 20
 			surface.create_entity({name = "crosshairs", target = IonTarget, force = force, position = CrosshairsPosition, speed = 0})
-			Game.print_force(force, {"target-acquired"})
+			if printMessages then
+				Game.print_force(force, {"target-acquired"})
+			end
 			if playKlaxon and global.klaxonTick < current_tick then
 				global.klaxonTick = current_tick + 60
 				playSoundForAllPlayers("klaxon")
 			end
 			global.forces_ion_cannon_table[force.name][cannonNum][1] = ionCannonCooldownSeconds
 			global.forces_ion_cannon_table[force.name][cannonNum][2] = 0
-			Game.print_force(force, {"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds})
+			if printMessages then
+				Game.print_force(force, {"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds})
+			end
 			return true
 		end
 	end

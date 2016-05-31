@@ -43,3 +43,6 @@ lockoutTicks = 10
 -- The range, in tiles, of the Auto-Targeting Station.
 -- Higher values may result in reduced performance.
 autoTargetRange = 250
+
+-- Print messages to the console whenever an ion cannon fires or an auto-targeting station acquires a target
+printMessages = false
