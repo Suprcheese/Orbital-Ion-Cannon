@@ -18,10 +18,10 @@ script.on_event(defines.events.on_sector_scanned, function(event)
 	if radar.name == "auto-targeter" then
 		local target = findNestNear(radar)
 		if target then
-			if printMessages then
+			local fired = targetIonCannon(radar.force, target.position, radar.surface)
+			if fired and printMessages then
 				Game.print_force(radar.force, {"auto-target-designated", radar.backer_name, target.position.x, target.position.y})
 			end
-			targetIonCannon(radar.force, target.position, radar.surface)
 		end
 	end
 end)
