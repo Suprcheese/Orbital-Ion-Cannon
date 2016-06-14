@@ -20,7 +20,7 @@ remote.add_interface("orbital_ion_cannon",
 function On_Init()
 	getIonCannonFiredEventID()
 	if not global.forces_ion_cannon_table then
-		global.forces_ion_cannon_table = {"player"}
+		global.forces_ion_cannon_table = {}
 		global.forces_ion_cannon_table["player"] = {}
 	end
 	global.SelectTarget = global.SelectTarget or {}
