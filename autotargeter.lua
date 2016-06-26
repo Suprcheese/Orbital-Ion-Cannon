@@ -6,9 +6,11 @@ function findNestNear(entity)
 	if #spawners > 0 then
 		return spawners[math.random(#spawners)]
 	end
-	local worms = entity.surface.find_entities_filtered{area = search, type = "turret"}
-	if #worms > 0 then
-		return worms[math.random(#worms)]
+	if targetWorms then
+		local worms = entity.surface.find_entities_filtered{area = search, type = "turret"}
+		if #worms > 0 then
+			return worms[math.random(#worms)]
+		end
 	end
 	return false
 end
