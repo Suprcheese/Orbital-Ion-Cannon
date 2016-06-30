@@ -177,6 +177,14 @@ data:extend({
 		{
 			sound = { filename = "__base__/sound/train-stop.ogg", volume = 0 }
 		},
+		circuit_wire_connection_points = {},
+		circuit_connector_sprites =
+		{
+			get_circuit_connector_sprites({0.5625-1, 1.03125}, {0.5625-1, 1.03125}, 0), --N
+			get_circuit_connector_sprites({-0.78125, 0.28125-1}, {-0.78125, 0.28125-1}, 6), --E
+			get_circuit_connector_sprites({-0.28125+1, 0.28125}, {-0.28125+1, 0.28125}, 0), --S
+			get_circuit_connector_sprites({0.03125, 0.28125+1}, {0.03125, 0.28125+1}, 6), --W
+		},
 	},
 
 	{
