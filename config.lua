@@ -15,7 +15,7 @@ voiceStyle = "CommandAndConquer"
 playKlaxon = true
 
 -- Radius of the ion cannon's blast.
-ionCannonRadius = 20
+ionCannonRadius = 25
 
 -- If true, this mod will update its recipes and technologies to include new, high-tier items from Bob's Electronics, Tech, Warfare, and/or Power mods.
 -- Note that this makes the ion cannon much more expensive to construct compared to vanilla.
@@ -42,7 +42,7 @@ lockoutTicks = 10
 
 -- The range, in tiles, of the Auto-Targeting Station.
 -- Higher values may result in reduced performance.
-autoTargetRange = 250
+autoTargetRange = 400
 
 -- Should the Auto-Targeting Station target worm-only nests?
 autoTargetWorms = true
