@@ -1,5 +1,4 @@
 require "util"
-require "defines"
 require "stdlib/game"
 require "stdlib/event/event"
 require "config"

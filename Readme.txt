@@ -1,3 +1,10 @@
+Orbital Ion Cannon 2.0.0
+========================
+
+Version 2.0.0 was released June 30, 2016 and was tested using Factorio v0.13.1.
+
+Mod should mostly function like 1.2.3, just in 0.13 instead. It does keep your satelittes etc from 0.12, but the mod itself can no longer be used in 0.12.
+
 Orbital Ion Cannon 1.2.3
 ========================
 

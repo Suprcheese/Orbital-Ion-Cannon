@@ -8,7 +8,7 @@ data:extend({
 		{
 			{"low-density-structure", 100},
 			{"solar-panel", 100},
-			{"basic-accumulator", 200},
+			{"accumulator", 200},
 			{"radar", 10},
 			{"processing-unit", 200},
 			{"electric-engine-unit", 25},
