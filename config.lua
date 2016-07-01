@@ -44,7 +44,7 @@ lockoutTicks = 10
 -- Higher values may result in reduced performance.
 autoTargetRange = 400
 
--- Should the Auto-Targeting Station target worm-only nests?
+-- Whether the Auto-Targeting Station should target worms as well as nests
 autoTargetWorms = true
 
 -- Print messages to the console whenever an ion cannon fires or an auto-targeting station acquires a target

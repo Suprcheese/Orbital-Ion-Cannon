@@ -1,14 +1,7 @@
-Orbital Ion Cannon 2.0.0
+Orbital Ion Cannon 1.3.0
 ========================
 
-Version 2.0.0 was released June 30, 2016 and was tested using Factorio v0.13.1.
-
-Mod should mostly function like 1.2.3, just in 0.13 instead. It does keep your satelittes etc from 0.12, but the mod itself can no longer be used in 0.12.
-
-Orbital Ion Cannon 1.2.3
-========================
-
-Version 1.2.3 was released May 31, 2016, was tested using Factorio v0.12.34, and was authored by Supercheese.
+Version 1.3.0 was released July 2, 2016, was tested using Factorio v0.13.3, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, and Danielv123.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
@@ -30,11 +23,8 @@ This mod also has configuration options available in config.lua. Here you may ad
 -Enable/Disable the friendly character proximity check or the recipe updates for Bob's mods
 -The minimum time between targeting multiple ion cannons
 -The range of the Auto-Targeting Station
-
-
-Important Notice:
------------------
-The Long Reach mod (and other such reach mods) breaks the proximity check feature of this mod. If you want to use Long Reach along with this mod, please go into Orbital Ion Cannon's config.lua file and disable the proximity check.
+-Whether the Auto-Targeting Station should target Worms in addition to Spawners
+-Enable verbose printing to the console
 
 
 Modding Details:
@@ -57,7 +47,7 @@ There is also a remote call that fires the ion cannon:
 
 	remote.call("orbital_ion_cannon", "fire_ion_cannon", force, position, surface, player)
 
-You must supply a force, position, and surface, but the final argument -- player -- is optional; if you include it, some extra information will be messaged to the player.
+You must supply a force, position, and surface, but the final argument -- player -- is optional; if you include it, some extra information can be messaged to the player.
 
 
 Credits:
@@ -92,7 +82,7 @@ Several portions of the control.lua code (et al.) were inspired by code from the
 
 My thanks to these talented modders for their great mods.
 
-Thanks to the forum and #factorio IRC denizens for advice & bugtesting.
+Thanks to the forum, Github, and #factorio IRC denizens for advice, code contributions, & bugtesting.
 
 
 See also the associated forum thread to give feedback, view screenshots, etc.:

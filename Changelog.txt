@@ -99,3 +99,16 @@ Version 1.2.3 - May 31, 2016
 ----------------------------
 Increase default Auto-Targeter range to 250 tiles.
 Add Worms as valid targets for Auto-Targeters; Spawners are primary targets, Worms secondary.
+
+
+Version 1.3.0 - July 2, 2016
+----------------------------
+Updated for Factorio 0.13 (thanks to Danielv123 for assisting).
+25% more BOOM: Increased default blast radius from 20 to 25.
+Add config option to disable printing messages to the console whenever an ion cannon fires or an auto-targeting station acquires a target.
+Added a dark_background_icon to the Targeting Device, to improve visibility in some situations.
+"Select Target" should now play more promptly upon grabbing a Targeting Device.
+The Auto-Targeting Station no longer prints messages when all ion cannons are on cooldown.
+Added an option in config.lua to toggle targeting of both worms & spawners or just spawners only (courtesy of madmaxoft).
+Performance optimizations.
+Increased default Auto-Targeting range to 400.
