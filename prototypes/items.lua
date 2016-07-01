@@ -12,6 +12,7 @@ data:extend({
 		type = "item",
 		name = "ion-cannon-targeter",
 		icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
+		dark_background_icon = "__Orbital Ion Cannon__/graphics/crosshairs_darkBG.png",
 		flags = {"goes-to-quickbar"},
 		place_result = "ion-cannon-targeter",
 		subgroup = "capsule",
