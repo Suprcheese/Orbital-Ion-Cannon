@@ -14,6 +14,7 @@ data:extend({
 		name = "ion-cannon-targeter",
 		icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
 		flags = {"placeable-neutral", "player-creation","placeable-off-grid"},
+		collision_mask = {},
 		max_health = 0,
 		corpse = "small-remnants",
 		inventory_size = 1,
@@ -124,28 +125,6 @@ data:extend({
 		},
 		},
 	},
-
-	-- {
-		-- type = "simple-entity",
-		-- name = "ion-cannon-target",
-		-- flags = {"placeable-off-grid", "not-on-map"},
-		-- max_health = 1,
-		-- render_layer = "air-object",
-		-- final_render_layer = "air-object",
-		-- resistances = {},
-		-- pictures =
-		-- {
-		 -- {
-				-- filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
-				-- priority = "low",
-				-- width = 64,
-				-- height = 64,
-				-- scale = 1,
-				-- shift = {0, -1},
-				-- frame_count = 1
-		 -- },
-		-- }
-	-- },
 
 	{
 		type = "train-stop",

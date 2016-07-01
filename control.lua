@@ -22,7 +22,6 @@ function On_Init()
 		global.forces_ion_cannon_table = {}
 		global.forces_ion_cannon_table["player"] = {}
 	end
-	global.SelectTarget = global.SelectTarget or {}
 	global.goToFull = global.goToFull or {}
 	global.klaxonTick = global.klaxonTick or 0
 	if global.ion_cannon_table then
@@ -34,7 +33,6 @@ function On_Init()
 			table.insert(global.forces_ion_cannon_table, player.force.name)
 			global.forces_ion_cannon_table[player.force.name] = {}
 		end
-		global.SelectTarget[player.index] = false
 		if global.goToFull[player.index] == nil then
 			global.goToFull[player.index] = true
 		end
@@ -199,27 +197,23 @@ script.on_event(defines.events.on_player_created, function(event)
 	init_GUI(game.players[event.player_index])
 end)
 
+script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
+	local player = game.players[event.player_index]
+	if playVoices and #global.forces_ion_cannon_table[player.force.name] > 0 and isHolding({name="ion-cannon-targeter", count=1}, player) and not isAllIonCannonOnCooldown(player) then
+		playSoundForPlayer("select-target", player)
+	end
+end)
+
 function process_tick()
 	if game.tick % 60 == 47 then
 		ReduceIonCannonCooldowns()
 		for i, force in pairs(game.forces) do
-			if global.forces_ion_cannon_table[force.name] then
-				if isIonCannonReady(force) then
-					if playVoices then
-						playSoundForForce("ion-cannon-ready", force)
-					end
-				end
+			if global.forces_ion_cannon_table[force.name] and isIonCannonReady(force) and playVoices then
+				playSoundForForce("ion-cannon-ready", force)
 			end
 		end
 		for i, player in pairs(game.players) do
 			update_GUI(player)
-			if player.connected and playVoices and #global.forces_ion_cannon_table[player.force.name] > 0 and isHolding({name="ion-cannon-targeter", count=1}, player) and not global.SelectTarget[player.index] and not isAllIonCannonOnCooldown(player) then
-				playSoundForPlayer("select-target", player)
-				global.SelectTarget[player.index] = true
-			end
-			if global.SelectTarget[player.index] and not isHolding({name="ion-cannon-targeter", count=1}, player) then
-				global.SelectTarget[player.index] = false
-			end
 		end
 	end
 end

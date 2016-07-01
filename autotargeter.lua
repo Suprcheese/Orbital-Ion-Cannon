@@ -2,14 +2,14 @@ require "stdlib/area/position"
 
 function findNestNear(entity)
 	local search = Position.expand_to_area(entity.position, autoTargetRange)
-	local spawners = entity.surface.find_entities_filtered{area = search, type = "unit-spawner"}
+	local spawners = entity.surface.find_entities_filtered{area = search, type = "unit-spawner", limit = 1}
 	if #spawners > 0 then
-		return spawners[math.random(#spawners)]
+		return spawners[1]
 	end
 	if targetWorms then
-		local worms = entity.surface.find_entities_filtered{area = search, type = "turret"}
+		local worms = entity.surface.find_entities_filtered{area = search, type = "turret", limit = 1}
 		if #worms > 0 then
-			return worms[math.random(#worms)]
+			return worms[1]
 		end
 	end
 	return false
