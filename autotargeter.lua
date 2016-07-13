@@ -6,7 +6,7 @@ function findNestNear(entity)
 	if #spawners > 0 then
 		return spawners[1]
 	end
-	if targetWorms then
+	if autoTargetWorms then
 		local worms = entity.surface.find_entities_filtered{area = search, type = "turret", limit = 1}
 		if #worms > 0 then
 			return worms[1]
