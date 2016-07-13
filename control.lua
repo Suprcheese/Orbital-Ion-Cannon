@@ -90,7 +90,7 @@ function init_GUI(player)
 		end
 		return
 	end
-	if (not player.gui.top["ion-cannon-button"]) then
+	if not player.gui.top["ion-cannon-button"] then
 		player.gui.top.add{type="button", name="ion-cannon-button", caption={"ion-cannons"}}
 	end
 end
@@ -187,7 +187,7 @@ end
 script.on_event(defines.events.on_gui_click, function(event)
 	local player = game.players[event.element.player_index]
 	local name = event.element.name
-	if (name == "ion-cannon-button") then
+	if name == "ion-cannon-button" then
 		open_GUI(player)
 		return
 	end

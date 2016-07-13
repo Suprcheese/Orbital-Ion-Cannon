@@ -112,3 +112,8 @@ The Auto-Targeting Station no longer prints messages when all ion cannons are on
 Added an option in config.lua to toggle targeting of both worms & spawners or just spawners only (courtesy of madmaxoft).
 Performance optimizations.
 Increased default Auto-Targeting range to 400.
+
+
+Version 1.3.1 - July 13, 2016
+-----------------------------
+Fixed worm auto-targeting config option.
