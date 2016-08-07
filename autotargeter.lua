@@ -1,7 +1,7 @@
-require "stdlib/area/position"
+require "stdlib/area/chunk"
 
-function findNestNear(entity)
-	local search = Position.expand_to_area(entity.position, autoTargetRange)
+function findNestNear(entity, chunk_position)
+	local search = Chunk.to_area(chunk_position)
 	local spawners = entity.surface.find_entities_filtered{area = search, type = "unit-spawner", limit = 1}
 	if #spawners > 0 then
 		return spawners[1]
@@ -18,7 +18,7 @@ end
 script.on_event(defines.events.on_sector_scanned, function(event)
 	local radar = event.radar
 	if radar.name == "auto-targeter" then
-		local target = findNestNear(radar)
+		local target = findNestNear(radar, event.chunk_position)
 		if target then
 			local fired = targetIonCannon(radar.force, target.position, radar.surface)
 			if fired and printMessages then
