@@ -2,14 +2,14 @@ require "stdlib/area/chunk"
 
 function findNestNear(entity, chunk_position)
 	local search = Chunk.to_area(chunk_position)
-	local spawners = entity.surface.find_entities_filtered{area = search, type = "unit-spawner", limit = 1}
+	local spawners = entity.surface.find_entities_filtered{area = search, type = "unit-spawner"}
 	if #spawners > 0 then
-		return spawners[1]
+		return spawners[math.random(#spawners)]
 	end
 	if autoTargetWorms then
-		local worms = entity.surface.find_entities_filtered{area = search, type = "turret", limit = 1}
+		local worms = entity.surface.find_entities_filtered{area = search, type = "turret"}
 		if #worms > 0 then
-			return worms[1]
+			return worms[math.random(#worms)]
 		end
 	end
 	return false
