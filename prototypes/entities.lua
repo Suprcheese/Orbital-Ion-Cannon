@@ -35,6 +35,81 @@ data:extend({
 		action =
 		{
 			{
+				type = "direct",
+				action_delivery =
+				{
+					type = "instant",
+					target_effects =
+					{
+						{
+							type = "create-entity",
+							entity_name = "dead-tree",
+							check_buildability = true
+						},
+						{
+							type = "create-entity",
+							entity_name = "dry-tree",
+							check_buildability = true
+						},
+						{
+							type = "create-entity",
+							entity_name = "huge-explosion"
+						},
+						{
+							type = "create-entity",
+							entity_name = "ion-cannon-beam"
+						},
+						{
+							type = "create-entity",
+							entity_name = "enormous-scorchmark",
+							check_buildability = true
+						},
+						{
+							type = "create-entity",
+							entity_name = "ion-cannon-explosion"
+						}
+					}
+				}
+			},
+			{
+				type = "area",
+				perimeter = ionCannonRadius * 0.8,
+				action_delivery =
+				{
+					type = "instant",
+					target_effects =
+					{
+						{
+							type = "create-fire",
+							entity_name = "fire-flame"
+						},
+						{
+							type = "create-fire",
+							entity_name = "fire-flame-on-tree"
+						}
+					}
+				}
+			},
+			{
+				type = "area",
+				perimeter = ionCannonRadius * 0.8,
+				action_delivery =
+				{
+					type = "instant",
+					target_effects =
+					{
+						{
+							type = "damage",
+							damage = {amount = ionCannonLaserDamage, type = "laser"}
+						},
+						{
+							type = "damage",
+							damage = {amount = ionCannonExplosionDamage, type = "explosion"}
+						}
+					}
+				}
+			},
+			{
 				type = "area",
 				perimeter = ionCannonRadius,
 				action_delivery =
@@ -43,39 +118,16 @@ data:extend({
 					target_effects =
 					{
 						{
-						type = "damage",
-						damage = {amount = ionCannonLaserDamage, type = "laser"}
+							type = "create-sticker",
+							sticker = "fire-sticker"
 						},
 						{
-						type = "damage",
-						damage = {amount = ionCannonExplosionDamage, type = "explosion"}
-						}
-					}
-				}
-			},
-			{
-				type = "direct",
-				action_delivery =
-				{
-					type = "instant",
-					target_effects =
-					{
-						{
-						type = "create-entity",
-						entity_name = "huge-explosion"
+							type = "create-fire",
+							entity_name = "fire-flame"
 						},
 						{
-						type = "create-entity",
-						entity_name = "ion-cannon-beam"
-						},
-						{
-						type = "create-entity",
-						entity_name = "enormous-scorchmark",
-						check_buildability = true
-						},
-						{
-						type = "create-entity",
-						entity_name = "ion-cannon-explosion",
+							type = "create-fire",
+							entity_name = "fire-flame-on-tree"
 						}
 					}
 				}
@@ -244,23 +296,23 @@ data:extend({
 		{
 			type = "direct",
 			action_delivery =
-		{
-			type = "instant",
-			target_effects =
 			{
-			{
-				type = "create-particle",
-				repeat_count = 60,
-				entity_name = "explosion-remnants-particle",
-				initial_height = 0.5,
-				speed_from_center = 0.15,
-				speed_from_center_deviation = 0.15,
-				initial_vertical_speed = 0.1,
-				initial_vertical_speed_deviation = 0.15,
-				offset_deviation = {{-0.2, -0.2}, {0.2, 0.2}}
+				type = "instant",
+				target_effects =
+				{
+					{
+						type = "create-particle",
+						repeat_count = 60,
+						entity_name = "explosion-remnants-particle",
+						initial_height = 0.5,
+						speed_from_center = 0.15,
+						speed_from_center_deviation = 0.15,
+						initial_vertical_speed = 0.1,
+						initial_vertical_speed_deviation = 0.15,
+						offset_deviation = {{-0.2, -0.2}, {0.2, 0.2}}
+					}
+				}
 			}
-			}
-		}
 		}
 	},
 	{
@@ -326,17 +378,18 @@ auto_targeter.name = "auto-targeter"
 auto_targeter.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
 auto_targeter.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter"}
 auto_targeter.pictures =
-    {
-      filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
-      priority = "low",
-      width = 153,
-      height = 131,
-      apply_projection = false,
-      direction_count = 64,
-      line_length = 8,
-      shift = {0.875, -0.34375}
-    }
-auto_targeter.energy_per_sector = "5MJ"
+		{
+			filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
+			priority = "low",
+			width = 153,
+			height = 131,
+			apply_projection = false,
+			direction_count = 64,
+			line_length = 8,
+			shift = {0.875, -0.34375}
+		}
+auto_targeter.energy_per_sector = "2MJ"
+auto_targeter.max_distance_of_sector_revealed = autoTargetRange
 auto_targeter.max_distance_of_nearby_sector_revealed = 1
 auto_targeter.energy_usage = "500kW"
 
