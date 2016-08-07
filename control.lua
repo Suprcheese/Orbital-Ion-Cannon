@@ -36,6 +36,9 @@ function On_Init()
 		if global.goToFull[player.index] == nil then
 			global.goToFull[player.index] = true
 		end
+		if player.gui.top["ion-cannon-button"] then
+			player.gui.top["ion-cannon-button"].destroy()
+		end
 	end
 	for i, force in pairs(game.forces) do
 		force.reset_recipes()
@@ -91,7 +94,7 @@ function init_GUI(player)
 		return
 	end
 	if not player.gui.top["ion-cannon-button"] then
-		player.gui.top.add{type="button", name="ion-cannon-button", caption={"ion-cannons"}}
+		player.gui.top.add{type="button", name="ion-cannon-button", style="ion-cannon-button-style"}
 	end
 end
 
@@ -191,6 +194,11 @@ script.on_event(defines.events.on_gui_click, function(event)
 		open_GUI(player)
 		return
 	end
+end)
+
+script.on_event("ion-cannon-hotkey", function(event)
+	local player = game.players[event.player_index]
+	open_GUI(player)
 end)
 
 script.on_event(defines.events.on_player_created, function(event)
