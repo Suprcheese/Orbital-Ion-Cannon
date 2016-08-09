@@ -134,3 +134,10 @@ Auto-targeting stations now scan for targets on a chunk-by-chunk basis, which sh
 This also makes the auto-targeting stations behave more like vanilla radars; now you can monitor their scanning progress on the map as each chunk is revealed.
 The range of the auto-targeting station is now represented in chunks (chunks are 32x32 tiles). The new default range is 10 chunks (for a 20x20 chunk scan region).
 Each station now scans a new chunk every 4 seconds.
+
+
+Version 1.4.1 - August 9, 2016
+------------------------------
+Auto-designated targets within a chunk are now randomized, rather than being biased towards the northwest corner of the chunk.
+Added radius visualization to the Ion Cannon Targeting Device. Now you can see just how far away from the blast zone you need to be!
+Along with the radius visualization, the Targeting Device acquired new tooltip data; feel free to ignore the "Shooting speed" bit, but the rest should reflect the values from config.lua.
