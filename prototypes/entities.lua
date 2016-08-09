@@ -8,24 +8,101 @@ crosshairsPicture =	{
 		frame_count = 1
  }
 
-data:extend({
+ local ion_cannon_targeter = util.table.deepcopy(data.raw["ammo-turret"]["gun-turret"])
+
+ion_cannon_targeter.name = "ion-cannon-targeter"
+ion_cannon_targeter.icon = "__Orbital Ion Cannon__/graphics/crosshairs.png"
+ion_cannon_targeter.flags = {"placeable-neutral", "player-creation","placeable-off-grid"}
+ion_cannon_targeter.collision_mask = {}
+ion_cannon_targeter.max_health = 0
+ion_cannon_targeter.inventory_size = 0
+ion_cannon_targeter.collision_box = {{ 0, 0}, {0, 0}}
+ion_cannon_targeter.selection_box = {{ 0, 0}, {0, 0}}
+ion_cannon_targeter.folded_animation =
+{
+	layers =
 	{
-		type = "container",
-		name = "ion-cannon-targeter",
-		icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
-		flags = {"placeable-neutral", "player-creation","placeable-off-grid"},
-		collision_mask = {},
-		max_health = 0,
-		corpse = "small-remnants",
-		inventory_size = 1,
-		picture =
 		{
-			filename = "__Orbital Ion Cannon__/graphics/crosshairs64.png",
-			width = 64,
-			height = 64,
+			filename = "__Orbital Ion Cannon__/graphics/null.png",
+			priority = "medium",
+			width = 32,
+			height = 32,
+			frame_count = 1,
+			line_length = 1,
+			run_mode = "forward",
+			axially_symmetrical = false,
+			direction_count = 1,
 			shift = {0, 0}
 		}
-	},
+	}
+}
+ion_cannon_targeter.base_picture =
+{
+	layers =
+	{
+		{
+			filename = "__Orbital Ion Cannon__/graphics/crosshairs64.png",
+			line_length = 1,
+			width = 64,
+			height = 64,
+			frame_count = 1,
+			axially_symmetrical = false,
+			direction_count = 1,
+			shift = {0, 0}
+		}
+	}
+}
+ion_cannon_targeter.attack_parameters =
+{
+	type = "projectile",
+	ammo_category = "melee",
+	cooldown = 1,
+	projectile_center = {0, 0},
+	projectile_creation_distance = 1.4,
+	range = ionCannonRadius,
+	damage_modifier = 1,
+	ammo_type =
+	{
+		type = "projectile",
+		category = "melee",
+		energy_consumption = "0J",
+		action =
+		{
+			{
+				type = "direct",
+				action_delivery =
+				{
+					{
+						type = "projectile",
+						projectile = "dummy-crosshairs",
+						starting_speed = 0.28
+					}
+				}
+			}
+		}
+	}
+}
+
+data:extend({ion_cannon_targeter})
+
+data:extend({
+	-- {
+		-- type = "container",
+		-- name = "ion-cannon-targeter",
+		-- icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
+		-- flags = {"placeable-neutral", "player-creation","placeable-off-grid"},
+		-- collision_mask = {},
+		-- max_health = 0,
+		-- corpse = "small-remnants",
+		-- inventory_size = 1,
+		-- picture =
+		-- {
+			-- filename = "__Orbital Ion Cannon__/graphics/crosshairs64.png",
+			-- width = 64,
+			-- height = 64,
+			-- shift = {0, 0}
+		-- }
+	-- },
 
 	{
 		type = "projectile",
@@ -128,6 +205,67 @@ data:extend({
 						{
 							type = "create-fire",
 							entity_name = "fire-flame-on-tree"
+						}
+					}
+				}
+			}
+		},
+		light = {intensity = 0, size = 0},
+		animation =
+		 {
+			filename = "__Orbital Ion Cannon__/graphics/null.png",
+			priority = "low",
+			width = 32,
+			height = 32,
+			frame_count = 1
+		 },
+		shadow =
+		{
+			filename = "__Orbital Ion Cannon__/graphics/null.png",
+			priority = "low",
+			width = 32,
+			height = 32,
+			frame_count = 1
+		}
+	},
+
+	{
+		type = "projectile",
+		name = "dummy-crosshairs",
+		flags = {"not-on-map"},
+		acceleration = .0009 / (HeatupTimeMultiplier * HeatupTimeMultiplier),
+		action =
+		{
+			{
+				type = "area",
+				perimeter = ionCannonRadius * 0.8,
+				action_delivery =
+				{
+					type = "instant",
+					target_effects =
+					{
+						{
+							type = "damage",
+							damage = {amount = ionCannonLaserDamage, type = "laser"}
+						},
+						{
+							type = "damage",
+							damage = {amount = ionCannonExplosionDamage, type = "explosion"}
+						}
+					}
+				}
+			},
+			{
+				type = "area",
+				perimeter = ionCannonRadius,
+				action_delivery =
+				{
+					type = "instant",
+					target_effects =
+					{
+						{
+							type = "create-fire",
+							entity_name = "fire-flame"
 						}
 					}
 				}
