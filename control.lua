@@ -380,6 +380,11 @@ script.on_event(defines.events.on_built_entity, function(event)
 		player.insert({name="ion-cannon-targeter", count=1})
 		return event.created_entity.destroy()
 	end
+	if event.created_entity.name == "entity-ghost" then
+		if event.created_entity.ghost_name == "ion-cannon-targeter" then
+			return event.created_entity.destroy()
+		end
+	end
 end)
 
 script.on_event(defines.events.on_put_item, function(event)
