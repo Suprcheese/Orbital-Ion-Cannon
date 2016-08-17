@@ -50,3 +50,6 @@ autoTargetWorms = true
 
 -- Print messages to the console whenever an ion cannon fires or an auto-targeting station acquires a target
 printMessages = false
+
+-- Choose whether ion cannon blasts ignite everything within the blast radius, resulting in patches of flame that may spread wildfires.
+ionCannonFlames = true

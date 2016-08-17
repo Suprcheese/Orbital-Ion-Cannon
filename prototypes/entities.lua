@@ -532,3 +532,88 @@ auto_targeter.max_distance_of_nearby_sector_revealed = 1
 auto_targeter.energy_usage = "500kW"
 
 data:extend({auto_targeter})
+
+if not ionCannonFlames then
+	data.raw["projectile"]["crosshairs"].action =
+	{
+		{
+			type = "area",
+			perimeter = ionCannonRadius,
+			action_delivery =
+			{
+				type = "instant",
+				target_effects =
+				{
+					{
+						type = "damage",
+						damage = {amount = ionCannonLaserDamage / 2, type = "laser"}
+					},
+					{
+						type = "damage",
+						damage = {amount = ionCannonExplosionDamage / 2, type = "explosion"}
+					}
+				}
+			}
+		},
+		{
+			type = "direct",
+			action_delivery =
+			{
+				type = "instant",
+				target_effects =
+				{
+					{
+						type = "create-entity",
+						entity_name = "dead-tree",
+						check_buildability = true
+					},
+					{
+						type = "create-entity",
+						entity_name = "dry-tree",
+						check_buildability = true
+					},
+					{
+						type = "create-entity",
+						entity_name = "huge-explosion"
+					},
+					{
+						type = "create-entity",
+						entity_name = "ion-cannon-beam"
+					},
+					{
+						type = "create-entity",
+						entity_name = "enormous-scorchmark",
+						check_buildability = true
+					},
+					{
+						type = "create-entity",
+						entity_name = "ion-cannon-explosion",
+					}
+				}
+			}
+		},
+		{
+			type = "area",
+			perimeter = ionCannonRadius,
+			action_delivery =
+			{
+				type = "instant",
+				target_effects =
+				{
+					{
+						type = "create-fire",
+						entity_name = "fire-flame-on-tree"
+					},
+					{
+						type = "damage",
+						damage = {amount = ionCannonLaserDamage / 2, type = "laser"}
+					},
+					{
+						type = "damage",
+						damage = {amount = ionCannonExplosionDamage / 2, type = "explosion"}
+					}
+				}
+			}
+		}
+	}
+end
