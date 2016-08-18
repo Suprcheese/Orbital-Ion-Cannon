@@ -43,7 +43,7 @@ data.raw["gui-style"].default["ion-cannon-button-style"] =
 			filename = "__Orbital Ion Cannon__/graphics/Button.png",
 			width = 64,
 			height = 64,
-			x = 64,
+			x = 0,
 			y = 0,
 		}
 	},
