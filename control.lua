@@ -84,7 +84,7 @@ function init_GUI(player)
 		return
 	end
 	if #global.forces_ion_cannon_table[player.force.name] == 0 then
-		local frame = player.gui.top["ion-cannon-stats"]
+		local frame = player.gui.left["ion-cannon-stats"]
 		if (frame) then
 			frame.destroy()
 		end
@@ -99,7 +99,7 @@ function init_GUI(player)
 end
 
 function open_GUI(player)
-	local frame = player.gui.top["ion-cannon-stats"]
+	local frame = player.gui.left["ion-cannon-stats"]
 	if (frame) and global.goToFull[player.index] then
 		frame.destroy()
 	else
@@ -108,7 +108,7 @@ function open_GUI(player)
 			if (frame) then
 				frame.destroy()
 			end
-			frame = player.gui.top.add{type="frame", name="ion-cannon-stats", direction="vertical"}
+			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
 			frame.add{type="label", caption={"ion-cannon-details-full"}}
 			frame.add{type="table", colspan=2, name="ion-cannon-table"}
 			for i = 1, #global.forces_ion_cannon_table[player.force.name] do
@@ -124,7 +124,7 @@ function open_GUI(player)
 			if (frame) then
 				frame.destroy()
 			end
-			frame = player.gui.top.add{type="frame", name="ion-cannon-stats", direction="vertical"}
+			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
 			frame.add{type="label", caption={"ion-cannon-details-compact"}}
 			frame.add{type="table", colspan=1, name="ion-cannon-table"}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[player.force.name]}}
@@ -141,7 +141,7 @@ function update_GUI(player)
 		return
 	end
 	init_GUI(player)
-	local frame = player.gui.top["ion-cannon-stats"]
+	local frame = player.gui.left["ion-cannon-stats"]
 	if (frame) then
 		if frame["ion-cannon-table"] and not global.goToFull[player.index] then
 			frame["ion-cannon-table"].destroy()
