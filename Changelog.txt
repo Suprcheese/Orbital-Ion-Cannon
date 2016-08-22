@@ -141,3 +141,10 @@ Version 1.4.1 - August 9, 2016
 Auto-designated targets within a chunk are now randomized, rather than being biased towards the northwest corner of the chunk.
 Added radius visualization to the Ion Cannon Targeting Device. Now you can see just how far away from the blast zone you need to be!
 Along with the radius visualization, the Targeting Device acquired new tooltip data; feel free to ignore the "Shooting speed" bit, but the rest should reflect the values from config.lua.
+
+
+Version 1.4.2 - August 29, 2016
+-------------------------------
+It is no longer possible to shift+click with the Targeting Device and place useless ghost entities.
+Moved the ion cannon status GUI from gui.top to gui.left.
+Added an option in the config file to disable the ion cannon blast flames, should you wish to eliminate the chance to cause wildfires with your orbital bombardment.
