@@ -39,6 +39,9 @@ function On_Init()
 		if player.gui.top["ion-cannon-button"] then
 			player.gui.top["ion-cannon-button"].destroy()
 		end
+		if player.gui.top["ion-cannon-stats"] then
+			player.gui.top["ion-cannon-stats"].destroy()
+		end
 	end
 	for i, force in pairs(game.forces) do
 		force.reset_recipes()
