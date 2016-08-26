@@ -148,3 +148,8 @@ Version 1.4.2 - August 22, 2016
 It is no longer possible to shift+click with the Targeting Device and place useless ghost entities.
 Moved the ion cannon status GUI from gui.top to gui.left.
 Added an option in the config file to disable the ion cannon blast flames, should you wish to eliminate the chance to cause wildfires with your orbital bombardment.
+
+
+Version 1.4.3 - August 26, 2016
+-------------------------------
+Close any instance of the old stats window still open.
