@@ -1,6 +1,5 @@
 require "util"
 require "stdlib/game"
-require "stdlib/event/event"
 require "config"
 require "autotargeter"
 
@@ -71,7 +70,6 @@ script.on_event(defines.events.on_force_created, function(event)
 	if not global.forces_ion_cannon_table then
 		On_Init()
 	end
-	table.insert(global.forces_ion_cannon_table, event.force.name)
 	global.forces_ion_cannon_table[event.force.name] = {}
 end)
 

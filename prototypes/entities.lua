@@ -86,24 +86,6 @@ ion_cannon_targeter.attack_parameters =
 data:extend({ion_cannon_targeter})
 
 data:extend({
-	-- {
-		-- type = "container",
-		-- name = "ion-cannon-targeter",
-		-- icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
-		-- flags = {"placeable-neutral", "player-creation","placeable-off-grid"},
-		-- collision_mask = {},
-		-- max_health = 0,
-		-- corpse = "small-remnants",
-		-- inventory_size = 1,
-		-- picture =
-		-- {
-			-- filename = "__Orbital Ion Cannon__/graphics/crosshairs64.png",
-			-- width = 64,
-			-- height = 64,
-			-- shift = {0, 0}
-		-- }
-	-- },
-
 	{
 		type = "projectile",
 		name = "crosshairs",
@@ -327,7 +309,6 @@ data:extend({
 		max_health = 0,
 		render_layer = "air-object",
 		final_render_layer = "air-object",
-		-- corpse = "small-remnants",
 		collision_box = {{0,0}, {0,0}},
 		selection_box = {{0,0}, {0,0}},
 		drawing_box = {{0,0}, {0,0}},

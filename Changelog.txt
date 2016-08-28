@@ -153,3 +153,8 @@ Added an option in the config file to disable the ion cannon blast flames, shoul
 Version 1.4.3 - August 26, 2016
 -------------------------------
 Close any instance of the old stats window still open.
+
+
+Version 1.4.4 - August 28, 2016
+-------------------------------
+Updated for Factorio 0.14.
