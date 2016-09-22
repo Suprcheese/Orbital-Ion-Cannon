@@ -1,5 +1,4 @@
 require "util"
-require "stdlib/game"
 require "config"
 require "autotargeter"
 
@@ -328,7 +327,7 @@ function targetIonCannon(force, position, surface, player)
 			CrosshairsPosition.y = CrosshairsPosition.y - 20
 			surface.create_entity({name = "crosshairs", target = IonTarget, force = force, position = CrosshairsPosition, speed = 0})
 			if printMessages then
-				Game.print_force(force, {"target-acquired"})
+				force.print({"target-acquired"})
 			end
 			if playKlaxon and global.klaxonTick < current_tick then
 				global.klaxonTick = current_tick + 60
@@ -337,7 +336,7 @@ function targetIonCannon(force, position, surface, player)
 			global.forces_ion_cannon_table[force.name][cannonNum][1] = ionCannonCooldownSeconds
 			global.forces_ion_cannon_table[force.name][cannonNum][2] = 0
 			if printMessages then
-				Game.print_force(force, {"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds})
+				force.print({"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds})
 			end
 			return true
 		end
@@ -355,19 +354,19 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 			for i, player in pairs(force.players) do
 				init_GUI(player)
 			end
-			Game.print_force(force, {"congratulations-first"})
-			Game.print_force(force, {"first-help"})
-			Game.print_force(force, {"second-help"})
-			Game.print_force(force, {"third-help"})
+			force.print({"congratulations-first"})
+			force.print({"first-help"})
+			force.print({"second-help"})
+			force.print({"third-help"})
 			if playVoices then
 				playSoundForForce("ion-cannon-charging", force)
 			end
 		else
 			if #global.forces_ion_cannon_table[force.name] > 1 then
-				Game.print_force(force, {"congratulations-additional"})
+				force.print{"congratulations-additional"})
 			end
-			Game.print_force(force, {"ion-cannons-in-orbit" , #global.forces_ion_cannon_table[force.name]})
-			Game.print_force(force, {"time-to-ready" , #global.forces_ion_cannon_table[force.name] , ionCannonCooldownSeconds})
+			force.print({"ion-cannons-in-orbit" , #global.forces_ion_cannon_table[force.name]})
+			force.print({"time-to-ready" , #global.forces_ion_cannon_table[force.name] , ionCannonCooldownSeconds})
 			if playVoices then
 				playSoundForForce("ion-cannon-charging", force)
 			end
