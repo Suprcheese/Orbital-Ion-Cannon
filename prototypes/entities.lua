@@ -12,12 +12,12 @@ local ion_cannon_targeter = util.table.deepcopy(data.raw["ammo-turret"]["gun-tur
 
 ion_cannon_targeter.name = "ion-cannon-targeter"
 ion_cannon_targeter.icon = "__Orbital Ion Cannon__/graphics/crosshairs.png"
-ion_cannon_targeter.flags = {"placeable-neutral", "player-creation","placeable-off-grid"}
+ion_cannon_targeter.flags = {"placeable-neutral", "player-creation", "placeable-off-grid"}
 ion_cannon_targeter.collision_mask = {}
 ion_cannon_targeter.max_health = 0
 ion_cannon_targeter.inventory_size = 0
-ion_cannon_targeter.collision_box = {{ 0, 0}, {0, 0}}
-ion_cannon_targeter.selection_box = {{ 0, 0}, {0, 0}}
+ion_cannon_targeter.collision_box = {{0, 0}, {0, 0}}
+ion_cannon_targeter.selection_box = {{0, 0}, {0, 0}}
 ion_cannon_targeter.folded_animation =
 {
 	layers =
