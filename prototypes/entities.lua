@@ -6,9 +6,9 @@ crosshairsPicture =	{
 		scale = 1,
 		shift = {0, -1},
 		frame_count = 1
- }
+}
 
- local ion_cannon_targeter = util.table.deepcopy(data.raw["ammo-turret"]["gun-turret"])
+local ion_cannon_targeter = util.table.deepcopy(data.raw["ammo-turret"]["gun-turret"])
 
 ion_cannon_targeter.name = "ion-cannon-targeter"
 ion_cannon_targeter.icon = "__Orbital Ion Cannon__/graphics/crosshairs.png"
