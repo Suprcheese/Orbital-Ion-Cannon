@@ -26,6 +26,7 @@ function On_Init()
 		global.forces_ion_cannon_table["player"] = global.ion_cannon_table 	-- Migrate ion cannon tables from version 1.0.5 and lower
 		global.ion_cannon_table = nil 										-- Remove old ion cannon table
 	end
+	-- remote.call("freeplay", set_show_launched_without_satellite, false)
 	for i, player in pairs(game.players) do
 		if not global.forces_ion_cannon_table[player.force.name] then
 			table.insert(global.forces_ion_cannon_table, player.force.name)
@@ -248,13 +249,14 @@ function isAllIonCannonOnCooldown(player)
 end
 
 function isIonCannonReady(force)
+	local found = false
 	for i, cooldown in pairs(global.forces_ion_cannon_table[force.name]) do
 		if cooldown[1] == 0 and cooldown[2] == 0 then
 			cooldown[2] = 1
-			return true
+			found = true
 		end
 	end
-	return false
+	return found
 end
 
 function anyFriendlyCanReach(entity, force)
@@ -363,7 +365,7 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 			end
 		else
 			if #global.forces_ion_cannon_table[force.name] > 1 then
-				force.print{"congratulations-additional"})
+				force.print({"congratulations-additional"})
 			end
 			force.print({"ion-cannons-in-orbit" , #global.forces_ion_cannon_table[force.name]})
 			force.print({"time-to-ready" , #global.forces_ion_cannon_table[force.name] , ionCannonCooldownSeconds})
