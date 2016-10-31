@@ -199,7 +199,9 @@ end)
 
 script.on_event("ion-cannon-hotkey", function(event)
 	local player = game.players[event.player_index]
-	open_GUI(player)
+	if global.IonCannonLaunched then
+		open_GUI(player)
+	end
 end)
 
 script.on_event(defines.events.on_player_created, function(event)
