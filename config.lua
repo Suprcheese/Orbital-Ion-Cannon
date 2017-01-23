@@ -40,10 +40,14 @@ proximityCheck = false
 -- For example, setting this value to 120 would mean that there is always a minimum of two seconds between ion cannon blasts; any attempt to target the ion cannon in the two seconds following a prior targeting would fail.
 lockoutTicks = 10
 
--- The range, in chunks, of the Auto-Targeting Station.
+-- The range, in chunks, of the Auto-Targeting Station scanning.
 -- Each chunk is 32x32 tiles, so the default radius of 10 would gradually scan a 640x640 region (20-chunk diameter).
 -- Higher values should have no appreciable effect on performance, but each station will take longer to go back and re-scan old regions when the range is higher.
 autoTargetRange = 10
+
+-- The range, in chunks, of permanently revealed area by Auto-Targeting Stations.
+-- A radius of 3 is equal to base radar.
+autoTargetRevealed = 3
 
 -- Whether the Auto-Targeting Station should target worms as well as nests
 autoTargetWorms = true
