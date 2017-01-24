@@ -509,7 +509,7 @@ auto_targeter.pictures =
 		}
 auto_targeter.energy_per_sector = "2MJ"
 auto_targeter.max_distance_of_sector_revealed = autoTargetRange
-auto_targeter.max_distance_of_nearby_sector_revealed = 1
+auto_targeter.max_distance_of_nearby_sector_revealed = autoTargetRevealed
 auto_targeter.energy_usage = "500kW"
 
 data:extend({auto_targeter})
