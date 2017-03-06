@@ -165,3 +165,11 @@ Version 1.4.5 - October 21, 2016
 Reduced "Ion Cannon Ready" spam by allowing multiple cannons to become ready in the same second.
 Simplify code now that the StdLib print-force function is available in the base game.
 
+
+Version 1.4.6 - March 6, 2017
+-----------------------------
+The ion cannon GUI hotkey now only works when there is at least one cannon in orbit.
+Added config option for adjusting how much area Auto-Targeting Stations permanently reveal around themselves.
+Reduced "Ion Cannon Ready" spam when firing several ion cannons -- the minimum duration between announces can be found in config.lua.
+Renamed custom "on_ion_cannon_fired" event to "on_ion_cannon_targeted", to better reflect that it fires on target designation rather than actual blast impact.
+The "on_ion_cannon_targeted" event position is no longer slightly off-center, and now also passes an event.radius variable.
