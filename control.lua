@@ -8,7 +8,7 @@ script.on_load(function() On_Load() end)
 
 remote.add_interface("orbital_ion_cannon",
 	{
-		on_ion_cannon_fired = function() return getIonCannonFiredEventID() end,
+		on_ion_cannon_targeted = function() return getIonCannonFiredEventID() end,
 
 		fire_ion_cannon = function(force, position, surface, player) return targetIonCannon(force, position, surface, player) end -- Player is optional
 	}
@@ -22,6 +22,7 @@ function On_Init()
 	end
 	global.goToFull = global.goToFull or {}
 	global.klaxonTick = global.klaxonTick or 0
+	global.readyTick = global.readyTick or 0
 	if global.ion_cannon_table then
 		global.forces_ion_cannon_table["player"] = global.ion_cannon_table 	-- Migrate ion cannon tables from version 1.0.5 and lower
 		global.ion_cannon_table = nil 										-- Remove old ion cannon table
@@ -60,10 +61,10 @@ function On_Load()
 end
 
 function getIonCannonFiredEventID()
-	if not when_ion_cannon_fired then
-		when_ion_cannon_fired = script.generate_event_name()
+	if not when_ion_cannon_targeted then
+		when_ion_cannon_targeted = script.generate_event_name()
 	end
-	return when_ion_cannon_fired
+	return when_ion_cannon_targeted
 end
 
 script.on_event(defines.events.on_force_created, function(event)
@@ -216,11 +217,15 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 end)
 
 function process_tick()
-	if game.tick % 60 == 47 then
+	local current_tick = game.tick
+	if current_tick % 60 == 47 then
 		ReduceIonCannonCooldowns()
 		for i, force in pairs(game.forces) do
-			if global.forces_ion_cannon_table[force.name] and isIonCannonReady(force) and playVoices then
-				playSoundForForce("ion-cannon-ready", force)
+			if global.forces_ion_cannon_table[force.name] and isIonCannonReady(force) then
+				if playVoices and global.readyTick < current_tick then
+					global.readyTick = current_tick + readyTicks
+					playSoundForForce("ion-cannon-ready", force)
+				end
 			end
 		end
 		for i, player in pairs(game.players) do
@@ -401,7 +406,9 @@ script.on_event(defines.events.on_put_item, function(event)
 	if isHolding({name="ion-cannon-targeter", count=1}, player) then
 		local fired = targetIonCannon(player.force, event.position, player.surface, player)
 		if fired then
-			game.raise_event(when_ion_cannon_fired, {force = player.force, player_index = event.player_index, position = event.position})		-- Passes event.force, event.player_index, and event.position
+			local TargetPosition = event.position
+			TargetPosition.y = TargetPosition.y + 1
+			game.raise_event(when_ion_cannon_targeted, {force = player.force, player_index = event.player_index, position = TargetPosition, radius = ionCannonRadius})		-- Passes event.force, event.player_index, event.position, and event.radius
 		end
 	end
 end)
