@@ -125,7 +125,8 @@ data:extend({
 						},
 						{
 							type = "create-entity",
-							entity_name = "ion-cannon-explosion"
+							entity_name = "ion-cannon-explosion",
+							trigger_created_entity = "true"
 						}
 					}
 				}
@@ -569,6 +570,7 @@ if not ionCannonFlames then
 					{
 						type = "create-entity",
 						entity_name = "ion-cannon-explosion",
+						trigger_created_entity = "true"
 					}
 				}
 			}
