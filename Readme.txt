@@ -30,26 +30,33 @@ This mod also has configuration options available in config.lua. Here you may ad
 
 Modding Details:
 ----------------
-This mod implements a custom event, on_ion_cannon_targeted, which can function just like other lua events (https://wiki.factorio.com/index.php?title=Lua/Events).
-In order to use this event in another mod, you should use the following code:
+This mod implements two custom events: on_ion_cannon_targeted & on_ion_cannon_fired, which can function just like other lua events (https://wiki.factorio.com/index.php?title=Lua/Events)
+In order to use them in another mod, you should use the following code:
 
 	script.on_event(remote.call("orbital_ion_cannon", "on_ion_cannon_targeted"), function(event)
 		...
 	end)
+	
+or
 
-Where the ... can be any code of your choosing. The following variables are available when using this custom event:
+	script.on_event(remote.call("orbital_ion_cannon", "on_ion_cannon_fired"), function(event)
+		...
+	end)
 
-	event.force				The force whose ion cannon is firing
+Where the "..." can be any code of your choosing. The following variables are available when using this custom event:
+
+	event.force			The force whose ion cannon is firing
+	event.surface                   The surface on which the ion cannon is firing	
 	event.player_index		The player index of who fired the ion cannon
-	event.position			The position the ion cannon is firing at
+	event.position			The position at which the ion cannon is firing
 	event.radius			The radius of the ion cannon blast
 
 
-There is also a remote call that fires the ion cannon:
+There is also a remote call that targets the ion cannon:
 
-	remote.call("orbital_ion_cannon", "fire_ion_cannon", force, position, surface, player)
+	remote.call("orbital_ion_cannon", "target_ion_cannon", force, position, surface, player)
 
-You must supply a force, position, and surface, but the final argument -- player -- is optional; if you include it, some extra information can be messaged to the player.
+You must supply a force, position, and surface, but the final argument -- player -- is optional; if you include it, some extra information can be messaged to the player. Calling this function will return true if the ion cannon is successfully targeted or false if targeting was unsuccessful.
 
 
 Credits:
