@@ -8,14 +8,35 @@ script.on_load(function() On_Load() end)
 
 remote.add_interface("orbital_ion_cannon",
 	{
-		on_ion_cannon_targeted = function() return getIonCannonFiredEventID() end,
+		on_ion_cannon_targeted = function() return getIonCannonTargetedEventID() end,
+
+		on_ion_cannon_fired = function() return getIonCannonFiredEventID() end,
 
 		fire_ion_cannon = function(force, position, surface, player) return targetIonCannon(force, position, surface, player) end -- Player is optional
 	}
 )
 
-function On_Init()
+function generateEvents()
+	getIonCannonTargetedEventID()
 	getIonCannonFiredEventID()
+end
+
+function getIonCannonTargetedEventID()
+	if not when_ion_cannon_targeted then
+		when_ion_cannon_targeted = script.generate_event_name()
+	end
+	return when_ion_cannon_targeted
+end
+
+function getIonCannonFiredEventID()
+	if not when_ion_cannon_fired then
+		when_ion_cannon_fired = script.generate_event_name()
+	end
+	return when_ion_cannon_fired
+end
+
+function On_Init()
+	generateEvents()
 	if not global.forces_ion_cannon_table then
 		global.forces_ion_cannon_table = {}
 		global.forces_ion_cannon_table["player"] = {}
@@ -54,17 +75,10 @@ function On_Init()
 end
 
 function On_Load()
-	getIonCannonFiredEventID()
+	generateEvents()
 	if global.IonCannonLaunched then
 		script.on_event(defines.events.on_tick, process_tick)
 	end
-end
-
-function getIonCannonFiredEventID()
-	if not when_ion_cannon_targeted then
-		when_ion_cannon_targeted = script.generate_event_name()
-	end
-	return when_ion_cannon_targeted
 end
 
 script.on_event(defines.events.on_force_created, function(event)
@@ -396,6 +410,13 @@ script.on_event(defines.events.on_built_entity, function(event)
 	end
 end)
 
+script.on_event(defines.events.on_trigger_created_entity, function(event)
+	local created_entity = event.entity
+	if created_entity.name == "ion-cannon-explosion" then
+		game.raise_event(when_ion_cannon_fired, {surface = created_entity.surface, position = created_entity.position, radius = ionCannonRadius})		-- Passes event.surface, event.position, and event.radius
+	end
+end)
+
 script.on_event(defines.events.on_put_item, function(event)
 	local current_tick = event.tick
 	if global.tick and global.tick > current_tick then
@@ -408,7 +429,7 @@ script.on_event(defines.events.on_put_item, function(event)
 		if fired then
 			local TargetPosition = event.position
 			TargetPosition.y = TargetPosition.y + 1
-			game.raise_event(when_ion_cannon_targeted, {force = player.force, player_index = event.player_index, position = TargetPosition, radius = ionCannonRadius})		-- Passes event.force, event.player_index, event.position, and event.radius
+			game.raise_event(when_ion_cannon_targeted, {surface = player.surface, force = player.force, player_index = event.player_index, position = TargetPosition, radius = ionCannonRadius})		-- Passes event.surface, event.force, event.player_index, event.position, and event.radius
 		end
 	end
 end)
