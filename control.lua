@@ -12,7 +12,7 @@ remote.add_interface("orbital_ion_cannon",
 
 		on_ion_cannon_fired = function() return getIonCannonFiredEventID() end,
 
-		fire_ion_cannon = function(force, position, surface, player) return targetIonCannon(force, position, surface, player) end -- Player is optional
+		target_ion_cannon = function(force, position, surface, player) return targetIonCannon(force, position, surface, player) end -- Player is optional
 	}
 )
 
