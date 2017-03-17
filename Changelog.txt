@@ -125,7 +125,7 @@ The direct damage from the ion cannon blast now only applies within 80% of the f
 All entities within 100% of the blast radius (25 by default) will be instantly set on fire; even if something survives the initial blast, it will continue to burn.
 If also playing with my Swarm mod, this makes ion cannon blasts significantly more effective at killing the sub-enemies that spawn after spawners/large enemies die, since they will now catch fire and burn.
 Black plumes of smoke will be emitted from ion cannon blast sites, similar to the smoke emitted by forest fires... and indeed, the blast can now ignite forest fires!
-(Note: Cheese Orbital Industries™ is not responsible for any property damage and/or pollution caused by rampaging forest fires ignited by ion blasts.)
+(Note: Cheese Orbital Industriesâ„¢ is not responsible for any property damage and/or pollution caused by rampaging forest fires ignited by ion blasts.)
 
 The "Ion Cannons" text-button at the top of the screen has been changed to an icon-button. Upon first update, the icon will shift position slightly; simply click it a couple times to reset the GUI positions.
 Added a custom hotkey that you can press to toggle the Ion Cannon GUI rather than click the button. The keybinding is "I" by default; you can edit this in the game controls options.
@@ -173,3 +173,11 @@ Added config option for adjusting how much area Auto-Targeting Stations permanen
 Reduced "Ion Cannon Ready" spam when firing several ion cannons -- the minimum duration between announces can be found in config.lua.
 Renamed custom "on_ion_cannon_fired" event to "on_ion_cannon_targeted", to better reflect that it fires on target designation rather than actual blast impact.
 The "on_ion_cannon_targeted" event position is no longer slightly off-center, and now also passes an event.radius variable.
+
+
+Version 1.5.0 - __, 2017
+--------------------------------
+Updated for Factorio 0.15.
+Added custom event "on_ion_cannon_fired", which now properly activates when the ion cannon blast actually occurs. See the Readme for documentation.
+Disabled the annoying "Launched rocket without satellite!" message.
+Renamed remote call "fire_ion_cannon" to "target_ion_cannon".
