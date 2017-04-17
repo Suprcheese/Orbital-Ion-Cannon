@@ -515,6 +515,95 @@ auto_targeter.energy_usage = "500kW"
 
 data:extend({auto_targeter})
 
+if data.raw["radar"]["radar-2"] and enableBobUpdates then
+  local auto_targeter_2 = util.table.deepcopy(data.raw["radar"]["radar-2"])
+
+  auto_targeter_2.name = "auto-targeter-2"
+  auto_targeter_2.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
+  auto_targeter_2.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter-2"}
+  auto_targeter_2.pictures =
+      {
+        filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
+        priority = "low",
+        width = 153,
+        height = 131,
+        apply_projection = false,
+        direction_count = 64,
+        line_length = 8,
+        shift = {0.875, -0.34375}
+      }
+  auto_targeter_2.energy_per_sector = "5MJ"
+  auto_targeter_2.energy_usage = "750kW"
+
+  data:extend({auto_targeter_2})
+end
+if data.raw["radar"]["radar-3"] and enableBobUpdates then
+  local auto_targeter3 = util.table.deepcopy(data.raw["radar"]["radar-3"])
+
+  auto_targeter3.name = "auto-targeter-3"
+  auto_targeter3.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
+  auto_targeter3.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter-3"}
+  auto_targeter3.pictures =
+      {
+        filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
+        priority = "low",
+        width = 153,
+        height = 131,
+        apply_projection = false,
+        direction_count = 64,
+        line_length = 8,
+        shift = {0.875, -0.34375}
+      }
+  auto_targeter3.energy_per_sector = "10MJ"
+  auto_targeter3.energy_usage = "1MW"
+
+  data:extend({auto_targeter3})
+end
+if data.raw["radar"]["radar-4"] and enableBobUpdates then
+  local auto_targeter4 = util.table.deepcopy(data.raw["radar"]["radar-4"])
+
+  auto_targeter4.name = "auto-targeter-4"
+  auto_targeter4.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
+  auto_targeter4.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter-4"}
+  auto_targeter4.pictures =
+      {
+        filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
+        priority = "low",
+        width = 153,
+        height = 131,
+        apply_projection = false,
+        direction_count = 64,
+        line_length = 8,
+        shift = {0.875, -0.34375}
+      }
+  auto_targeter4.energy_per_sector = "15MJ"
+  auto_targeter4.energy_usage = "1.25MW"
+
+  data:extend({auto_targeter4})
+end
+if data.raw["radar"]["radar-5"] and enableBobUpdates then
+  local auto_targeter5 = util.table.deepcopy(data.raw["radar"]["radar-5"])
+
+  auto_targeter5.name = "auto-targeter-5"
+  auto_targeter5.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
+  auto_targeter5.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter-5"}
+  auto_targeter5.pictures =
+      {
+        filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
+        priority = "low",
+        width = 153,
+        height = 131,
+        apply_projection = false,
+        direction_count = 64,
+        line_length = 8,
+        shift = {0.875, -0.34375}
+      }
+  auto_targeter5.energy_per_sector = "20MJ"
+  auto_targeter5.energy_usage = "1.5MW"
+
+  data:extend({auto_targeter5})
+end
+
 if not ionCannonFlames then
 	data.raw["projectile"]["crosshairs"].action =
 	{

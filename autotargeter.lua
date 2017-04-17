@@ -17,7 +17,7 @@ end
 
 script.on_event(defines.events.on_sector_scanned, function(event)
 	local radar = event.radar
-	if radar.name == "auto-targeter" then
+	if string.match(radar.name, "auto%-targeter") then -- Note escape hyphen
 		local target = findNestNear(radar, event.chunk_position)
 		if target then
 			local fired = targetIonCannon(radar.force, target.position, radar.surface)
