@@ -1,7 +1,7 @@
-Orbital Ion Cannon 1.4.6
+Orbital Ion Cannon 1.5.0
 ========================
 
-Version 1.4.6 was released March 6, 2017, was tested using Factorio v0.14.22, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, and Yousei9.
+Version 1.5.0 was released __, 2017, was tested using Factorio v0.15._, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, and Yousei9.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
@@ -30,26 +30,33 @@ This mod also has configuration options available in config.lua. Here you may ad
 
 Modding Details:
 ----------------
-This mod implements a custom event, on_ion_cannon_targeted, which can function just like other lua events (https://wiki.factorio.com/index.php?title=Lua/Events).
-In order to use this event in another mod, you should use the following code:
+This mod implements two custom events: on_ion_cannon_targeted & on_ion_cannon_fired, which can function just like other lua events (https://wiki.factorio.com/index.php?title=Lua/Events)
+In order to use them in another mod, you should use the following code:
 
 	script.on_event(remote.call("orbital_ion_cannon", "on_ion_cannon_targeted"), function(event)
 		...
 	end)
+	
+or
 
-Where the ... can be any code of your choosing. The following variables are available when using this custom event:
+	script.on_event(remote.call("orbital_ion_cannon", "on_ion_cannon_fired"), function(event)
+		...
+	end)
 
-	event.force				The force whose ion cannon is firing
+Where the "..." can be any code of your choosing. The following variables are available when using this custom event:
+
+	event.force			The force whose ion cannon is firing
+	event.surface                   The surface on which the ion cannon is firing	
 	event.player_index		The player index of who fired the ion cannon
-	event.position			The position the ion cannon is firing at
+	event.position			The position at which the ion cannon is firing
 	event.radius			The radius of the ion cannon blast
 
 
-There is also a remote call that fires the ion cannon:
+There is also a remote call that targets the ion cannon:
 
-	remote.call("orbital_ion_cannon", "fire_ion_cannon", force, position, surface, player)
+	remote.call("orbital_ion_cannon", "target_ion_cannon", force, position, surface, player)
 
-You must supply a force, position, and surface, but the final argument -- player -- is optional; if you include it, some extra information can be messaged to the player.
+You must supply a force, position, and surface, but the final argument -- player -- is optional; if you include it, some extra information can be messaged to the player. Calling this function will return true if the ion cannon is successfully targeted or false if targeting was unsuccessful.
 
 
 Credits:
