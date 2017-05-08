@@ -1,5 +1,6 @@
 require "util"
-require "config"
+require "stdlib/area/chunk"
+require "stdlib/area/position"
 require "autotargeter"
 
 script.on_init(function() On_Init() end)
@@ -43,13 +44,17 @@ function On_Init()
 	end
 	global.goToFull = global.goToFull or {}
 	global.klaxonTick = global.klaxonTick or 0
-	global.readyTick = global.readyTick or 0
+	global.auto_tick = global.auto_tick or 0
+	global.readyTick = {}
 	if global.ion_cannon_table then
 		global.forces_ion_cannon_table["player"] = global.ion_cannon_table 	-- Migrate ion cannon tables from version 1.0.5 and lower
 		global.ion_cannon_table = nil 										-- Remove old ion cannon table
 	end
-	-- remote.call("freeplay", set_show_launched_without_satellite, false)
+	remote.call("silo_script", "set_show_launched_without_satellite", false) -- FINALLY!
+	remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
+	remote.call("silo_script", "update_gui")
 	for i, player in pairs(game.players) do
+		global.readyTick[player.index] = 0
 		if not global.forces_ion_cannon_table[player.force.name] then
 			table.insert(global.forces_ion_cannon_table, player.force.name)
 			global.forces_ion_cannon_table[player.force.name] = {}
@@ -96,9 +101,6 @@ script.on_event(defines.events.on_forces_merging, function(event)
 end)
 
 function init_GUI(player)
-	if not player.connected then
-		return
-	end
 	if #global.forces_ion_cannon_table[player.force.name] == 0 then
 		local frame = player.gui.left["ion-cannon-stats"]
 		if (frame) then
@@ -153,9 +155,6 @@ function open_GUI(player)
 end
 
 function update_GUI(player)
-	if not player.connected then
-		return
-	end
 	init_GUI(player)
 	local frame = player.gui.left["ion-cannon-stats"]
 	if (frame) then
@@ -194,7 +193,7 @@ function countIonCannonsReady(player)
 end
 
 function timeUntilNextReady(player)
-	local shortestCooldown = ionCannonCooldownSeconds
+	local shortestCooldown = settings.global["ion-cannon-cooldown-seconds"].value
 	for i, cooldown in pairs(global.forces_ion_cannon_table[player.force.name]) do
 		if cooldown[1] < shortestCooldown and cooldown[2] == 0 then
 			shortestCooldown = cooldown[1]
@@ -221,11 +220,12 @@ end)
 
 script.on_event(defines.events.on_player_created, function(event)
 	init_GUI(game.players[event.player_index])
+	global.readyTick[event.player_index] = 0
 end)
 
 script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 	local player = game.players[event.player_index]
-	if playVoices and #global.forces_ion_cannon_table[player.force.name] > 0 and isHolding({name="ion-cannon-targeter", count=1}, player) and not isAllIonCannonOnCooldown(player) then
+	if settings.get_player_settings(player)["ion-cannon-play-voices"].value and #global.forces_ion_cannon_table[player.force.name] > 0 and isHolding({name="ion-cannon-targeter", count=1}, player) and not isAllIonCannonOnCooldown(player) then
 		playSoundForPlayer("select-target", player)
 	end
 end)
@@ -236,13 +236,15 @@ function process_tick()
 		ReduceIonCannonCooldowns()
 		for i, force in pairs(game.forces) do
 			if global.forces_ion_cannon_table[force.name] and isIonCannonReady(force) then
-				if playVoices and global.readyTick < current_tick then
-					global.readyTick = current_tick + readyTicks
-					playSoundForForce("ion-cannon-ready", force)
+				for i, player in pairs(force.connected_players) do
+					if settings.get_player_settings(player)["ion-cannon-play-voices"].value and global.readyTick[player.index] < current_tick then
+						global.readyTick[player.index] = current_tick + settings.get_player_settings(player)["ion-cannon-ready-ticks"].value
+						playSoundForPlayer("ion-cannon-ready", player)
+					end
 				end
 			end
 		end
-		for i, player in pairs(game.players) do
+		for i, player in pairs(game.connected_players) do
 			update_GUI(player)
 		end
 	end
@@ -280,33 +282,9 @@ function isIonCannonReady(force)
 	return found
 end
 
-function anyFriendlyCanReach(entity, force)
-	for i, player in pairs(force.players) do
-		if player.connected and player.can_reach_entity(entity) then
-			return true
-		end
-	end
-	return false
-end
-
 function playSoundForPlayer(sound, player)
-	player.surface.create_entity({name = sound, position = player.position})
-end
-
-function playSoundForForce(sound, force)
-	for i, player in pairs(force.players) do
-		if player.connected then
-			player.surface.create_entity({name = sound, position = player.position})
-		end
-	end
-end
-
-function playSoundForAllPlayers(sound)
-	for i, player in pairs(game.players) do
-		if player.connected then
-			player.surface.create_entity({name = sound, position = player.position})
-		end
-	end
+	local voice = settings.get_player_settings(player)["ion-cannon-voice-style"].value
+	player.surface.create_entity({name = sound .. "-" .. voice, position = player.position})
 end
 
 function isHolding(stack, player)
@@ -331,68 +309,62 @@ function targetIonCannon(force, position, surface, player)
 		end
 		return false
 	else
-		if player then
-			player.print({"targeting-ion-cannon" , cannonNum})
-		end
 		local TargetPosition = position
 		TargetPosition.y = TargetPosition.y + 1
 		local IonTarget = surface.create_entity({name = "ion-cannon-target", position = TargetPosition, force = game.forces.neutral})
-		IonTarget.backer_name = "Ion Cannon #" .. cannonNum .. " Target Location"
-		if proximityCheck and anyFriendlyCanReach(IonTarget, force) then
-			if player then
-				player.print({"proximity-alert"})
-			end
-			IonTarget.destroy()
-			return false
-		else
-			local current_tick = game.tick
-			local CrosshairsPosition = position
-			CrosshairsPosition.y = CrosshairsPosition.y - 20
-			surface.create_entity({name = "crosshairs", target = IonTarget, force = force, position = CrosshairsPosition, speed = 0})
-			if printMessages then
-				force.print({"target-acquired"})
-			end
-			if playKlaxon and global.klaxonTick < current_tick then
-				global.klaxonTick = current_tick + 60
-				playSoundForAllPlayers("klaxon")
-			end
-			global.forces_ion_cannon_table[force.name][cannonNum][1] = ionCannonCooldownSeconds
-			global.forces_ion_cannon_table[force.name][cannonNum][2] = 0
-			if printMessages then
-				force.print({"time-to-ready-again" , cannonNum , ionCannonCooldownSeconds})
-			end
-			return true
+		IonTarget.backer_name = "Ion cannon #" .. cannonNum .. " target location"
+		if player then
+			player.print({"targeting-ion-cannon" , cannonNum})
+			-- player.add_custom_alert(IonTarget, {"item", "orbital-ion-cannon"}, {"ion-cannon-target-location", position.x, position.y}, true)
 		end
+		local current_tick = game.tick
+		local CrosshairsPosition = position
+		CrosshairsPosition.y = CrosshairsPosition.y - 20
+		surface.create_entity({name = "crosshairs", target = IonTarget, force = force, position = CrosshairsPosition, speed = 0})
+		for i, player in pairs(force.connected_players) do
+			if settings.get_player_settings(player)["ion-cannon-verbose-print"].value then
+				player.print({"time-to-ready-again" , cannonNum , settings.global["ion-cannon-cooldown-seconds"].value})
+			end
+		end
+		for i, player in pairs(game.connected_players) do
+			if settings.get_player_settings(player)["ion-cannon-play-klaxon"].value and global.klaxonTick < current_tick then
+				global.klaxonTick = current_tick + 60
+				player.surface.create_entity({name = "klaxon", position = player.position})
+			end
+		end
+		global.forces_ion_cannon_table[force.name][cannonNum][1] = settings.global["ion-cannon-cooldown-seconds"].value
+		global.forces_ion_cannon_table[force.name][cannonNum][2] = 0
+		if player then
+			script.raise_event(when_ion_cannon_targeted, {surface = surface, force = force, position = position, radius = settings.startup["ion-cannon-radius"].value, player_index = player.index,})		-- Passes event.surface, event.force, event.position, event.radius, and event.player_index
+		else
+			script.raise_event(when_ion_cannon_targeted, {surface = surface, force = force, position = position, radius = settings.startup["ion-cannon-radius"].value})		-- Passes event.surface, event.force, event.position, and event.radius
+		end
+		return true
 	end
 end
 
 script.on_event(defines.events.on_rocket_launched, function(event)
 	local force = event.rocket.force
 	if event.rocket.get_item_count("orbital-ion-cannon") > 0 then
-		table.insert(global.forces_ion_cannon_table[force.name], {ionCannonCooldownSeconds, 0})
+		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
 		global.IonCannonLaunched = true
 		script.on_event(defines.events.on_tick, process_tick)
-		if #global.forces_ion_cannon_table[force.name] == 1 then
-			force.recipes["ion-cannon-targeter"].enabled = true
-			for i, player in pairs(force.players) do
-				init_GUI(player)
+		force.recipes["ion-cannon-targeter"].enabled = true
+		for i, player in pairs(force.connected_players) do
+			init_GUI(player)
+			if settings.get_player_settings(player)["ion-cannon-play-voices"].value then
+				playSoundForPlayer("ion-cannon-charging", player)
 			end
+		end
+		if #global.forces_ion_cannon_table[force.name] == 1 then
 			force.print({"congratulations-first"})
 			force.print({"first-help"})
 			force.print({"second-help"})
 			force.print({"third-help"})
-			if playVoices then
-				playSoundForForce("ion-cannon-charging", force)
-			end
 		else
-			if #global.forces_ion_cannon_table[force.name] > 1 then
-				force.print({"congratulations-additional"})
-			end
+			force.print({"congratulations-additional"})
 			force.print({"ion-cannons-in-orbit" , #global.forces_ion_cannon_table[force.name]})
-			force.print({"time-to-ready" , #global.forces_ion_cannon_table[force.name] , ionCannonCooldownSeconds})
-			if playVoices then
-				playSoundForForce("ion-cannon-charging", force)
-			end
+			-- force.print({"time-to-ready" , #global.forces_ion_cannon_table[force.name] , settings.global["ion-cannon-cooldown-seconds"].value})
 		end
 	end
 end)
@@ -413,7 +385,10 @@ end)
 script.on_event(defines.events.on_trigger_created_entity, function(event)
 	local created_entity = event.entity
 	if created_entity.name == "ion-cannon-explosion" then
-		game.raise_event(when_ion_cannon_fired, {surface = created_entity.surface, position = created_entity.position, radius = ionCannonRadius})		-- Passes event.surface, event.position, and event.radius
+		script.raise_event(when_ion_cannon_fired, {surface = created_entity.surface, position = created_entity.position, radius = settings.startup["ion-cannon-radius"].value})		-- Passes event.surface, event.position, and event.radius
+		for i, force in pairs(game.forces) do
+			force.chart(created_entity.surface, Position.expand_to_area(created_entity.position, 1))
+		end
 	end
 end)
 
@@ -422,14 +397,13 @@ script.on_event(defines.events.on_put_item, function(event)
 	if global.tick and global.tick > current_tick then
 		return
 	end
-	global.tick = current_tick + lockoutTicks
+	global.tick = current_tick + 10
 	local player = game.players[event.player_index]
 	if isHolding({name="ion-cannon-targeter", count=1}, player) then
 		local fired = targetIonCannon(player.force, event.position, player.surface, player)
 		if fired then
 			local TargetPosition = event.position
 			TargetPosition.y = TargetPosition.y + 1
-			game.raise_event(when_ion_cannon_targeted, {surface = player.surface, force = player.force, player_index = event.player_index, position = TargetPosition, radius = ionCannonRadius})		-- Passes event.surface, event.force, event.player_index, event.position, and event.radius
 		end
 	end
 end)

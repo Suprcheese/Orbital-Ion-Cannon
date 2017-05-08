@@ -1,7 +1,7 @@
 Orbital Ion Cannon 1.5.0
 ========================
 
-Version 1.5.0 was released __, 2017, was tested using Factorio v0.15._, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, and Yousei9.
+Version 1.5.0 was released May _, 2017, was tested using Factorio v0.15._, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, Yousei9, and WPettersson.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
@@ -10,22 +10,21 @@ Simply click anywhere with your targeting device and watch the total annihilatio
 
 You can click on the button added at the top of your screen to check on the status of your ion cannons in orbit.
 
-If you like, you can even automate the destruction of enemy nests by researching and building Auto-Targeting Stations, which will periodically scan for enemy nests and automatically fire an ion cannon if it detects one.
+If you like, you can even automate the destruction of enemy nests by researching Auto-Targeting, which will utilize your radars to scan for enemy nests and automatically fire an ion cannon.
 
 This mod is aware of Bob's mods and will update its recipes and technology requirements if Bob's Electronics, Tech, Warfare, and/or Power mods are installed.
 
-This mod also has configuration options available in config.lua. Here you may adjust parameters such as:
+This mod also has configuration options available through the in-game mod options menu (Options -> Mods). Here you may adjust myriad parameters such as:
 
 -The cooldown time for the ion cannons, their damage amounts and blast radii
 -Select which announcer voice you want (Original C&C, Tiberian Sun EVA, or Tiberian Sun CABAL)
 -Toggle the "Ion cannon ready" etc. voices and klaxon sounds on/off
 -The time it takes between designating a target and the ion cannon firing
--Enable/Disable the friendly character proximity check or the recipe updates for Bob's mods
--The minimum time between targeting multiple ion cannons
--The range of the Auto-Targeting Station
--Whether the Auto-Targeting Station should target Worms in addition to Spawners
+-Whether Auto-Targeting should target Worms in addition to Spawners
 -Enable verbose printing to the console
 -Disable the intense flames caused by ion cannon blasts, removing the chance to cause wildfires.
+
+... and more!
 
 
 Modding Details:
@@ -36,18 +35,18 @@ In order to use them in another mod, you should use the following code:
 	script.on_event(remote.call("orbital_ion_cannon", "on_ion_cannon_targeted"), function(event)
 		...
 	end)
-	
+
 or
 
 	script.on_event(remote.call("orbital_ion_cannon", "on_ion_cannon_fired"), function(event)
 		...
 	end)
 
-Where the "..." can be any code of your choosing. The following variables are available when using this custom event:
+Where the "..." can be any code of your choosing. The following variables are available when using these custom events:
 
-	event.force			The force whose ion cannon is firing
-	event.surface                   The surface on which the ion cannon is firing	
-	event.player_index		The player index of who fired the ion cannon
+	event.force				The force whose ion cannon is firing (only for the targeted event)
+	event.surface			The surface on which the ion cannon is firing
+	event.player_index		The player index of who fired the ion cannon (only if manually targeted by a player)
 	event.position			The position at which the ion cannon is firing
 	event.radius			The radius of the ion cannon blast
 
@@ -76,8 +75,6 @@ The ion beam that the ion cannon fires was obtained from: http://opengameart.org
 It was uploaded by the user Tatermand under the CC-BY-SA license.
 
 This mod makes use of the Factorio Standard Library by Afforess (https://github.com/Afforess/Factorio-Stdlib).
-
-The Auto-Targeting Station graphics are from the excellent ExtraChests mod by Qumojo (https://forums.factorio.com/viewtopic.php?f=91&t=19970)
 
 Several portions of the control.lua code (et al.) were inspired by code from the following mods:
 

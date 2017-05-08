@@ -1,4 +1,4 @@
-crosshairsPicture =	{
+local crosshairsPicture =	{
 		filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
 		priority = "low",
 		width = 64,
@@ -14,7 +14,7 @@ ion_cannon_targeter.name = "ion-cannon-targeter"
 ion_cannon_targeter.icon = "__Orbital Ion Cannon__/graphics/crosshairs.png"
 ion_cannon_targeter.flags = {"placeable-neutral", "player-creation", "placeable-off-grid"}
 ion_cannon_targeter.collision_mask = {}
-ion_cannon_targeter.max_health = 0
+ion_cannon_targeter.max_health = 1
 ion_cannon_targeter.inventory_size = 0
 ion_cannon_targeter.collision_box = {{0, 0}, {0, 0}}
 ion_cannon_targeter.selection_box = {{0, 0}, {0, 0}}
@@ -59,7 +59,7 @@ ion_cannon_targeter.attack_parameters =
 	cooldown = 1,
 	projectile_center = {0, 0},
 	projectile_creation_distance = 1.4,
-	range = ionCannonRadius,
+	range = settings.startup["ion-cannon-radius"].value,
 	damage_modifier = 1,
 	ammo_type =
 	{
@@ -90,7 +90,7 @@ data:extend({
 		type = "projectile",
 		name = "crosshairs",
 		flags = {"not-on-map"},
-		acceleration = .0009 / (HeatupTimeMultiplier * HeatupTimeMultiplier),
+		acceleration = .0009 / (settings.startup["ion-cannon-heatup-multiplier"].value * settings.startup["ion-cannon-heatup-multiplier"].value),
 		action =
 		{
 			{
@@ -133,7 +133,7 @@ data:extend({
 			},
 			{
 				type = "area",
-				perimeter = ionCannonRadius * 0.8,
+				perimeter = settings.startup["ion-cannon-radius"].value * 0.8,
 				action_delivery =
 				{
 					type = "instant",
@@ -152,7 +152,7 @@ data:extend({
 			},
 			{
 				type = "area",
-				perimeter = ionCannonRadius * 0.8,
+				perimeter = settings.startup["ion-cannon-radius"].value * 0.8,
 				action_delivery =
 				{
 					type = "instant",
@@ -160,18 +160,18 @@ data:extend({
 					{
 						{
 							type = "damage",
-							damage = {amount = ionCannonLaserDamage, type = "laser"}
+							damage = {amount = settings.startup["ion-cannon-laser-damage"].value, type = "laser"}
 						},
 						{
 							type = "damage",
-							damage = {amount = ionCannonExplosionDamage, type = "explosion"}
+							damage = {amount = settings.startup["ion-cannon-explosion-damage"].value, type = "explosion"}
 						}
 					}
 				}
 			},
 			{
 				type = "area",
-				perimeter = ionCannonRadius,
+				perimeter = settings.startup["ion-cannon-radius"].value,
 				action_delivery =
 				{
 					type = "instant",
@@ -216,12 +216,12 @@ data:extend({
 		type = "projectile",
 		name = "dummy-crosshairs",
 		flags = {"not-on-map"},
-		acceleration = .0009 / (HeatupTimeMultiplier * HeatupTimeMultiplier),
+		acceleration = .0009 / (settings.startup["ion-cannon-heatup-multiplier"].value * settings.startup["ion-cannon-heatup-multiplier"].value),
 		action =
 		{
 			{
 				type = "area",
-				perimeter = ionCannonRadius * 0.8,
+				perimeter = settings.startup["ion-cannon-radius"].value * 0.8,
 				action_delivery =
 				{
 					type = "instant",
@@ -229,18 +229,18 @@ data:extend({
 					{
 						{
 							type = "damage",
-							damage = {amount = ionCannonLaserDamage, type = "laser"}
+							damage = {amount = settings.startup["ion-cannon-laser-damage"].value, type = "laser"}
 						},
 						{
 							type = "damage",
-							damage = {amount = ionCannonExplosionDamage, type = "explosion"}
+							damage = {amount = settings.startup["ion-cannon-explosion-damage"].value, type = "explosion"}
 						}
 					}
 				}
 			},
 			{
 				type = "area",
-				perimeter = ionCannonRadius,
+				perimeter = settings.startup["ion-cannon-radius"].value,
 				action_delivery =
 				{
 					type = "instant",
@@ -307,7 +307,7 @@ data:extend({
 		order = "y",
 		selectable_in_game = false,
 		minable = {mining_time = 1, result = "train-stop"},
-		max_health = 0,
+		max_health = 1,
 		render_layer = "air-object",
 		final_render_layer = "air-object",
 		collision_box = {{0,0}, {0,0}},
@@ -352,7 +352,7 @@ data:extend({
 			frame_count = 20,
 			animation_speed = 0.2,
 			line_length = 5,
-			scale = 5 * (ionCannonRadius / 15),
+			scale = 5 * (settings.startup["ion-cannon-radius"].value / 15),
 		},
 		slow_down_factor = 0,
 		affected_by_wind = false,
@@ -404,7 +404,7 @@ data:extend({
 			animation_speed = 0.5
 			},
 		},
-		light = {intensity = 2, size = ionCannonRadius * 3},
+		light = {intensity = 2, size = settings.startup["ion-cannon-radius"].value * 3},
 		sound =
 		{
 		{
@@ -434,182 +434,25 @@ data:extend({
 				}
 			}
 		}
-	},
-	{
-		type = "corpse",
-		name = "enormous-scorchmark",
-		icon = "__base__/graphics/icons/small-scorchmark.png",
-		flags = {"placeable-neutral", "not-on-map", "placeable-off-grid"},
-		collision_box = {{-1.5, -1.5}, {1.5, 1.5}},
-		collision_mask = {"doodad-layer", "not-colliding-with-itself"},
-		selection_box = {{-1, -1}, {1, 1}},
-		selectable_in_game = false,
-		time_before_removed = 60 * 60 * 10, -- 10 minutes
-		final_render_layer = "ground_patch_higher2",
-		subgroup = "remnants",
-		order="d[remnants]-b[scorchmark]-a[small]",
-		animation =
-		{
-			sheet=
-		{
-			width = 110,
-			height = 90,
-			frame_count = 1,
-			direction_count = 1,
-			filename = "__base__/graphics/entity/scorchmark/small-scorchmark.png",
-			scale = ionCannonRadius / 4,
-			variation_count = 3
-		}
-		},
-		ground_patch =
-		{
-			sheet =
-		{
-			width = 110,
-			height = 90,
-			frame_count = 1,
-			direction_count = 1,
-			x = 110 * 2,
-			filename = "__base__/graphics/entity/scorchmark/small-scorchmark.png",
-			scale = ionCannonRadius / 4,
-			variation_count = 3
-		}
-		},
-		ground_patch_higher =
-		{
-			sheet =
-		{
-			width = 110,
-			height = 90,
-			frame_count = 1,
-			direction_count = 1,
-			x = 110,
-			filename = "__base__/graphics/entity/scorchmark/small-scorchmark.png",
-			scale = ionCannonRadius / 4,
-			variation_count = 3
-		}
-		}
 	}
 })
 
-local auto_targeter = util.table.deepcopy(data.raw["radar"]["radar"])
+local yuge_crater = util.table.deepcopy(data.raw["corpse"]["small-scorchmark"])
 
-auto_targeter.name = "auto-targeter"
-auto_targeter.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
-auto_targeter.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter"}
-auto_targeter.pictures =
-		{
-			filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
-			priority = "low",
-			width = 153,
-			height = 131,
-			apply_projection = false,
-			direction_count = 64,
-			line_length = 8,
-			shift = {0.875, -0.34375}
-		}
-auto_targeter.energy_per_sector = "2MJ"
-auto_targeter.max_distance_of_sector_revealed = autoTargetRange
-auto_targeter.max_distance_of_nearby_sector_revealed = autoTargetRevealed
-auto_targeter.energy_usage = "500kW"
+yuge_crater.name = "enormous-scorchmark"
+yuge_crater.order = "d[remnants]-b[scorchmark]-b[yuge]"
+yuge_crater.animation.scale = settings.startup["ion-cannon-radius"].value / 4
+yuge_crater.ground_patch.sheet.scale = settings.startup["ion-cannon-radius"].value / 4
+yuge_crater.ground_patch_higher.sheet.scale = settings.startup["ion-cannon-radius"].value / 4,
 
-data:extend({auto_targeter})
+data:extend({yuge_crater})
 
-if data.raw["radar"]["radar-2"] and enableBobUpdates then
-  local auto_targeter_2 = util.table.deepcopy(data.raw["radar"]["radar-2"])
-
-  auto_targeter_2.name = "auto-targeter-2"
-  auto_targeter_2.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
-  auto_targeter_2.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter-2"}
-  auto_targeter_2.pictures =
-      {
-        filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
-        priority = "low",
-        width = 153,
-        height = 131,
-        apply_projection = false,
-        direction_count = 64,
-        line_length = 8,
-        shift = {0.875, -0.34375}
-      }
-  auto_targeter_2.energy_per_sector = "5MJ"
-  auto_targeter_2.energy_usage = "750kW"
-
-  data:extend({auto_targeter_2})
-end
-if data.raw["radar"]["radar-3"] and enableBobUpdates then
-  local auto_targeter3 = util.table.deepcopy(data.raw["radar"]["radar-3"])
-
-  auto_targeter3.name = "auto-targeter-3"
-  auto_targeter3.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
-  auto_targeter3.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter-3"}
-  auto_targeter3.pictures =
-      {
-        filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
-        priority = "low",
-        width = 153,
-        height = 131,
-        apply_projection = false,
-        direction_count = 64,
-        line_length = 8,
-        shift = {0.875, -0.34375}
-      }
-  auto_targeter3.energy_per_sector = "10MJ"
-  auto_targeter3.energy_usage = "1MW"
-
-  data:extend({auto_targeter3})
-end
-if data.raw["radar"]["radar-4"] and enableBobUpdates then
-  local auto_targeter4 = util.table.deepcopy(data.raw["radar"]["radar-4"])
-
-  auto_targeter4.name = "auto-targeter-4"
-  auto_targeter4.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
-  auto_targeter4.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter-4"}
-  auto_targeter4.pictures =
-      {
-        filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
-        priority = "low",
-        width = 153,
-        height = 131,
-        apply_projection = false,
-        direction_count = 64,
-        line_length = 8,
-        shift = {0.875, -0.34375}
-      }
-  auto_targeter4.energy_per_sector = "15MJ"
-  auto_targeter4.energy_usage = "1.25MW"
-
-  data:extend({auto_targeter4})
-end
-if data.raw["radar"]["radar-5"] and enableBobUpdates then
-  local auto_targeter5 = util.table.deepcopy(data.raw["radar"]["radar-5"])
-
-  auto_targeter5.name = "auto-targeter-5"
-  auto_targeter5.icon = "__Orbital Ion Cannon__/graphics/AutoTargeter.png"
-  auto_targeter5.minable = {hardness = 0.2, mining_time = 0.5, result = "auto-targeter-5"}
-  auto_targeter5.pictures =
-      {
-        filename = "__Orbital Ion Cannon__/graphics/Auto-Target-Entity.png",
-        priority = "low",
-        width = 153,
-        height = 131,
-        apply_projection = false,
-        direction_count = 64,
-        line_length = 8,
-        shift = {0.875, -0.34375}
-      }
-  auto_targeter5.energy_per_sector = "20MJ"
-  auto_targeter5.energy_usage = "1.5MW"
-
-  data:extend({auto_targeter5})
-end
-
-if not ionCannonFlames then
+if not settings.startup["ion-cannon-flames"].value then
 	data.raw["projectile"]["crosshairs"].action =
 	{
 		{
 			type = "area",
-			perimeter = ionCannonRadius,
+			perimeter = settings.startup["ion-cannon-radius"].value,
 			action_delivery =
 			{
 				type = "instant",
@@ -617,11 +460,11 @@ if not ionCannonFlames then
 				{
 					{
 						type = "damage",
-						damage = {amount = ionCannonLaserDamage / 2, type = "laser"}
+						damage = {amount = settings.startup["ion-cannon-laser-damage"].value / 2, type = "laser"}
 					},
 					{
 						type = "damage",
-						damage = {amount = ionCannonExplosionDamage / 2, type = "explosion"}
+						damage = {amount = settings.startup["ion-cannon-explosion-damage"].value / 2, type = "explosion"}
 					}
 				}
 			}
@@ -666,7 +509,7 @@ if not ionCannonFlames then
 		},
 		{
 			type = "area",
-			perimeter = ionCannonRadius,
+			perimeter = settings.startup["ion-cannon-radius"].value,
 			action_delivery =
 			{
 				type = "instant",
@@ -678,11 +521,11 @@ if not ionCannonFlames then
 					},
 					{
 						type = "damage",
-						damage = {amount = ionCannonLaserDamage / 2, type = "laser"}
+						damage = {amount = settings.startup["ion-cannon-laser-damage"].value / 2, type = "laser"}
 					},
 					{
 						type = "damage",
-						damage = {amount = ionCannonExplosionDamage / 2, type = "explosion"}
+						damage = {amount = settings.startup["ion-cannon-explosion-damage"].value / 2, type = "explosion"}
 					}
 				}
 			}

@@ -29,108 +29,19 @@ data:extend({
 			{"plastic-bar", 2},
 			{"battery", 1}
 		},
-		result= "ion-cannon-targeter"
-	},
-	{
-		type = "recipe",
-		name = "auto-targeter",
-		energy_required = 5,
-		enabled = false,
-		category = "crafting",
-		ingredients =
-		{
-			{"radar", 1},
-			{"processing-unit", 20},
-			{"ion-cannon-targeter", 1}
-		},
-		result= "auto-targeter"
+		result = "ion-cannon-targeter"
 	},
 })
 
-if data.raw["item"]["advanced-processing-unit"] and enableBobUpdates then
+if data.raw["item"]["advanced-processing-unit"] and settings.startup["ion-cannon-bob-updates"].value then
 	data.raw["recipe"]["orbital-ion-cannon"].ingredients[5] = {"advanced-processing-unit", 200}
-	data.raw["recipe"]["auto-targeter"].ingredients[2] = {"advanced-processing-unit", 20}
 end
 
-if data.raw["item"]["bob-laser-turret-5"] and enableBobUpdates then
+if data.raw["item"]["bob-laser-turret-5"] and settings.startup["ion-cannon-bob-updates"].value then
 	data.raw["recipe"]["orbital-ion-cannon"].ingredients[7] = {"bob-laser-turret-5", 50}
 end
 
-if data.raw["item"]["fast-accumulator-3"] and data.raw["item"]["solar-panel-large-3"] and enableBobUpdates then
+if data.raw["item"]["fast-accumulator-3"] and data.raw["item"]["solar-panel-large-3"] and settings.startup["ion-cannon-bob-updates"].value then
 	data.raw["recipe"]["orbital-ion-cannon"].ingredients[2] = {"solar-panel-large-3", 100}
 	data.raw["recipe"]["orbital-ion-cannon"].ingredients[3] = {"fast-accumulator-3", 200}
-end
-
--- If we have radar-2, assume we have bobs?
-if data.raw["item"]["radar-2"] and enableBobUpdates then
-  data:extend({
-    {
-      type = "recipe",
-      name = "auto-targeter-2",
-      energy_required = 5,
-      enabled = false,
-      category = "crafting",
-      ingredients =
-      {
-        {"radar-2", 1},
-        {"electronic-circuit", 20},
-        {"auto-targeter", 1}
-      },
-      result= "auto-targeter-2"
-    },
-  })
-end
-if data.raw["item"]["radar-3"] and enableBobUpdates then
-  data:extend({
-    {
-      type = "recipe",
-      name = "auto-targeter-3",
-      energy_required = 5,
-      enabled = false,
-      category = "crafting",
-      ingredients =
-      {
-        {"radar-3", 1},
-        {"advanced-circuit", 20},
-        {"auto-targeter-2", 1}
-      },
-      result= "auto-targeter-3"
-    },
-  })
-end
-if data.raw["item"]["radar-4"] and enableBobUpdates then
-  data:extend({
-    {
-      type = "recipe",
-      name = "auto-targeter-4",
-      energy_required = 5,
-      enabled = false,
-      category = "crafting",
-      ingredients =
-      {
-        {"radar-4", 1},
-        {"processing-unit", 20},
-        {"auto-targeter-3", 1}
-      },
-      result= "auto-targeter-4"
-    },
-  })
-end
-if data.raw["item"]["radar-5"] and enableBobUpdates then
-  data:extend({
-    {
-      type = "recipe",
-      name = "auto-targeter-5",
-      energy_required = 5,
-      enabled = false,
-      category = "crafting",
-      ingredients =
-      {
-        {"radar-5", 1},
-        {"advanced-processing-unit", 50},
-        {"auto-targeter-4", 1}
-      },
-      result= "auto-targeter-5"
-    },
-  })
 end
