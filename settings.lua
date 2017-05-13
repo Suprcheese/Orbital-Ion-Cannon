@@ -1,4 +1,5 @@
 data:extend({
+	-- Startup
 	{
 		type = "int-setting",
 		name = "ion-cannon-radius",
@@ -47,8 +48,7 @@ data:extend({
 		order = "f",
 		default_value = true
 	},
-
-
+	-- Runtime (global)
 	{
 		type = "bool-setting",
 		name = "ion-cannon-auto-targeting",
@@ -78,8 +78,7 @@ data:extend({
 		default_value = 300,
 		minimum_value = 2
 	},
-
-
+	-- Runtime (per player)
 	{
 		type = "bool-setting",
 		name = "ion-cannon-play-voices",

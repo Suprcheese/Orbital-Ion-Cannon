@@ -8,9 +8,13 @@ data:extend({
 		effects =
 		{
 			{
-			type = "unlock-recipe",
-			recipe = "orbital-ion-cannon"
+				type = "unlock-recipe",
+				recipe = "orbital-ion-cannon"
 			},
+			{
+				type = "unlock-recipe",
+				recipe = "ion-cannon-targeter"
+			}
 		},
 		unit =
 		{

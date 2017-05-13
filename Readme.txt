@@ -1,20 +1,20 @@
 Orbital Ion Cannon 1.5.0
 ========================
 
-Version 1.5.0 was released May _, 2017, was tested using Factorio v0.15._, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, Yousei9, and WPettersson.
+Version 1.5.0 was released May 14, 2017, was tested using Factorio v0.15.10, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, Yousei9, and WPettersson.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
 Simply click anywhere with your targeting device and watch the total annihilation ensue.
 (If you've played the Command & Conquer series of games, you're bound to recognize many features similar to the GDI's Ion Cannons.)
 
-You can click on the button added at the top of your screen to check on the status of your ion cannons in orbit.
+You can click on the button added at the top of your screen (or use the hotkey, "I" by default) to check on the status of your ion cannons in orbit.
 
 If you like, you can even automate the destruction of enemy nests by researching Auto-Targeting, which will utilize your radars to scan for enemy nests and automatically fire an ion cannon.
 
 This mod is aware of Bob's mods and will update its recipes and technology requirements if Bob's Electronics, Tech, Warfare, and/or Power mods are installed.
 
-This mod also has configuration options available through the in-game mod options menu (Options -> Mods). Here you may adjust myriad parameters such as:
+This mod also has configuration options available through the in-game mod options menu (Options -> Mods). There you may adjust myriad parameters such as:
 
 -The cooldown time for the ion cannons, their damage amounts and blast radii
 -Select which announcer voice you want (Original C&C, Tiberian Sun EVA, or Tiberian Sun CABAL)

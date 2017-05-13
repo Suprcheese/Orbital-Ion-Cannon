@@ -351,8 +351,8 @@ Renamed custom "on_ion_cannon_fired" event to "on_ion_cannon_targeted", to bette
 The "on_ion_cannon_targeted" event position is no longer slightly off-center, and now also passes an event.radius variable.
 
 
-Version 1.5.0 - May _, 2017
----------------------------
+Version 1.5.0 - May 14, 2017
+----------------------------
 Updated for Factorio 0.15.
 
 Auto-Targeting of ion cannons no longer requires dedicated Auto-Targeting Stations.
@@ -363,11 +363,14 @@ Do be cautious with this option enabled, as biter nests expanding in close proxi
 Disabled the annoying "Rocket launched without satellite!" message.
 Added Orbital Ion Cannons as tracked items in the new "Rocket silo stats" frame.
 New research costs.
+Added support for the new "Expensive" recipes option in Factorio 0.15.
 Auto-targeting now fires the custom "on_ion_cannon_targeted" event.
 Auto-targeting should no longer leave spurious "target location" markers on the map; they should now properly disappear after the ion blast.
 Added custom event "on_ion_cannon_fired", which now properly activates when the ion cannon blast actually occurs. See the Readme for documentation.
 Added support for in-game mod options (Options -> Mods).
 Added a mod option to toggle auto-targeting.
 Removed the "proximity check" option. Be sure to be careful about your target designation, as always.
-Removed the "lockout ticks" option; there are now always 10 lockout ticks.
+Removed the "lockout ticks" option; there are now always 10 lockout ticks (1/6 second).
 Renamed remote call "fire_ion_cannon" to "target_ion_cannon".
+The Ion Cannon Targeting Device is now unlocked upon research of the technology, rather than upon launching the first ion cannon.
+It is no longer possible to switch to the "Full" ion cannon gui when there are 40 or more ion cannons in orbit.

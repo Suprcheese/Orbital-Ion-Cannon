@@ -118,12 +118,12 @@ end
 
 function open_GUI(player)
 	local frame = player.gui.left["ion-cannon-stats"]
-	if (frame) and global.goToFull[player.index] then
+	if frame and global.goToFull[player.index] then
 		frame.destroy()
 	else
-		if global.goToFull[player.index] then
+		if global.goToFull[player.index] and #global.forces_ion_cannon_table[player.force.name] < 40 then
 			global.goToFull[player.index] = false
-			if (frame) then
+			if frame then
 				frame.destroy()
 			end
 			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
@@ -139,7 +139,7 @@ function open_GUI(player)
 			end
 		else
 			global.goToFull[player.index] = true
-			if (frame) then
+			if frame then
 				frame.destroy()
 			end
 			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
@@ -157,7 +157,7 @@ end
 function update_GUI(player)
 	init_GUI(player)
 	local frame = player.gui.left["ion-cannon-stats"]
-	if (frame) then
+	if frame then
 		if frame["ion-cannon-table"] and not global.goToFull[player.index] then
 			frame["ion-cannon-table"].destroy()
 			frame.add{type="table", colspan=2, name="ion-cannon-table"}
@@ -349,7 +349,6 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
 		global.IonCannonLaunched = true
 		script.on_event(defines.events.on_tick, process_tick)
-		force.recipes["ion-cannon-targeter"].enabled = true
 		for i, player in pairs(force.connected_players) do
 			init_GUI(player)
 			if settings.get_player_settings(player)["ion-cannon-play-voices"].value then
