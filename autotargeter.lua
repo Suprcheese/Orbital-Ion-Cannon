@@ -23,7 +23,7 @@ script.on_event(defines.events.on_sector_scanned, function(event)
 				if fired then
 					for i, player in pairs(radar.force.connected_players) do
 						if settings.get_player_settings(player)["ion-cannon-verbose-print"].value then
-							player.print({"auto-target-designated", target.position.x, target.position.y})
+							player.print({"auto-target-designated", radar.backer_name, target.position.x, target.position.y})
 						end
 					end
 				end
