@@ -50,9 +50,11 @@ function On_Init()
 		global.forces_ion_cannon_table["player"] = global.ion_cannon_table 	-- Migrate ion cannon tables from version 1.0.5 and lower
 		global.ion_cannon_table = nil 										-- Remove old ion cannon table
 	end
-	remote.call("silo_script", "set_show_launched_without_satellite", false) -- FINALLY!
-	remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
-	remote.call("silo_script", "update_gui")
+	if remote.interfaces["silo_script"] then
+		remote.call("silo_script", "set_show_launched_without_satellite", false) -- FINALLY!
+		remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
+		remote.call("silo_script", "update_gui")
+	end
 	for i, player in pairs(game.players) do
 		global.readyTick[player.index] = 0
 		if not global.forces_ion_cannon_table[player.force.name] then
