@@ -354,12 +354,10 @@ The "on_ion_cannon_targeted" event position is no longer slightly off-center, an
 Version 1.5.0 - May 14, 2017
 ----------------------------
 Updated for Factorio 0.15.
-
 Auto-Targeting of ion cannons no longer requires dedicated Auto-Targeting Stations.
 Instead, after researching Auto-Targeting, *any* radar scanning activity will scan for nests and target ion cannons as needed.
 Additionally, there is a new option to detect any nest expansions within the always-revealed regions of radar coverage and auto-target them accordingly.
 Do be cautious with this option enabled, as biter nests expanding in close proximity to your own structures can result in friendly fire.
-
 Disabled the annoying "Rocket launched without satellite!" message.
 Added Orbital Ion Cannons as tracked items in the new "Rocket silo stats" frame.
 New research costs.
@@ -374,3 +372,10 @@ Removed the "lockout ticks" option; there are now always 10 lockout ticks (1/6 s
 Renamed remote call "fire_ion_cannon" to "target_ion_cannon".
 The Ion Cannon Targeting Device is now unlocked upon research of the technology, rather than upon launching the first ion cannon.
 It is no longer possible to switch to the "Full" ion cannon gui when there are 40 or more ion cannons in orbit.
+
+
+Version 1.5.1 - May 22, 2017
+----------------------------
+Fixed an error when trying to start a train mini-tutorial.
+Reinstated printing the name of the radar that designates an auto-target if Verbose Messaging is enabled.
+Fixed a rare bug when both quickbar & inventory slots were completely filled, manually using an ion cannon targeter could cause it to disappear.
