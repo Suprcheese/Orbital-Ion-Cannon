@@ -22,8 +22,8 @@ script.on_event(defines.events.on_sector_scanned, function(event)
 				local fired = targetIonCannon(radar.force, target.position, radar.surface)
 				if fired then
 					for i, player in pairs(radar.force.connected_players) do
-						if settings.get_player_settings(player)["ion-cannon-verbose-print"].value then
-							player.print({"auto-target-designated", radar.backer_name, target.position.x, target.position.y})
+						if settings.get_player_settings(player)["ion-cannon-custom-alerts"].value then
+							player.add_custom_alert(target, {type = "item", name = "orbital-ion-cannon"}, {"auto-target-designated", radar.backer_name, target.position.x, target.position.y}, true)
 						end
 					end
 				end
@@ -44,8 +44,8 @@ script.on_event(defines.events.on_biter_base_built, function(event)
 						local fired = targetIonCannon(force, base.position, base.surface)
 						if fired then
 							for i, player in pairs(force.connected_players) do
-								if settings.get_player_settings(player)["ion-cannon-verbose-print"].value then
-									player.print({"auto-target-designated", base.position.x, base.position.y})
+								if settings.get_player_settings(player)["ion-cannon-custom-alerts"].value then
+									player.add_custom_alert(base, {type = "item", name = "orbital-ion-cannon"}, {"ion-cannon-target-location", fired, base.position.x, base.position.y}, true)
 								end
 							end
 							break

@@ -78,6 +78,14 @@ data:extend({
 		default_value = 300,
 		minimum_value = 2
 	},
+	{
+		type = "int-setting",
+		name = "ion-cannon-chart-tag-duration",
+		setting_type = "runtime-global",
+		order = "e",
+		default_value = 720,
+		minimum_value = 120
+	},
 	-- Runtime (per player)
 	{
 		type = "bool-setting",
@@ -111,9 +119,9 @@ data:extend({
 	},
 	{
 		type = "bool-setting",
-		name = "ion-cannon-verbose-print",
+		name = "ion-cannon-custom-alerts",
 		setting_type = "runtime-per-user",
 		order = "e",
-		default_value = false
+		default_value = true
 	}
 })

@@ -21,13 +21,13 @@ data:extend({
 			count = 2500,
 			ingredients =
 			{
-			{"science-pack-1", 2},
-			{"science-pack-2", 2},
-			{"science-pack-3", 2},
-			{"military-science-pack", 2},
-			{"high-tech-science-pack", 2},
-			{"production-science-pack", 2},
-			{"space-science-pack", 1}
+				{"science-pack-1", 2},
+				{"science-pack-2", 2},
+				{"science-pack-3", 2},
+				{"military-science-pack", 2},
+				{"high-tech-science-pack", 2},
+				{"production-science-pack", 2},
+				{"space-science-pack", 1}
 			},
 			time = 60
 		},
@@ -45,13 +45,13 @@ data:extend({
 			count = 2000,
 			ingredients =
 			{
-			{"science-pack-1", 2},
-			{"science-pack-2", 2},
-			{"science-pack-3", 2},
-			{"military-science-pack", 2},
-			{"high-tech-science-pack", 2},
-			{"production-science-pack", 2},
-			{"space-science-pack", 2}
+				{"science-pack-1", 2},
+				{"science-pack-2", 2},
+				{"science-pack-3", 2},
+				{"military-science-pack", 2},
+				{"high-tech-science-pack", 2},
+				{"production-science-pack", 2},
+				{"space-science-pack", 2}
 			},
 			time = 60
 		},

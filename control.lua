@@ -43,6 +43,7 @@ function On_Init()
 		global.forces_ion_cannon_table["player"] = {}
 	end
 	global.goToFull = global.goToFull or {}
+	global.markers = global.markers or {}
 	global.klaxonTick = global.klaxonTick or 0
 	global.auto_tick = global.auto_tick or 0
 	global.readyTick = {}
@@ -234,6 +235,13 @@ end)
 
 function process_tick()
 	local current_tick = game.tick
+	for i = #global.markers, 1, -1 do -- Loop over table backwards because some entries get removed within the loop
+		local marker = global.markers[i]
+		if marker[2] == current_tick then
+			marker[1].destroy()
+			table.remove(global.markers, i)
+		end
+	end
 	if current_tick % 60 == 47 then
 		ReduceIonCannonCooldowns()
 		for i, force in pairs(game.forces) do
@@ -311,23 +319,18 @@ function targetIonCannon(force, position, surface, player)
 		end
 		return false
 	else
+		local current_tick = game.tick
 		local TargetPosition = position
 		TargetPosition.y = TargetPosition.y + 1
 		local IonTarget = surface.create_entity({name = "ion-cannon-target", position = TargetPosition, force = game.forces.neutral})
-		IonTarget.backer_name = "Ion cannon #" .. cannonNum .. " target location"
+		local marker = force.add_chart_tag(surface, {icon = {type = "item", name = "orbital-ion-cannon"}, text = "Ion cannon #" .. cannonNum .. " target location", position = TargetPosition})
+		table.insert(global.markers, {marker, current_tick + settings.global["ion-cannon-chart-tag-duration"].value})
 		if player then
 			player.print({"targeting-ion-cannon" , cannonNum})
-			-- player.add_custom_alert(IonTarget, {"item", "orbital-ion-cannon"}, {"ion-cannon-target-location", position.x, position.y}, true)
 		end
-		local current_tick = game.tick
 		local CrosshairsPosition = position
 		CrosshairsPosition.y = CrosshairsPosition.y - 20
 		surface.create_entity({name = "crosshairs", target = IonTarget, force = force, position = CrosshairsPosition, speed = 0})
-		for i, player in pairs(force.connected_players) do
-			if settings.get_player_settings(player)["ion-cannon-verbose-print"].value then
-				player.print({"time-to-ready-again" , cannonNum , settings.global["ion-cannon-cooldown-seconds"].value})
-			end
-		end
 		for i, player in pairs(game.connected_players) do
 			if settings.get_player_settings(player)["ion-cannon-play-klaxon"].value and global.klaxonTick < current_tick then
 				global.klaxonTick = current_tick + 60
@@ -341,7 +344,7 @@ function targetIonCannon(force, position, surface, player)
 		else
 			script.raise_event(when_ion_cannon_targeted, {surface = surface, force = force, position = position, radius = settings.startup["ion-cannon-radius"].value})		-- Passes event.surface, event.force, event.position, and event.radius
 		end
-		return true
+		return cannonNum
 	end
 end
 
@@ -365,7 +368,6 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 		else
 			force.print({"congratulations-additional"})
 			force.print({"ion-cannons-in-orbit" , #global.forces_ion_cannon_table[force.name]})
-			-- force.print({"time-to-ready" , #global.forces_ion_cannon_table[force.name] , settings.global["ion-cannon-cooldown-seconds"].value})
 		end
 	end
 end)
@@ -405,6 +407,11 @@ script.on_event(defines.events.on_put_item, function(event)
 		if fired then
 			local TargetPosition = event.position
 			TargetPosition.y = TargetPosition.y + 1
+			for i, p in pairs(player.force.connected_players) do
+				if settings.get_player_settings(p)["ion-cannon-custom-alerts"].value then
+					p.add_custom_alert(p.character, {type = "item", name = "orbital-ion-cannon"}, {"ion-cannon-target-location", fired, TargetPosition.x, TargetPosition.y}, true)
+				end
+			end
 		end
 	end
 end)

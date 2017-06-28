@@ -1,13 +1,3 @@
-local crosshairsPicture =	{
-		filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
-		priority = "low",
-		width = 64,
-		height = 64,
-		scale = 1,
-		shift = {0, -1},
-		frame_count = 1
-}
-
 local ion_cannon_targeter = util.table.deepcopy(data.raw["ammo-turret"]["gun-turret"])
 
 ion_cannon_targeter.name = "ion-cannon-targeter"
@@ -300,42 +290,27 @@ data:extend({
 	},
 
 	{
-		type = "train-stop",
+		type = "simple-entity",
 		name = "ion-cannon-target",
-		icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
-		flags = {"placeable-off-grid", "placeable-neutral", "player-creation", "filter-directions"},
-		order = "y",
-		selectable_in_game = false,
-		minable = {mining_time = 1, result = "train-stop"},
+		flags = {"placeable-off-grid", "not-on-map"},
 		max_health = 1,
 		render_layer = "air-object",
 		final_render_layer = "air-object",
 		collision_box = {{0,0}, {0,0}},
 		selection_box = {{0,0}, {0,0}},
-		drawing_box = {{0,0}, {0,0}},
-		tile_width = 1,
-		tile_height = 1,
-		animation_ticks_per_frame = 60,
-		animations =
+		resistances = {},
+		pictures =
 		{
-			north = crosshairsPicture,
-			east = crosshairsPicture,
-			south = crosshairsPicture,
-			west = crosshairsPicture,
-		},
-		vehicle_impact_sound =	{ filename = "__base__/sound/car-metal-impact.ogg", volume = 0 },
-		working_sound =
-		{
-			sound = { filename = "__base__/sound/train-stop.ogg", volume = 0 }
-		},
-		circuit_wire_connection_points = {},
-		circuit_connector_sprites =
-		{
-			get_circuit_connector_sprites({0.5625-1, 1.03125}, {0.5625-1, 1.03125}, 0), --N
-			get_circuit_connector_sprites({-0.78125, 0.28125-1}, {-0.78125, 0.28125-1}, 6), --E
-			get_circuit_connector_sprites({-0.28125+1, 0.28125}, {-0.28125+1, 0.28125}, 0), --S
-			get_circuit_connector_sprites({0.03125, 0.28125+1}, {0.03125, 0.28125+1}, 6), --W
-		},
+			{
+				filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
+				priority = "low",
+				width = 64,
+				height = 64,
+				scale = 1,
+				shift = {0, -1},
+				frame_count = 1
+			},
+		}
 	},
 
 	{
