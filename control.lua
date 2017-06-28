@@ -121,37 +121,40 @@ end
 
 function open_GUI(player)
 	local frame = player.gui.left["ion-cannon-stats"]
-	if frame and global.goToFull[player.index] then
+	local force = player.force
+	local forceName = force.name
+	local player_index = player.index
+	if frame and global.goToFull[player_index] then
 		frame.destroy()
 	else
-		if global.goToFull[player.index] and #global.forces_ion_cannon_table[player.force.name] < 40 then
-			global.goToFull[player.index] = false
+		if global.goToFull[player_index] and #global.forces_ion_cannon_table[forceName] < 40 then
+			global.goToFull[player_index] = false
 			if frame then
 				frame.destroy()
 			end
 			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
 			frame.add{type="label", caption={"ion-cannon-details-full"}}
 			frame.add{type="table", colspan=2, name="ion-cannon-table"}
-			for i = 1, #global.forces_ion_cannon_table[player.force.name] do
+			for i = 1, #global.forces_ion_cannon_table[forceName] do
 				frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannon-num", i}}
-				if global.forces_ion_cannon_table[player.force.name][i][2] == 1 then
+				if global.forces_ion_cannon_table[forceName][i][2] == 1 then
 					frame["ion-cannon-table"].add{type = "label", caption = {"ready"}}
 				else
-					frame["ion-cannon-table"].add{type = "label", caption = {"cooldown", global.forces_ion_cannon_table[player.force.name][i][1]}}
+					frame["ion-cannon-table"].add{type = "label", caption = {"cooldown", global.forces_ion_cannon_table[forceName][i][1]}}
 				end
 			end
 		else
-			global.goToFull[player.index] = true
+			global.goToFull[player_index] = true
 			if frame then
 				frame.destroy()
 			end
 			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
 			frame.add{type="label", caption={"ion-cannon-details-compact"}}
 			frame.add{type="table", colspan=1, name="ion-cannon-table"}
-			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[player.force.name]}}
-			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(player)}}
-			if countIonCannonsReady(player) < #global.forces_ion_cannon_table[player.force.name] then
-				frame["ion-cannon-table"].add{type = "label", caption = {"time-until-next-ready", timeUntilNextReady(player)}}
+			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[forceName]}}
+			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(force)}}
+			if countIonCannonsReady(force) < #global.forces_ion_cannon_table[forceName] then
+				frame["ion-cannon-table"].add{type = "label", caption = {"time-until-next-ready", timeUntilNextReady(force)}}
 			end
 		end
 	end
@@ -160,34 +163,37 @@ end
 function update_GUI(player)
 	init_GUI(player)
 	local frame = player.gui.left["ion-cannon-stats"]
+	local force = player.force
+	local forceName = force.name
+	local player_index = player.index
 	if frame then
-		if frame["ion-cannon-table"] and not global.goToFull[player.index] then
+		if frame["ion-cannon-table"] and not global.goToFull[player_index] then
 			frame["ion-cannon-table"].destroy()
 			frame.add{type="table", colspan=2, name="ion-cannon-table"}
-			for i = 1, #global.forces_ion_cannon_table[player.force.name] do
+			for i = 1, #global.forces_ion_cannon_table[forceName] do
 				frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannon-num", i}}
-				if global.forces_ion_cannon_table[player.force.name][i][2] == 1 then
+				if global.forces_ion_cannon_table[forceName][i][2] == 1 then
 					frame["ion-cannon-table"].add{type = "label", caption = {"ready"}}
 				else
-					frame["ion-cannon-table"].add{type = "label", caption = {"cooldown", global.forces_ion_cannon_table[player.force.name][i][1]}}
+					frame["ion-cannon-table"].add{type = "label", caption = {"cooldown", global.forces_ion_cannon_table[forceName][i][1]}}
 				end
 			end
 		end
-		if frame["ion-cannon-table"] and global.goToFull[player.index] then
+		if frame["ion-cannon-table"] and global.goToFull[player_index] then
 			frame["ion-cannon-table"].destroy()
 			frame.add{type="table", colspan=1, name="ion-cannon-table"}
-			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[player.force.name]}}
-			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(player)}}
-			if countIonCannonsReady(player) < #global.forces_ion_cannon_table[player.force.name] then
-				frame["ion-cannon-table"].add{type = "label", caption = {"time-until-next-ready", timeUntilNextReady(player)}}
+			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[forceName]}}
+			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(force)}}
+			if countIonCannonsReady(force) < #global.forces_ion_cannon_table[forceName] then
+				frame["ion-cannon-table"].add{type = "label", caption = {"time-until-next-ready", timeUntilNextReady(force)}}
 			end
 		end
 	end
 end
 
-function countIonCannonsReady(player)
+function countIonCannonsReady(force)
 	local ionCannonsReady = 0
-	for i, cooldown in pairs(global.forces_ion_cannon_table[player.force.name]) do
+	for i, cooldown in pairs(global.forces_ion_cannon_table[force.name]) do
 		if cooldown[2] == 1 then
 			ionCannonsReady = ionCannonsReady + 1
 		end
@@ -195,9 +201,9 @@ function countIonCannonsReady(player)
 	return ionCannonsReady
 end
 
-function timeUntilNextReady(player)
+function timeUntilNextReady(force)
 	local shortestCooldown = settings.global["ion-cannon-cooldown-seconds"].value
-	for i, cooldown in pairs(global.forces_ion_cannon_table[player.force.name]) do
+	for i, cooldown in pairs(global.forces_ion_cannon_table[force.name]) do
 		if cooldown[1] < shortestCooldown and cooldown[2] == 0 then
 			shortestCooldown = cooldown[1]
 		end
@@ -262,10 +268,11 @@ end
 
 function ReduceIonCannonCooldowns()
 	for i, force in pairs(game.forces) do
-		if global.forces_ion_cannon_table[force.name] then
-			for i, cooldown in pairs(global.forces_ion_cannon_table[force.name]) do
+		local name = force.name
+		if global.forces_ion_cannon_table[name] then
+			for i, cooldown in pairs(global.forces_ion_cannon_table[name]) do
 				if cooldown[1] > 0 then
-					global.forces_ion_cannon_table[force.name][i][1] = global.forces_ion_cannon_table[force.name][i][1] - 1
+					global.forces_ion_cannon_table[name][i][1] = global.forces_ion_cannon_table[name][i][1] - 1
 				end
 			end
 		end

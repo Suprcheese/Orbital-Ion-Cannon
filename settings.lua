@@ -86,6 +86,14 @@ data:extend({
 		default_value = 720,
 		minimum_value = 120
 	},
+	{
+		type = "int-setting",
+		name = "ion-cannon-min-cannons-ready",
+		setting_type = "runtime-global",
+		order = "f",
+		default_value = 2,
+		minimum_value = 0
+	},
 	-- Runtime (per player)
 	{
 		type = "bool-setting",

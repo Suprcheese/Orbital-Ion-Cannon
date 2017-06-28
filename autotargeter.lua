@@ -16,12 +16,13 @@ end
 script.on_event(defines.events.on_sector_scanned, function(event)
 	if settings.global["ion-cannon-auto-targeting"].value then
 		local radar = event.radar
-		if radar.force.technologies["auto-targeting"].researched == true then
+		local force = radar.force
+		if force.technologies["auto-targeting"].researched == true and (settings.global["ion-cannon-min-cannons-ready"].value < countIonCannonsReady(force)) then
 			local target = findNestNear(radar, event.chunk_position)
 			if target then
-				local fired = targetIonCannon(radar.force, target.position, radar.surface)
+				local fired = targetIonCannon(force, target.position, radar.surface)
 				if fired then
-					for i, player in pairs(radar.force.connected_players) do
+					for i, player in pairs(force.connected_players) do
 						if settings.get_player_settings(player)["ion-cannon-custom-alerts"].value then
 							player.add_custom_alert(target, {type = "item", name = "orbital-ion-cannon"}, {"auto-target-designated", radar.backer_name, target.position.x, target.position.y}, true)
 						end
@@ -36,7 +37,7 @@ script.on_event(defines.events.on_biter_base_built, function(event)
 	if settings.global["ion-cannon-auto-target-visible"].value then
 		local base = event.entity
 		for i, force in pairs(game.forces) do
-			if force.technologies["auto-targeting"].researched == true then
+			if force.technologies["auto-targeting"].researched == true and (settings.global["ion-cannon-min-cannons-ready"].value < countIonCannonsReady(force)) then
 				if force.is_chunk_visible(base.surface, Chunk.from_position(base.position)) then
 					local current_tick = game.tick
 					if global.auto_tick < current_tick then
