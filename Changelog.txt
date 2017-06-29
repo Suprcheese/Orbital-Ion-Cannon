@@ -379,3 +379,14 @@ Version 1.5.1 - May 22, 2017
 Fixed an error when trying to start a train mini-tutorial.
 Reinstated printing the name of the radar that designates an auto-target if Verbose Messaging is enabled.
 Fixed a rare bug when both quickbar & inventory slots were completely filled, manually using an ion cannon targeter could cause it to disappear.
+Reworded & improved a couple setting names/descriptions.
+
+
+Version 1.5.2 - June 29, 2017
+-----------------------------
+New setting "Minimum Cannons Ready Before Auto-Targeting" that allows you to keep a buffer of ready-to-fire cannons that will always be available for manual targeting.
+Removed "Verbose Messaging" option -- It is replaced by the new "Custom Alerts" option.
+New custom alerts will trigger (if enabled in the mod options) whenever an ion cannon target is designated. These behave just like the alerts for destroyed structures et al.
+Switched from using a train stop to show the ion cannon target location on the map to 0.15's new custom map marker feature.
+New setting: "Map Marker Duration". This determines for how long the target map markers will remain after the ion cannon fires.
+Reworked some text strings & added descriptions to the mod's technologies.
