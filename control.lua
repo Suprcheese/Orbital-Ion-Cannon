@@ -193,9 +193,11 @@ end
 
 function countIonCannonsReady(force)
 	local ionCannonsReady = 0
-	for i, cooldown in pairs(global.forces_ion_cannon_table[force.name]) do
-		if cooldown[2] == 1 then
-			ionCannonsReady = ionCannonsReady + 1
+	if global.forces_ion_cannon_table[force.name] then
+		for i, cooldown in pairs(global.forces_ion_cannon_table[force.name]) do
+			if cooldown[2] == 1 then
+				ionCannonsReady = ionCannonsReady + 1
+			end
 		end
 	end
 	return ionCannonsReady
