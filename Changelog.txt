@@ -390,3 +390,9 @@ New custom alerts will trigger (if enabled in the mod options) whenever an ion c
 Switched from using a train stop to show the ion cannon target location on the map to 0.15's new custom map marker feature.
 New setting: "Map Marker Duration". This determines for how long the target map markers will remain after the ion cannon fires.
 Reworked some text strings & added descriptions to the mod's technologies.
+
+
+Version 1.5.3 - Auguest 24, 2017
+--------------------------------
+Just some bug fixes.
+
