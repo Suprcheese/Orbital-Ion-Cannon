@@ -98,9 +98,9 @@ end)
 
 script.on_event(defines.events.on_forces_merging, function(event)
 	global.forces_ion_cannon_table[event.source.name] = nil
-	for i, player in pairs(game.players) do
-		init_GUI(player)
-	end
+	-- for i, player in pairs(game.players) do
+		-- init_GUI(player)
+	-- end
 end)
 
 function init_GUI(player)
