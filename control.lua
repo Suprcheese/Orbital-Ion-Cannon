@@ -80,6 +80,10 @@ function On_Init()
 			break
 		end
 	end
+	if not global.forces_ion_cannon_table["NewBases"] then
+		table.insert(global.forces_ion_cannon_table, "NewBases")
+		global.forces_ion_cannon_table["NewBases"] = {}
+	end
 end
 
 function On_Load()
