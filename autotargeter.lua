@@ -29,6 +29,7 @@ script.on_event(defines.events.on_sector_scanned, function(event)
 									player.add_custom_alert(base, {type = "item", name = "orbital-ion-cannon"}, {"ion-cannon-target-location", fired, base.position.x, base.position.y}, true)
 								end
 							end
+							table.remove(global.forces_ion_cannon_table["NewBases"], 1)
 							break
 						end
 					end
