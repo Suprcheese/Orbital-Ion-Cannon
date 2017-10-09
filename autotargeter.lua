@@ -14,6 +14,30 @@ function findNestNear(entity, chunk_position)
 end
 
 script.on_event(defines.events.on_sector_scanned, function(event)
+	if settings.global["ion-cannon-auto-target-visible"].value and #global.forces_ion_cannon_table["NewBases"] > 0 then
+		local base = global.forces_ion_cannon_table["NewBases"][1]
+		if base.valid then
+			for i, force in pairs(game.forces) do
+				if force.technologies["auto-targeting"].researched == true and force.is_chunk_visible(base.surface, Chunk.from_position(base.position)) and (settings.global["ion-cannon-min-cannons-ready"].value < countIonCannonsReady(force)) then
+					local current_tick = game.tick
+					if global.auto_tick < current_tick then
+						global.auto_tick = current_tick + (settings.startup["ion-cannon-heatup-multiplier"].value * 210)
+						local fired = targetIonCannon(force, base.position, base.surface)
+						if fired then
+							for i, player in pairs(force.connected_players) do
+								if settings.get_player_settings(player)["ion-cannon-custom-alerts"].value then
+									player.add_custom_alert(base, {type = "item", name = "orbital-ion-cannon"}, {"ion-cannon-target-location", fired, base.position.x, base.position.y}, true)
+								end
+							end
+							break
+						end
+					end
+				end
+			end
+		else
+			table.remove(global.forces_ion_cannon_table["NewBases"], 1)
+		end
+	end
 	if settings.global["ion-cannon-auto-targeting"].value then
 		local radar = event.radar
 		local force = radar.force
@@ -36,22 +60,14 @@ end)
 script.on_event(defines.events.on_biter_base_built, function(event)
 	if settings.global["ion-cannon-auto-target-visible"].value then
 		local base = event.entity
+		local addbase = false
 		for i, force in pairs(game.forces) do
-			if force.technologies["auto-targeting"].researched == true and force.is_chunk_visible(base.surface, Chunk.from_position(base.position)) and (settings.global["ion-cannon-min-cannons-ready"].value < countIonCannonsReady(force)) then
-				local current_tick = game.tick
-				if global.auto_tick < current_tick then
-					global.auto_tick = current_tick + (settings.startup["ion-cannon-heatup-multiplier"].value * 210)
-					local fired = targetIonCannon(force, base.position, base.surface)
-					if fired then
-						for i, player in pairs(force.connected_players) do
-							if settings.get_player_settings(player)["ion-cannon-custom-alerts"].value then
-								player.add_custom_alert(base, {type = "item", name = "orbital-ion-cannon"}, {"ion-cannon-target-location", fired, base.position.x, base.position.y}, true)
-							end
-						end
-						break
-					end
-				end
+			if force.technologies["auto-targeting"].researched == true and force.is_chunk_visible(base.surface, Chunk.from_position(base.position)) then
+				addbase = true
 			end
+		end
+		if addbase then
+			table.insert(global.forces_ion_cannon_table["NewBases"], base)
 		end
 	end
 end)
