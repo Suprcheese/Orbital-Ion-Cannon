@@ -16,9 +16,15 @@ end
 script.on_event(defines.events.on_sector_scanned, function(event)
 	if settings.global["ion-cannon-auto-target-visible"].value and #global.forces_ion_cannon_table["NewBases"] > 0 then
 		local base = global.forces_ion_cannon_table["NewBases"][1]
+		local visible = false
 		if base.valid then
 			for i, force in pairs(game.forces) do
-				if force.technologies["auto-targeting"].researched == true and force.is_chunk_visible(base.surface, Chunk.from_position(base.position)) and (settings.global["ion-cannon-min-cannons-ready"].value < countIonCannonsReady(force)) then
+				if force.is_chunk_visible(base.surface, Chunk.from_position(base.position)) then
+					visible = true
+				end
+			end
+			for i, force in pairs(game.forces) do
+				if force.technologies["auto-targeting"].researched == true and visible and (settings.global["ion-cannon-min-cannons-ready"].value < countIonCannonsReady(force)) then
 					local current_tick = game.tick
 					if global.auto_tick < current_tick then
 						global.auto_tick = current_tick + (settings.startup["ion-cannon-heatup-multiplier"].value * 210)
@@ -36,6 +42,9 @@ script.on_event(defines.events.on_sector_scanned, function(event)
 				end
 			end
 		else
+			table.remove(global.forces_ion_cannon_table["NewBases"], 1)
+		end
+		if not visible then
 			table.remove(global.forces_ion_cannon_table["NewBases"], 1)
 		end
 	end
