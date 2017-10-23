@@ -392,7 +392,15 @@ New setting: "Map Marker Duration". This determines for how long the target map 
 Reworked some text strings & added descriptions to the mod's technologies.
 
 
-Version 1.5.3 - Auguest 24, 2017
---------------------------------
+Version 1.5.3 - August 24, 2017
+-------------------------------
 Just some bug fixes.
 
+
+Version 1.6.0 - __, 2017
+--------------------------------
+When a new biter base is built in a revealed zone and would normally be auto-targeted immediately, but there are no ion cannons available, it will now be queued up for targeting when the next ion cannon is ready.
+You can no longer target ion cannons in unrevealed map zones using the zoom-to-map feature.
+Shift-clicking while holding an ion cannon targeter when all ion cannons are on cooldown now enters the target location into a queue to be targeted when the next ion cannon is ready.
+Ion cannon alerts & map icons now contain the name of the user who designated the target (if applicable).
+An admin panel has been added to restrict ion cannon targeting device access in multiplayer environments.
