@@ -152,6 +152,7 @@ function open_GUI(player)
 				frame.destroy()
 			end
 			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
+			frame.add{type="label", caption={"ion-cannon-details-compact"}}
 			if player.admin then
 				frame.add{type = "table", colspan = 2, name = "ion-cannon-admin-panel-header"}
 				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-admin-panel-show"}}
@@ -168,7 +169,6 @@ function open_GUI(player)
 					end
 				end
 			end
-			frame.add{type="label", caption={"ion-cannon-details-compact"}}
 			frame.add{type="table", colspan=1, name="ion-cannon-table"}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[forceName]}}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(force)}}
@@ -470,7 +470,7 @@ script.on_event(defines.events.on_put_item, function(event)
 	end
 	global.tick = current_tick + 10
 	local player = game.players[event.player_index]
-	if isHolding({name="ion-cannon-targeter", count=1}, player) then
+	if isHolding({name="ion-cannon-targeter", count=1}, player) and player.force.is_chunk_charted(player.surface, Chunk.from_position(event.position)) then
 		targetIonCannon(player.force, event.position, player.surface, player)
 	end
 end)
