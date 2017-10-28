@@ -56,12 +56,14 @@ function On_Init()
 		remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
 		remote.call("silo_script", "update_gui")
 	end
+	if not global.permissions then
+		global.permissions = {}
+		global.permissions[-1] = true
+		global.permissions[0] = false
+	end
 	for i, player in pairs(game.players) do
 		global.readyTick[player.index] = 0
-		if not global.forces_ion_cannon_table[player.force.name] then
-			table.insert(global.forces_ion_cannon_table, player.force.name)
-			global.forces_ion_cannon_table[player.force.name] = {}
-		end
+		global.forces_ion_cannon_table[player.force.name] = global.forces_ion_cannon_table[player.force.name] or {}
 		if global.goToFull[player.index] == nil then
 			global.goToFull[player.index] = true
 		end
@@ -71,19 +73,16 @@ function On_Init()
 		if player.gui.top["ion-cannon-stats"] then
 			player.gui.top["ion-cannon-stats"].destroy()
 		end
+		global.permissions[player.index] = player.admin
 	end
 	for i, force in pairs(game.forces) do
 		force.reset_recipes()
 		if global.forces_ion_cannon_table[force.name] and #global.forces_ion_cannon_table[force.name] > 0 then
 			global.IonCannonLaunched = true
 			script.on_event(defines.events.on_tick, process_tick)
-			break
 		end
 	end
-	if not global.forces_ion_cannon_table["NewBases"] then
-		table.insert(global.forces_ion_cannon_table, "NewBases")
-		global.forces_ion_cannon_table["NewBases"] = {}
-	end
+	global.forces_ion_cannon_table["Queue"] = global.forces_ion_cannon_table["Queue"] or {}
 end
 
 function On_Load()
@@ -110,7 +109,7 @@ end)
 function init_GUI(player)
 	if #global.forces_ion_cannon_table[player.force.name] == 0 then
 		local frame = player.gui.left["ion-cannon-stats"]
-		if (frame) then
+		if frame then
 			frame.destroy()
 		end
 		if player.gui.top["ion-cannon-button"] then
@@ -153,6 +152,22 @@ function open_GUI(player)
 				frame.destroy()
 			end
 			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
+			if player.admin then
+				frame.add{type = "table", colspan = 2, name = "ion-cannon-admin-panel-header"}
+				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-admin-panel-show"}}
+				frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-1], name = "show"}
+				if frame["ion-cannon-admin-panel-header"]["show"].state then
+					frame.add{type = "table", colspan = 2, name = "ion-cannon-admin-panel-table"}
+					frame["ion-cannon-admin-panel-table"].add{type = "label", caption = {"player-names"}}
+					frame["ion-cannon-admin-panel-table"].add{type = "label", caption = {"allowed"}}
+					frame["ion-cannon-admin-panel-table"].add{type = "label", caption = {"toggle-all"}}
+					frame["ion-cannon-admin-panel-table"].add{type = "checkbox", state = global.permissions[0], name = "0"}
+					for i, player in pairs(game.players) do
+						frame["ion-cannon-admin-panel-table"].add{type = "label", caption = player.name}
+						frame["ion-cannon-admin-panel-table"].add{type = "checkbox", state = global.permissions[player.index], name = player.index .. ""}
+					end
+				end
+			end
 			frame.add{type="label", caption={"ion-cannon-details-compact"}}
 			frame.add{type="table", colspan=1, name="ion-cannon-table"}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[forceName]}}
@@ -228,7 +243,7 @@ end)
 
 script.on_event("ion-cannon-hotkey", function(event)
 	local player = game.players[event.player_index]
-	if global.IonCannonLaunched then
+	if global.IonCannonLaunched or player.cheat_mode then
 		open_GUI(player)
 	end
 end)
@@ -236,12 +251,40 @@ end)
 script.on_event(defines.events.on_player_created, function(event)
 	init_GUI(game.players[event.player_index])
 	global.readyTick[event.player_index] = 0
+	local player = game.players[event.player_index]
+	if not global.permissions then
+		global.permissions = {}
+		global.permissions[0] = false
+		global.permissions[event.player_index] = player.admin
+	else
+		global.permissions[event.player_index] = player.admin or global.permissions[0]
+	end
 end)
 
 script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
-	local player = game.players[event.player_index]
-	if settings.get_player_settings(player)["ion-cannon-play-voices"].value and #global.forces_ion_cannon_table[player.force.name] > 0 and isHolding({name="ion-cannon-targeter", count=1}, player) and not isAllIonCannonOnCooldown(player) then
-		playSoundForPlayer("select-target", player)
+	if not global.permissions then
+		global.permissions = {}
+		global.permissions[0] = false
+		for i, p in pairs(game.players) do
+			global.permissions[p.index] = player.admin
+		end
+	end
+	local index = event.player_index
+	local player = game.players[index]
+	if isHolding({name="ion-cannon-targeter", count=1}, player) then
+		if player.character then
+			if not global.permissions[index] then
+				player.print({"ion-permission-denied"})
+				playSoundForPlayer("unable-to-comply", player)
+				return player.cursor_stack.clear()
+			end
+			--player.character_build_distance_bonus = 5000
+		end
+		if player.cheat_mode or settings.get_player_settings(player)["ion-cannon-play-voices"].value and #global.forces_ion_cannon_table[player.force.name] > 0 and not isAllIonCannonOnCooldown(player) then
+			playSoundForPlayer("select-target", player)
+		end
+	else
+		--player.character_build_distance_bonus = 0
 	end
 end)
 
@@ -314,7 +357,7 @@ end
 
 function isHolding(stack, player)
 	local holding = player.cursor_stack
-	if holding and holding.valid_for_read and (holding.name == stack.name) and (holding.count >= stack.count) then
+	if holding and holding.valid_for_read and holding.name == stack.name and holding.count >= stack.count then
 		return true
 	end
 	return false
@@ -328,6 +371,10 @@ function targetIonCannon(force, position, surface, player)
 			break
 		end
 	end
+	if player and player.cheat_mode == true then
+		cannonNum = "Cheat"
+		script.on_event(defines.events.on_tick, process_tick)
+	end
 	if cannonNum == 0 then
 		if player then
 			player.print({"unable-to-fire"})
@@ -337,8 +384,9 @@ function targetIonCannon(force, position, surface, player)
 		local current_tick = game.tick
 		local TargetPosition = position
 		TargetPosition.y = TargetPosition.y + 1
+		local targeterName = player.name or "Auto"
 		local IonTarget = surface.create_entity({name = "ion-cannon-target", position = TargetPosition, force = game.forces.neutral})
-		local marker = force.add_chart_tag(surface, {icon = {type = "item", name = "orbital-ion-cannon"}, text = "Ion cannon #" .. cannonNum .. " target location", position = TargetPosition})
+		local marker = force.add_chart_tag(surface, {icon = {type = "item", name = "orbital-ion-cannon"}, text = "Ion cannon #" .. cannonNum .. " target location (" .. targeterName .. ")", position = TargetPosition})
 		table.insert(global.markers, {marker, current_tick + settings.global["ion-cannon-chart-tag-duration"].value})
 		local CrosshairsPosition = position
 		CrosshairsPosition.y = CrosshairsPosition.y - 20
@@ -349,13 +397,15 @@ function targetIonCannon(force, position, surface, player)
 				player.surface.create_entity({name = "klaxon", position = player.position})
 			end
 		end
-		global.forces_ion_cannon_table[force.name][cannonNum][1] = settings.global["ion-cannon-cooldown-seconds"].value
-		global.forces_ion_cannon_table[force.name][cannonNum][2] = 0
+		if not player or not player.cheat_mode then
+			global.forces_ion_cannon_table[force.name][cannonNum][1] = settings.global["ion-cannon-cooldown-seconds"].value
+			global.forces_ion_cannon_table[force.name][cannonNum][2] = 0
+		end
 		if player then
 			player.print({"targeting-ion-cannon" , cannonNum})
 			for i, p in pairs(player.force.connected_players) do
 				if settings.get_player_settings(p)["ion-cannon-custom-alerts"].value then
-					p.add_custom_alert(IonTarget, {type = "item", name = "orbital-ion-cannon"}, {"ion-cannon-target-location", cannonNum, TargetPosition.x, TargetPosition.y}, true)
+					p.add_custom_alert(IonTarget, {type = "item", name = "orbital-ion-cannon"}, {"ion-cannon-target-location", cannonNum, TargetPosition.x, TargetPosition.y, targeterName}, true)
 				end
 			end
 			script.raise_event(when_ion_cannon_targeted, {surface = surface, force = force, position = position, radius = settings.startup["ion-cannon-radius"].value, player_index = player.index,})		-- Passes event.surface, event.force, event.position, event.radius, and event.player_index
@@ -422,5 +472,26 @@ script.on_event(defines.events.on_put_item, function(event)
 	local player = game.players[event.player_index]
 	if isHolding({name="ion-cannon-targeter", count=1}, player) then
 		targetIonCannon(player.force, event.position, player.surface, player)
+	end
+end)
+
+script.on_event(defines.events.on_gui_checked_state_changed, function(event)
+	local checkbox = event.element
+	if checkbox.name == "show" then
+		global.goToFull[event.player_index] = false
+		global.permissions[-1] = checkbox.state
+		open_GUI(game.players[event.player_index])
+	else
+		local index = tonumber(checkbox.name)
+		if checkbox.parent.name == "ion-cannon-admin-panel-table" then
+			global.permissions[index] = checkbox.state
+			if index == 0 then
+				for i = 1, #game.players do
+					global.permissions[i] = global.permissions[0]
+				end
+				global.goToFull[event.player_index] = false
+				open_GUI(game.players[event.player_index])
+			end
+		end
 	end
 end)

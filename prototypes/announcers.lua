@@ -74,6 +74,31 @@ data:extend({
 		},
 		},
 	},
+	{
+		type = "explosion",
+		name = "unable-to-comply-CommandAndConquer",
+		flags = {"not-on-map"},
+		animations =
+		{
+			{
+				filename = "__Orbital Ion Cannon__/graphics/null.png",
+				priority = "low",
+				width = 32,
+				height = 32,
+				frame_count = 1,
+				line_length = 1,
+				animation_speed = 1
+			},
+		},
+		light = {intensity = 0, size = 0},
+		sound =
+		{
+		{
+			filename = "__Orbital Ion Cannon__/sound/CommandAndConquer/UnableToComply.ogg",
+			volume = 0.75
+		},
+		},
+	},
 })
 
 data:extend({
@@ -152,6 +177,31 @@ data:extend({
 		},
 		},
 	},
+	{
+		type = "explosion",
+		name = "unable-to-comply-TiberianSunCABAL",
+		flags = {"not-on-map"},
+		animations =
+		{
+			{
+				filename = "__Orbital Ion Cannon__/graphics/null.png",
+				priority = "low",
+				width = 32,
+				height = 32,
+				frame_count = 1,
+				line_length = 1,
+				animation_speed = 1
+			},
+		},
+		light = {intensity = 0, size = 0},
+		sound =
+		{
+		{
+			filename = "__Orbital Ion Cannon__/sound/TiberianSunCABAL/UnableToComply.ogg",
+			volume = 0.75
+		},
+		},
+	},
 })
 
 data:extend({
@@ -226,6 +276,31 @@ data:extend({
 		{
 		{
 			filename = "__Orbital Ion Cannon__/sound/TiberianSunEVA/SelectTarget.ogg",
+			volume = 0.75
+		},
+		},
+	},
+	{
+		type = "explosion",
+		name = "unable-to-comply-TiberianSunEVA",
+		flags = {"not-on-map"},
+		animations =
+		{
+			{
+				filename = "__Orbital Ion Cannon__/graphics/null.png",
+				priority = "low",
+				width = 32,
+				height = 32,
+				frame_count = 1,
+				line_length = 1,
+				animation_speed = 1
+			},
+		},
+		light = {intensity = 0, size = 0},
+		sound =
+		{
+		{
+			filename = "__Orbital Ion Cannon__/sound/TiberianSunEVA/UnableToComply.ogg",
 			volume = 0.75
 		},
 		},
