@@ -49,7 +49,7 @@ script.on_event(defines.events.on_sector_scanned, function(event)
 				if fired then
 					for i, player in pairs(force.connected_players) do
 						if settings.get_player_settings(player)["ion-cannon-custom-alerts"].value then
-							player.add_custom_alert(target, {type = "item", name = "orbital-ion-cannon"}, {"ion-cannon-target-location", fired, target.position.x, target.position.y, "Auto"}, true)
+							player.add_custom_alert(target, {type = "item", name = "orbital-ion-cannon"}, {"auto-target-designated", radar.backer_name, target.position.x, target.position.y}, true)
 						end
 					end
 				end
