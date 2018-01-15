@@ -1,7 +1,10 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.6.0
-Date: 0. 1. 2018
+Date: 15. 1. 2018
   Changes:
+    - Updated for Factorio 0.16.
+	- New icon for the Ion Cannon Targeting Device
+	- New (minor) animation for the ion cannon target location
     - It is no longer possible to designate a target for an ion cannon in an uncharted region using the zoom-to-map feature. Charted areas that are in the "fog of war" are, however, still valid.
     - When a new biter base is built in a revealed zone and would normally be auto-targeted immediately, but there are insufficient ion cannons available, it will now be queued up for targeting when the next ion cannon is ready.
     - Ion cannon alerts & map icons now contain the name of the user who designated the target, if applicable.

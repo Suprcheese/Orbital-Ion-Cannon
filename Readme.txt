@@ -1,7 +1,7 @@
-Orbital Ion Cannon 1.5.3
+Orbital Ion Cannon 1.6.0
 ========================
 
-Version 1.5.3 was released Auguest 24, 2017, was tested using Factorio v0.15.34, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, Yousei9, and WPettersson.
+Version 1.6.0 was released January 15, 2018, was tested using Factorio v0.16.16, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, Yousei9, WPettersson, and Martok88.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
@@ -72,6 +72,9 @@ Command and Conquer: Tiberian Sun was released as freeware in 2010.
 
 The ion beam that the ion cannon fires was obtained from: http://opengameart.org/content/top-down-sci-fi-shooter-pack
 It was uploaded by the user Tatermand under the CC-BY-SA license.
+
+The Ion Cannon Targeting Device icon was obtained from: http://opengameart.org/content/%E2%80%9Calien%E2%80%9D-crosshairs
+	These were authored by Pyccna and submitted by the user Calinou, under the CC-BY License (https://creativecommons.org/licenses/by/3.0)
 
 This mod makes use of the Factorio Standard Library by Afforess (https://github.com/Afforess/Factorio-Stdlib).
 

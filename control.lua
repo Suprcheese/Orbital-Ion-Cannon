@@ -277,13 +277,10 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 				playSoundForPlayer("unable-to-comply", player)
 				return player.cursor_stack.clear()
 			end
-			--player.character_build_distance_bonus = 5000
 		end
-		if player.cheat_mode or settings.get_player_settings(player)["ion-cannon-play-voices"].value and #global.forces_ion_cannon_table[player.force.name] > 0 and not isAllIonCannonOnCooldown(player) then
+		if (player.cheat_mode and settings.get_player_settings(player)["ion-cannon-play-voices"].value) or (settings.get_player_settings(player)["ion-cannon-play-voices"].value and #global.forces_ion_cannon_table[player.force.name] > 0 and not isAllIonCannonOnCooldown(player)) then
 			playSoundForPlayer("select-target", player)
 		end
-	else
-		--player.character_build_distance_bonus = 0
 	end
 end)
 
