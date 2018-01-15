@@ -1,7 +1,7 @@
 local ion_cannon_targeter = util.table.deepcopy(data.raw["ammo-turret"]["gun-turret"])
 
 ion_cannon_targeter.name = "ion-cannon-targeter"
-ion_cannon_targeter.icon = "__Orbital Ion Cannon__/graphics/crosshairs_64.png"
+ion_cannon_targeter.icon = "__Orbital Ion Cannon__/graphics/crosshairs64.png"
 ion_cannon_targeter.icon_size = 64
 ion_cannon_targeter.flags = {"placeable-neutral", "player-creation", "placeable-off-grid"}
 ion_cannon_targeter.collision_mask = {}
@@ -300,18 +300,32 @@ data:extend({
 		collision_box = {{0,0}, {0,0}},
 		selection_box = {{0,0}, {0,0}},
 		resistances = {},
-		pictures =
+		animations =
 		{
 			{
-				filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
+				filename = "__Orbital Ion Cannon__/graphics/crosshairs_anim.png",
 				priority = "low",
 				width = 64,
 				height = 64,
-				scale = 1,
+				frame_count = 32,
+				animation_speed = 0.35,
+				line_length = 8,
 				shift = {0, -1},
-				frame_count = 1
-			},
-		}
+				scale = 1,
+			}
+		},
+		-- pictures =
+		-- {
+			-- {
+				-- filename = "__Orbital Ion Cannon__/graphics/crosshairsEntity.png",
+				-- priority = "low",
+				-- width = 64,
+				-- height = 64,
+				-- scale = 1,
+				-- shift = {0, -1},
+				-- frame_count = 1
+			-- },
+		-- }
 	},
 
 	{
@@ -325,7 +339,7 @@ data:extend({
 			priority = "low",
 			width = 192,
 			height = 192,
-			frame_count = 20,
+			frame_count = 25,
 			animation_speed = 0.2,
 			line_length = 5,
 			scale = 5 * (settings.startup["ion-cannon-radius"].value / 15),
