@@ -1,7 +1,7 @@
 data.raw["gui-style"].default["ion-cannon-button-style"] =
 {
 	type = "button_style",
-	parent = "button_style",
+	parent = "button",
 	width = 32,
 	height = 32,
 	top_padding = 0,

@@ -2,7 +2,8 @@ data:extend({
 	{
 		type = "item",
 		name = "orbital-ion-cannon",
-		icon = "__Orbital Ion Cannon__/graphics/Icon.png",
+		icon = "__Orbital Ion Cannon__/graphics/icon64.png",
+		icon_size = 64,
 		flags = {"goes-to-main-inventory"},
 		subgroup = "defensive-structure",
 		order = "e[orbital-ion-cannon]",
@@ -11,7 +12,8 @@ data:extend({
 	{
 		type = "item",
 		name = "ion-cannon-targeter",
-		icon = "__Orbital Ion Cannon__/graphics/crosshairs.png",
+		icon = "__Orbital Ion Cannon__/graphics/crosshairs_64.png",
+		icon_size = 64,
 		dark_background_icon = "__Orbital Ion Cannon__/graphics/crosshairs_darkBG.png",
 		flags = {"goes-to-quickbar"},
 		place_result = "ion-cannon-targeter",

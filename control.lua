@@ -54,7 +54,6 @@ function On_Init()
 	if remote.interfaces["silo_script"] then
 		remote.call("silo_script", "set_show_launched_without_satellite", false) -- FINALLY!
 		remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
-		remote.call("silo_script", "update_gui")
 	end
 	if not global.permissions then
 		global.permissions = {}
@@ -137,7 +136,7 @@ function open_GUI(player)
 			end
 			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
 			frame.add{type="label", caption={"ion-cannon-details-full"}}
-			frame.add{type="table", colspan=2, name="ion-cannon-table"}
+			frame.add{type="table", column_count=2, name="ion-cannon-table"}
 			for i = 1, #global.forces_ion_cannon_table[forceName] do
 				frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannon-num", i}}
 				if global.forces_ion_cannon_table[forceName][i][2] == 1 then
@@ -154,11 +153,11 @@ function open_GUI(player)
 			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
 			frame.add{type="label", caption={"ion-cannon-details-compact"}}
 			if player.admin then
-				frame.add{type = "table", colspan = 2, name = "ion-cannon-admin-panel-header"}
+				frame.add{type = "table", column_count = 2, name = "ion-cannon-admin-panel-header"}
 				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-admin-panel-show"}}
 				frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-1], name = "show"}
 				if frame["ion-cannon-admin-panel-header"]["show"].state then
-					frame.add{type = "table", colspan = 2, name = "ion-cannon-admin-panel-table"}
+					frame.add{type = "table", column_count = 2, name = "ion-cannon-admin-panel-table"}
 					frame["ion-cannon-admin-panel-table"].add{type = "label", caption = {"player-names"}}
 					frame["ion-cannon-admin-panel-table"].add{type = "label", caption = {"allowed"}}
 					frame["ion-cannon-admin-panel-table"].add{type = "label", caption = {"toggle-all"}}
@@ -169,7 +168,7 @@ function open_GUI(player)
 					end
 				end
 			end
-			frame.add{type="table", colspan=1, name="ion-cannon-table"}
+			frame.add{type="table", column_count=1, name="ion-cannon-table"}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[forceName]}}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(force)}}
 			if countIonCannonsReady(force) < #global.forces_ion_cannon_table[forceName] then
@@ -188,7 +187,7 @@ function update_GUI(player)
 	if frame then
 		if frame["ion-cannon-table"] and not global.goToFull[player_index] then
 			frame["ion-cannon-table"].destroy()
-			frame.add{type="table", colspan=2, name="ion-cannon-table"}
+			frame.add{type="table", column_count=2, name="ion-cannon-table"}
 			for i = 1, #global.forces_ion_cannon_table[forceName] do
 				frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannon-num", i}}
 				if global.forces_ion_cannon_table[forceName][i][2] == 1 then
@@ -200,7 +199,7 @@ function update_GUI(player)
 		end
 		if frame["ion-cannon-table"] and global.goToFull[player_index] then
 			frame["ion-cannon-table"].destroy()
-			frame.add{type="table", colspan=1, name="ion-cannon-table"}
+			frame.add{type="table", column_count=1, name="ion-cannon-table"}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[forceName]}}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(force)}}
 			if countIonCannonsReady(force) < #global.forces_ion_cannon_table[forceName] then

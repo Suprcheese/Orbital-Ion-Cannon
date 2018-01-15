@@ -1,7 +1,8 @@
 local ion_cannon_targeter = util.table.deepcopy(data.raw["ammo-turret"]["gun-turret"])
 
 ion_cannon_targeter.name = "ion-cannon-targeter"
-ion_cannon_targeter.icon = "__Orbital Ion Cannon__/graphics/crosshairs.png"
+ion_cannon_targeter.icon = "__Orbital Ion Cannon__/graphics/crosshairs_64.png"
+ion_cannon_targeter.icon_size = 64
 ion_cannon_targeter.flags = {"placeable-neutral", "player-creation", "placeable-off-grid"}
 ion_cannon_targeter.collision_mask = {}
 ion_cannon_targeter.max_health = 1
@@ -90,16 +91,16 @@ data:extend({
 					type = "instant",
 					target_effects =
 					{
-						{
-							type = "create-entity",
-							entity_name = "dead-tree",
-							check_buildability = true
-						},
-						{
-							type = "create-entity",
-							entity_name = "dry-tree",
-							check_buildability = true
-						},
+						-- {
+							-- type = "create-entity",
+							-- entity_name = "dead-tree-desert",
+							-- check_buildability = true
+						-- },
+						-- {
+							-- type = "create-entity",
+							-- entity_name = "dry-tree",
+							-- check_buildability = true
+						-- },
 						{
 							type = "create-entity",
 							entity_name = "huge-explosion"
@@ -123,7 +124,7 @@ data:extend({
 			},
 			{
 				type = "area",
-				perimeter = settings.startup["ion-cannon-radius"].value * 0.8,
+				radius = settings.startup["ion-cannon-radius"].value * 0.8,
 				action_delivery =
 				{
 					type = "instant",
@@ -142,7 +143,7 @@ data:extend({
 			},
 			{
 				type = "area",
-				perimeter = settings.startup["ion-cannon-radius"].value * 0.8,
+				radius = settings.startup["ion-cannon-radius"].value * 0.8,
 				action_delivery =
 				{
 					type = "instant",
@@ -161,7 +162,7 @@ data:extend({
 			},
 			{
 				type = "area",
-				perimeter = settings.startup["ion-cannon-radius"].value,
+				radius = settings.startup["ion-cannon-radius"].value,
 				action_delivery =
 				{
 					type = "instant",
@@ -211,7 +212,7 @@ data:extend({
 		{
 			{
 				type = "area",
-				perimeter = settings.startup["ion-cannon-radius"].value * 0.8,
+				radius = settings.startup["ion-cannon-radius"].value * 0.8,
 				action_delivery =
 				{
 					type = "instant",
@@ -230,7 +231,7 @@ data:extend({
 			},
 			{
 				type = "area",
-				perimeter = settings.startup["ion-cannon-radius"].value,
+				radius = settings.startup["ion-cannon-radius"].value,
 				action_delivery =
 				{
 					type = "instant",
@@ -427,7 +428,7 @@ if not settings.startup["ion-cannon-flames"].value then
 	{
 		{
 			type = "area",
-			perimeter = settings.startup["ion-cannon-radius"].value,
+			radius = settings.startup["ion-cannon-radius"].value,
 			action_delivery =
 			{
 				type = "instant",
@@ -451,16 +452,16 @@ if not settings.startup["ion-cannon-flames"].value then
 				type = "instant",
 				target_effects =
 				{
-					{
-						type = "create-entity",
-						entity_name = "dead-tree",
-						check_buildability = true
-					},
-					{
-						type = "create-entity",
-						entity_name = "dry-tree",
-						check_buildability = true
-					},
+					-- {
+						-- type = "create-entity",
+						-- entity_name = "dead-tree-desert",
+						-- check_buildability = true
+					-- },
+					-- {
+						-- type = "create-entity",
+						-- entity_name = "dry-tree",
+						-- check_buildability = true
+					-- },
 					{
 						type = "create-entity",
 						entity_name = "huge-explosion"
@@ -484,7 +485,7 @@ if not settings.startup["ion-cannon-flames"].value then
 		},
 		{
 			type = "area",
-			perimeter = settings.startup["ion-cannon-radius"].value,
+			radius = settings.startup["ion-cannon-radius"].value,
 			action_delivery =
 			{
 				type = "instant",
