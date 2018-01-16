@@ -382,7 +382,7 @@ function targetIonCannon(force, position, surface, player)
 		TargetPosition.y = TargetPosition.y + 1
 		local targeterName = player.name or "Auto"
 		local IonTarget = surface.create_entity({name = "ion-cannon-target", position = TargetPosition, force = game.forces.neutral})
-		local marker = force.add_chart_tag(surface, {icon = {type = "item", name = "orbital-ion-cannon"}, text = "Ion cannon #" .. cannonNum .. " target location (" .. targeterName .. ")", position = TargetPosition})
+		local marker = force.add_chart_tag(surface, {icon = {type = "item", name = "ion-cannon-targeter"}, text = "Ion cannon #" .. cannonNum .. " target location (" .. targeterName .. ")", position = TargetPosition})
 		table.insert(global.markers, {marker, current_tick + settings.global["ion-cannon-chart-tag-duration"].value})
 		local CrosshairsPosition = position
 		CrosshairsPosition.y = CrosshairsPosition.y - 20
