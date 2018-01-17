@@ -186,13 +186,13 @@ data:extend({
 		},
 		light = {intensity = 0, size = 0},
 		animation =
-		 {
+		{
 			filename = "__Orbital Ion Cannon__/graphics/null.png",
 			priority = "low",
 			width = 32,
 			height = 32,
 			frame_count = 1
-		 },
+		},
 		shadow =
 		{
 			filename = "__Orbital Ion Cannon__/graphics/null.png",
@@ -247,13 +247,13 @@ data:extend({
 		},
 		light = {intensity = 0, size = 0},
 		animation =
-		 {
+		{
 			filename = "__Orbital Ion Cannon__/graphics/null.png",
 			priority = "low",
 			width = 32,
 			height = 32,
 			frame_count = 1
-		 },
+		},
 		shadow =
 		{
 			filename = "__Orbital Ion Cannon__/graphics/null.png",
@@ -265,28 +265,14 @@ data:extend({
 	},
 
 	{
-		type = "explosion",
-		name = "klaxon",
-		flags = {"not-on-map"},
-		animations =
+		type = "sound",
+		name = "ion-cannon-klaxon",
+		variations =
 		{
 			{
-				filename = "__Orbital Ion Cannon__/graphics/null.png",
-				priority = "low",
-				width = 32,
-				height = 32,
-				frame_count = 1,
-				line_length = 1,
-				animation_speed = 1
+				filename = "__Orbital Ion Cannon__/sound/Klaxon.ogg",
+				volume = 0.75
 			},
-		},
-		light = {intensity = 0, size = 0},
-		sound =
-		{
-		{
-			filename = "__Orbital Ion Cannon__/sound/Klaxon.ogg",
-			volume = 0.75
-		},
 		},
 	},
 
@@ -383,24 +369,24 @@ data:extend({
 		animations =
 		{
 			{
-			filename = "__base__/graphics/entity/medium-explosion/medium-explosion.png",
-			priority = "high",
-			width = 112,
-			height = 94,
-			scale = 0.8,
-			frame_count = 54,
-			line_length = 6,
-			shift = {-0.56, -0.96},
-			animation_speed = 0.5
+				filename = "__base__/graphics/entity/medium-explosion/medium-explosion.png",
+				priority = "high",
+				width = 112,
+				height = 94,
+				scale = 0.8,
+				frame_count = 54,
+				line_length = 6,
+				shift = {-0.56, -0.96},
+				animation_speed = 0.5
 			},
 		},
 		light = {intensity = 2, size = settings.startup["ion-cannon-radius"].value * 3},
 		sound =
 		{
-		{
-			filename = "__Orbital Ion Cannon__/sound/OrbitalIonCannon.ogg",
-			volume = 2.0
-		},
+			{
+				filename = "__Orbital Ion Cannon__/sound/OrbitalIonCannon.ogg",
+				volume = 2.0
+			},
 		},
 		created_effect =
 		{

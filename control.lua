@@ -348,7 +348,8 @@ end
 
 function playSoundForPlayer(sound, player)
 	local voice = settings.get_player_settings(player)["ion-cannon-voice-style"].value
-	player.surface.create_entity({name = sound .. "-" .. voice, position = player.position})
+	-- player.surface.create_entity({name = sound .. "-" .. voice, position = player.position})
+	player.play_sound({path = sound .. "-" .. voice})
 end
 
 function isHolding(stack, player)
@@ -390,7 +391,8 @@ function targetIonCannon(force, position, surface, player)
 		for i, player in pairs(game.connected_players) do
 			if settings.get_player_settings(player)["ion-cannon-play-klaxon"].value and global.klaxonTick < current_tick then
 				global.klaxonTick = current_tick + 60
-				player.surface.create_entity({name = "klaxon", position = player.position})
+				-- player.surface.create_entity({name = "klaxon", position = player.position})
+				player.play_sound({path = "ion-cannon-klaxon"})
 			end
 		end
 		if not player or not player.cheat_mode then
