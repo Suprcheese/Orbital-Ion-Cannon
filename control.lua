@@ -362,15 +362,19 @@ end
 
 function targetIonCannon(force, position, surface, player)
 	local cannonNum = 0
+	local targeterName = "Auto"
 	for i, cooldown in pairs(global.forces_ion_cannon_table[force.name]) do
 		if cooldown[2] == 1 then
 			cannonNum = i
 			break
 		end
 	end
-	if player and player.cheat_mode == true then
-		cannonNum = "Cheat"
-		script.on_event(defines.events.on_tick, process_tick)
+	if player then
+		targeterName = player.name
+		if player.cheat_mode == true then
+			cannonNum = "Cheat"
+			script.on_event(defines.events.on_tick, process_tick)
+		end
 	end
 	if cannonNum == 0 then
 		if player then
@@ -381,7 +385,6 @@ function targetIonCannon(force, position, surface, player)
 		local current_tick = game.tick
 		local TargetPosition = position
 		TargetPosition.y = TargetPosition.y + 1
-		local targeterName = player.name or "Auto"
 		local IonTarget = surface.create_entity({name = "ion-cannon-target", position = TargetPosition, force = game.forces.neutral})
 		local marker = force.add_chart_tag(surface, {icon = {type = "item", name = "ion-cannon-targeter"}, text = "Ion cannon #" .. cannonNum .. " target location (" .. targeterName .. ")", position = TargetPosition})
 		table.insert(global.markers, {marker, current_tick + settings.global["ion-cannon-chart-tag-duration"].value})
