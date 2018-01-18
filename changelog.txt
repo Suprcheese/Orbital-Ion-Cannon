@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.6.1
+Date: 18. 1. 2018
+  Changes:
+    - Changed map marker icon.
+    - Switch to new play_sound() function rather than spawning "explosion"-type entities to play sounds.
+  Bugfixes:
+    - Fixed error with auto-targeting.
+---------------------------------------------------------------------------------------------------
 Version: 1.6.0
 Date: 15. 1. 2018
   Changes:
