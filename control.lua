@@ -57,6 +57,7 @@ function On_Init()
 	end
 	if not global.permissions then
 		global.permissions = {}
+		global.permissions[-2] = false
 		global.permissions[-1] = true
 		global.permissions[0] = false
 	end
@@ -117,7 +118,7 @@ function init_GUI(player)
 		return
 	end
 	if not player.gui.top["ion-cannon-button"] then
-		player.gui.top.add{type="button", name="ion-cannon-button", style="ion-cannon-button-style"}
+		player.gui.top.add{type = "button", name = "ion-cannon-button", style = "ion-cannon-button-style"}
 	end
 end
 
@@ -134,9 +135,9 @@ function open_GUI(player)
 			if frame then
 				frame.destroy()
 			end
-			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
-			frame.add{type="label", caption={"ion-cannon-details-full"}}
-			frame.add{type="table", column_count=2, name="ion-cannon-table"}
+			frame = player.gui.left.add{type = "frame", name = "ion-cannon-stats", direction = "vertical"}
+			frame.add{type = "label", caption = {"ion-cannon-details-full"}}
+			frame.add{type = "table", column_count = 2, name = "ion-cannon-table"}
 			for i = 1, #global.forces_ion_cannon_table[forceName] do
 				frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannon-num", i}}
 				if global.forces_ion_cannon_table[forceName][i][2] == 1 then
@@ -150,12 +151,14 @@ function open_GUI(player)
 			if frame then
 				frame.destroy()
 			end
-			frame = player.gui.left.add{type="frame", name="ion-cannon-stats", direction="vertical"}
-			frame.add{type="label", caption={"ion-cannon-details-compact"}}
+			frame = player.gui.left.add{type = "frame", name = "ion-cannon-stats", direction = "vertical"}
+			frame.add{type = "label", caption = {"ion-cannon-details-compact"}}
 			if player.admin then
 				frame.add{type = "table", column_count = 2, name = "ion-cannon-admin-panel-header"}
 				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-admin-panel-show"}}
 				frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-1], name = "show"}
+				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-cheat-menu-show"}}
+				frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-2], name = "cheats"}
 				if frame["ion-cannon-admin-panel-header"]["show"].state then
 					frame.add{type = "table", column_count = 2, name = "ion-cannon-admin-panel-table"}
 					frame["ion-cannon-admin-panel-table"].add{type = "label", caption = {"player-names"}}
@@ -167,8 +170,14 @@ function open_GUI(player)
 						frame["ion-cannon-admin-panel-table"].add{type = "checkbox", state = global.permissions[player.index], name = player.index .. ""}
 					end
 				end
+				if frame["ion-cannon-admin-panel-header"]["cheats"].state then
+					frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-cheat-one"}}
+					frame["ion-cannon-admin-panel-header"].add{type = "button", name = "add-ion-cannon", style = "ion-cannon-button-style"}
+					frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-cheat-five"}}
+					frame["ion-cannon-admin-panel-header"].add{type = "button", name = "add-five-ion-cannon", style = "ion-cannon-button-style"}
+				end
 			end
-			frame.add{type="table", column_count=1, name="ion-cannon-table"}
+			frame.add{type = "table", column_count = 1, name = "ion-cannon-table"}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[forceName]}}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(force)}}
 			if countIonCannonsReady(force) < #global.forces_ion_cannon_table[forceName] then
@@ -187,7 +196,7 @@ function update_GUI(player)
 	if frame then
 		if frame["ion-cannon-table"] and not global.goToFull[player_index] then
 			frame["ion-cannon-table"].destroy()
-			frame.add{type="table", column_count=2, name="ion-cannon-table"}
+			frame.add{type = "table", column_count = 2, name = "ion-cannon-table"}
 			for i = 1, #global.forces_ion_cannon_table[forceName] do
 				frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannon-num", i}}
 				if global.forces_ion_cannon_table[forceName][i][2] == 1 then
@@ -199,7 +208,7 @@ function update_GUI(player)
 		end
 		if frame["ion-cannon-table"] and global.goToFull[player_index] then
 			frame["ion-cannon-table"].destroy()
-			frame.add{type="table", column_count=1, name="ion-cannon-table"}
+			frame.add{type = "table", column_count = 1, name = "ion-cannon-table"}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[forceName]}}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-ready", countIonCannonsReady(force)}}
 			if countIonCannonsReady(force) < #global.forces_ion_cannon_table[forceName] then
@@ -233,9 +242,34 @@ end
 
 script.on_event(defines.events.on_gui_click, function(event)
 	local player = game.players[event.element.player_index]
+	local force = player.force
 	local name = event.element.name
 	if name == "ion-cannon-button" then
 		open_GUI(player)
+		return
+	elseif name == "add-ion-cannon" then
+		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
+		global.IonCannonLaunched = true
+		script.on_event(defines.events.on_tick, process_tick)
+		for i, player in pairs(force.connected_players) do
+			init_GUI(player)
+			playSoundForPlayer("ion-cannon-charging", player)
+		end
+		force.print({"ion-cannons-in-orbit" , #global.forces_ion_cannon_table[force.name]})
+		return
+	elseif name == "add-five-ion-cannon" then
+		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
+		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
+		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
+		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
+		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
+		global.IonCannonLaunched = true
+		script.on_event(defines.events.on_tick, process_tick)
+		for i, player in pairs(force.connected_players) do
+			init_GUI(player)
+			playSoundForPlayer("ion-cannon-charging", player)
+		end
+		force.print({"ion-cannons-in-orbit" , #global.forces_ion_cannon_table[force.name]})
 		return
 	end
 end)
@@ -270,7 +304,7 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 	end
 	local index = event.player_index
 	local player = game.players[index]
-	if isHolding({name="ion-cannon-targeter", count=1}, player) then
+	if isHolding({name = "ion-cannon-targeter", count = 1}, player) then
 		if player.character then
 			if not global.permissions[index] then
 				player.print({"ion-permission-denied"})
@@ -278,7 +312,7 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 				return player.cursor_stack.clear()
 			end
 		end
-		if (player.cheat_mode and settings.get_player_settings(player)["ion-cannon-play-voices"].value) or (settings.get_player_settings(player)["ion-cannon-play-voices"].value and #global.forces_ion_cannon_table[player.force.name] > 0 and not isAllIonCannonOnCooldown(player)) then
+		if player.cheat_mode or (#global.forces_ion_cannon_table[player.force.name] > 0 and not isAllIonCannonOnCooldown(player)) then
 			playSoundForPlayer("select-target", player)
 		end
 	end
@@ -300,7 +334,7 @@ function process_tick()
 		for i, force in pairs(game.forces) do
 			if global.forces_ion_cannon_table[force.name] and isIonCannonReady(force) then
 				for i, player in pairs(force.connected_players) do
-					if settings.get_player_settings(player)["ion-cannon-play-voices"].value and global.readyTick[player.index] < current_tick then
+					if global.readyTick[player.index] < current_tick then
 						global.readyTick[player.index] = current_tick + settings.get_player_settings(player)["ion-cannon-ready-ticks"].value
 						playSoundForPlayer("ion-cannon-ready", player)
 					end
@@ -347,8 +381,10 @@ function isIonCannonReady(force)
 end
 
 function playSoundForPlayer(sound, player)
-	local voice = settings.get_player_settings(player)["ion-cannon-voice-style"].value
-	player.play_sound({path = sound .. "-" .. voice})
+	if settings.get_player_settings(player)["ion-cannon-play-voices"].value then
+		local voice = settings.get_player_settings(player)["ion-cannon-voice-style"].value
+		player.play_sound({path = sound .. "-" .. voice})
+	end
 end
 
 function isHolding(stack, player)
@@ -423,9 +459,7 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 		script.on_event(defines.events.on_tick, process_tick)
 		for i, player in pairs(force.connected_players) do
 			init_GUI(player)
-			if settings.get_player_settings(player)["ion-cannon-play-voices"].value then
-				playSoundForPlayer("ion-cannon-charging", player)
-			end
+			playSoundForPlayer("ion-cannon-charging", player)
 		end
 		if #global.forces_ion_cannon_table[force.name] == 1 then
 			force.print({"congratulations-first"})
@@ -442,7 +476,7 @@ end)
 script.on_event(defines.events.on_built_entity, function(event)
 	local player = game.players[event.player_index]
 	if event.created_entity.name == "ion-cannon-targeter" then
-		player.cursor_stack.set_stack({name="ion-cannon-targeter", count=1})
+		player.cursor_stack.set_stack({name = "ion-cannon-targeter", count = 1})
 		return event.created_entity.destroy()
 	end
 	if event.created_entity.name == "entity-ghost" then
@@ -469,7 +503,7 @@ script.on_event(defines.events.on_put_item, function(event)
 	end
 	global.tick = current_tick + 10
 	local player = game.players[event.player_index]
-	if isHolding({name="ion-cannon-targeter", count=1}, player) and player.force.is_chunk_charted(player.surface, Chunk.from_position(event.position)) then
+	if isHolding({name = "ion-cannon-targeter", count = 1}, player) and player.force.is_chunk_charted(player.surface, Chunk.from_position(event.position)) then
 		targetIonCannon(player.force, event.position, player.surface, player)
 	end
 end)
@@ -479,6 +513,10 @@ script.on_event(defines.events.on_gui_checked_state_changed, function(event)
 	if checkbox.name == "show" then
 		global.goToFull[event.player_index] = false
 		global.permissions[-1] = checkbox.state
+		open_GUI(game.players[event.player_index])
+	elseif checkbox.name == "cheats" then
+		global.goToFull[event.player_index] = false
+		global.permissions[-2] = checkbox.state
 		open_GUI(game.players[event.player_index])
 	else
 		local index = tonumber(checkbox.name)
