@@ -5,7 +5,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/CommandAndConquer/IonCannonReady.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/CommandAndConquer/IonCannonReady.ogg",
 				volume = 0.75
 			},
 		},
@@ -16,7 +16,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/CommandAndConquer/IonCannonCharging.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/CommandAndConquer/IonCannonCharging.ogg",
 				volume = 0.75
 			},
 		},
@@ -27,7 +27,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/CommandAndConquer/SelectTarget.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/CommandAndConquer/SelectTarget.ogg",
 				volume = 0.75
 			},
 		},
@@ -38,7 +38,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/CommandAndConquer/UnableToComply.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/CommandAndConquer/UnableToComply.ogg",
 				volume = 0.75
 			},
 		},
@@ -52,7 +52,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/TiberianSunCABAL/IonCannonReady.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/TiberianSunCABAL/IonCannonReady.ogg",
 				volume = 0.75
 			},
 		},
@@ -63,7 +63,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/TiberianSunCABAL/IonCannonCharging.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/TiberianSunCABAL/IonCannonCharging.ogg",
 				volume = 0.75
 			},
 		},
@@ -74,7 +74,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/TiberianSunCABAL/SelectTarget.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/TiberianSunCABAL/SelectTarget.ogg",
 				volume = 0.75
 			},
 		},
@@ -85,7 +85,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/TiberianSunCABAL/UnableToComply.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/TiberianSunCABAL/UnableToComply.ogg",
 				volume = 0.75
 			},
 		},
@@ -99,7 +99,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/TiberianSunEVA/IonCannonReady.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/TiberianSunEVA/IonCannonReady.ogg",
 				volume = 0.75
 			},
 		},
@@ -110,7 +110,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/TiberianSunEVA/IonCannonCharging.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/TiberianSunEVA/IonCannonCharging.ogg",
 				volume = 0.75
 			},
 		},
@@ -121,7 +121,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/TiberianSunEVA/SelectTarget.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/TiberianSunEVA/SelectTarget.ogg",
 				volume = 0.75
 			},
 		},
@@ -132,7 +132,7 @@ data:extend({
 		variations =
 		{
 			{
-				filename = "__Orbital_Ion_Cannon__/sound/TiberianSunEVA/UnableToComply.ogg",
+				filename = "__Orbital-Ion-Cannon__/sound/TiberianSunEVA/UnableToComply.ogg",
 				volume = 0.75
 			},
 		},

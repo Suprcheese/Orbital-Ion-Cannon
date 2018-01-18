@@ -14,7 +14,7 @@ data.raw["gui-style"].default["ion-cannon-button-style"] =
 		type = "monolith",
 		monolith_image =
 		{
-			filename = "__Orbital_Ion_Cannon__/graphics/Button.png",
+			filename = "__Orbital-Ion-Cannon__/graphics/Button.png",
 			priority = "extra-high-no-scale",
 			width = 64,
 			height = 64,
@@ -27,7 +27,7 @@ data.raw["gui-style"].default["ion-cannon-button-style"] =
 		type = "monolith",
 		monolith_image =
 		{
-			filename = "__Orbital_Ion_Cannon__/graphics/Button.png",
+			filename = "__Orbital-Ion-Cannon__/graphics/Button.png",
 			priority = "extra-high-no-scale",
 			width = 64,
 			height = 64,
@@ -40,7 +40,7 @@ data.raw["gui-style"].default["ion-cannon-button-style"] =
 		type = "monolith",
 		monolith_image =
 		{
-			filename = "__Orbital_Ion_Cannon__/graphics/Button.png",
+			filename = "__Orbital-Ion-Cannon__/graphics/Button.png",
 			width = 64,
 			height = 64,
 			x = 0,
