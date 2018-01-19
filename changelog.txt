@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.6.2 - Renaming breaks savegame compatibility
+Date: 19. 1. 2018
+  Changes:
+    - Removed whitespace in mod folder/archive due to changes in mod parsing rules. This breaks savegame compatibility, causing any ion cannons in orbit to be lost.
+    - Added a Cheat Menu accessible in singleplayer or for admins in multiplayer that allows you to cheat ion cannons into orbit. This can be used to fix up savegames that had ion cannons in orbit.
+      When migrating a savefile, note how many ion cannons you have in orbit, then update the mod and use the hotkey ("I" by default) to open the GUI and cheat menu, then re-add your cannons as needed.
+    - The Cheat Menu selections can be found beneath the Admin Panel.
+    - Removed the "(Compact)" designation from the Compact-type menu. This is a text-only change, so now the GUI merely cycles between closed, open, and full.
+      The Full GUI is still disabled when 40 or more cannons are in orbit (see 1.5.0).
+---------------------------------------------------------------------------------------------------
 Version: 1.6.1
 Date: 18. 1. 2018
   Changes:

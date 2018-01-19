@@ -96,11 +96,6 @@ data:extend({
 							-- entity_name = "dead-tree-desert",
 							-- check_buildability = true
 						-- },
-						-- {
-							-- type = "create-entity",
-							-- entity_name = "dry-tree",
-							-- check_buildability = true
-						-- },
 						{
 							type = "create-entity",
 							entity_name = "huge-explosion"
@@ -455,11 +450,6 @@ if not settings.startup["ion-cannon-flames"].value then
 					-- {
 						-- type = "create-entity",
 						-- entity_name = "dead-tree-desert",
-						-- check_buildability = true
-					-- },
-					-- {
-						-- type = "create-entity",
-						-- entity_name = "dry-tree",
 						-- check_buildability = true
 					-- },
 					{

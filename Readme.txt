@@ -1,9 +1,9 @@
-Orbital Ion Cannon 1.6.1
+Orbital Ion Cannon 1.6.2
 ========================
 
-Version 1.6.1 was released January 18, 2018, was tested using Factorio v0.16.16, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, Yousei9, WPettersson, and Martok88.
+Version 1.6.2 was released January 19, 2018, was tested using Factorio v0.16.16, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, Yousei9, WPettersson, and Martok88.
 
-Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch than just increment a single number? Do you really hate biters? If so, then this mod is for you!
+Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.
 Simply click anywhere with your targeting device and watch the total annihilation ensue.
 (If you've played the Command & Conquer series of games, you're bound to recognize many features similar to the GDI's Ion Cannons.)
@@ -61,17 +61,17 @@ Credits:
 --------
 
 The klaxon sound was obtained from: https://freesound.org/people/jobro/sounds/244113/
-It was uploaded by the user "jobro" under the CC-0 (Creative Commons 0) license. (See: http://creativecommons.org/publicdomain/zero/1.0/)
+	It was uploaded by the user "jobro" under the CC-0 (Creative Commons 0) license. (See: http://creativecommons.org/publicdomain/zero/1.0/)
 
 The explosion graphic was obtained from the Supreme Warfare mod, authored by SpeedyBrain (graphics by YuokiTani).
 
 The "Ion Cannon Charging"/"Ion Cannon Deployed", "Ion Cannon Ready", and "Select Target" voices are from the "Command & Conquer" series of games by Westwood Studios, as are the Ion Cannon icons.
-Command and Conquer: Tiberian Dawn was released as freeware in 2007.
-Command and Conquer: Red Alert was released as freeware in 2008.
-Command and Conquer: Tiberian Sun was released as freeware in 2010.
+	Command and Conquer: Tiberian Dawn was released as freeware in 2007.
+	Command and Conquer: Red Alert was released as freeware in 2008.
+	Command and Conquer: Tiberian Sun was released as freeware in 2010.
 
 The ion beam that the ion cannon fires was obtained from: http://opengameart.org/content/top-down-sci-fi-shooter-pack
-It was uploaded by the user Tatermand under the CC-BY-SA license.
+	It was uploaded by the user Tatermand under the CC-BY-SA license.
 
 The Ion Cannon Targeting Device icon was obtained from: http://opengameart.org/content/%E2%80%9Calien%E2%80%9D-crosshairs
 	These were authored by Pyccna and submitted by the user Calinou, under the CC-BY License (https://creativecommons.org/licenses/by/3.0)

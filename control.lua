@@ -47,10 +47,6 @@ function On_Init()
 	global.klaxonTick = global.klaxonTick or 0
 	global.auto_tick = global.auto_tick or 0
 	global.readyTick = {}
-	if global.ion_cannon_table then
-		global.forces_ion_cannon_table["player"] = global.ion_cannon_table 	-- Migrate ion cannon tables from version 1.0.5 and lower
-		global.ion_cannon_table = nil 										-- Remove old ion cannon table
-	end
 	if remote.interfaces["silo_script"] then
 		remote.call("silo_script", "set_show_launched_without_satellite", false) -- FINALLY!
 		remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
@@ -276,7 +272,7 @@ end)
 
 script.on_event("ion-cannon-hotkey", function(event)
 	local player = game.players[event.player_index]
-	if global.IonCannonLaunched or player.cheat_mode then
+	if global.IonCannonLaunched or player.cheat_mode or player.admin then
 		open_GUI(player)
 	end
 end)
