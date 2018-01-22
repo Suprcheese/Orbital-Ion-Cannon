@@ -186,10 +186,10 @@ end
 function update_GUI(player)
 	init_GUI(player)
 	local frame = player.gui.left["ion-cannon-stats"]
-	local force = player.force
-	local forceName = force.name
-	local player_index = player.index
 	if frame then
+		local force = player.force
+		local forceName = force.name
+		local player_index = player.index
 		if frame["ion-cannon-table"] and not global.goToFull[player_index] then
 			frame["ion-cannon-table"].destroy()
 			frame.add{type = "table", column_count = 2, name = "ion-cannon-table"}
@@ -470,14 +470,15 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 end)
 
 script.on_event(defines.events.on_built_entity, function(event)
-	local player = game.players[event.player_index]
-	if event.created_entity.name == "ion-cannon-targeter" then
+	local entity = event.created_entity
+	if entity.name == "ion-cannon-targeter" then
+		local player = game.players[event.player_index]
 		player.cursor_stack.set_stack({name = "ion-cannon-targeter", count = 1})
-		return event.created_entity.destroy()
+		return entity.destroy()
 	end
-	if event.created_entity.name == "entity-ghost" then
-		if event.created_entity.ghost_name == "ion-cannon-targeter" then
-			return event.created_entity.destroy()
+	if entity.name == "entity-ghost" then
+		if entity.ghost_name == "ion-cannon-targeter" then
+			return entity.destroy()
 		end
 	end
 end)
