@@ -154,6 +154,7 @@ function open_GUI(player)
 				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-admin-panel-show"}}
 				frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-1], name = "show"}
 				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-cheat-menu-show"}}
+				if global.permissions[-2] == nil then global.permissions[-2] = false end
 				frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-2], name = "cheats"}
 				if frame["ion-cannon-admin-panel-header"]["show"].state then
 					frame.add{type = "table", column_count = 2, name = "ion-cannon-admin-panel-table"}
