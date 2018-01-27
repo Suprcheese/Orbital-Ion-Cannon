@@ -91,11 +91,6 @@ data:extend({
 					type = "instant",
 					target_effects =
 					{
-						-- {
-							-- type = "create-entity",
-							-- entity_name = "dead-tree-desert",
-							-- check_buildability = true
-						-- },
 						{
 							type = "create-entity",
 							entity_name = "huge-explosion"
@@ -113,7 +108,21 @@ data:extend({
 							type = "create-entity",
 							entity_name = "ion-cannon-explosion",
 							trigger_created_entity = "true"
-						}
+						},
+						{
+							type = "show-explosion-on-chart",
+							scale = settings.startup["ion-cannon-radius"].value / 50
+						},
+						{
+							type = "create-trivial-smoke",
+							smoke_name = "artillery-smoke",
+							initial_height = 0,
+							speed_from_center = 0.05,
+							speed_from_center_deviation = 0.005,
+							offset_deviation = {{-4, -4}, {4, 4}},
+							max_radius = settings.startup["ion-cannon-radius"].value / 5,
+							repeat_count = 4 * 4 * 15
+						},
 					}
 				}
 			},
