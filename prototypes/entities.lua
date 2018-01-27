@@ -111,17 +111,7 @@ data:extend({
 						},
 						{
 							type = "show-explosion-on-chart",
-							scale = settings.startup["ion-cannon-radius"].value / 50
-						},
-						{
-							type = "create-trivial-smoke",
-							smoke_name = "artillery-smoke",
-							initial_height = 0,
-							speed_from_center = 0.05,
-							speed_from_center_deviation = 0.005,
-							offset_deviation = {{-4, -4}, {4, 4}},
-							max_radius = settings.startup["ion-cannon-radius"].value / 5,
-							repeat_count = 4 * 4 * 15
+							scale = settings.startup["ion-cannon-radius"].value / 20
 						},
 					}
 				}
