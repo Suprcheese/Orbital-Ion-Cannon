@@ -16,8 +16,8 @@ ion_cannon_targeter.folded_animation =
 		{
 			filename = "__core__/graphics/empty.png",
 			priority = "low",
-			width = 32,
-			height = 32,
+			width = 1,
+			height = 1,
 			frame_count = 1,
 			line_length = 1,
 			run_mode = "forward",
@@ -183,16 +183,16 @@ data:extend({
 		{
 			filename = "__core__/graphics/empty.png",
 			priority = "low",
-			width = 32,
-			height = 32,
+			width = 1,
+			height = 1,
 			frame_count = 1
 		},
 		shadow =
 		{
 			filename = "__core__/graphics/empty.png",
 			priority = "low",
-			width = 32,
-			height = 32,
+			width = 1,
+			height = 1,
 			frame_count = 1
 		}
 	},
@@ -244,16 +244,16 @@ data:extend({
 		{
 			filename = "__core__/graphics/empty.png",
 			priority = "low",
-			width = 32,
-			height = 32,
+			width = 1,
+			height = 1,
 			frame_count = 1
 		},
 		shadow =
 		{
 			filename = "__core__/graphics/empty.png",
 			priority = "low",
-			width = 32,
-			height = 32,
+			width = 1,
+			height = 1,
 			frame_count = 1
 		}
 	},
