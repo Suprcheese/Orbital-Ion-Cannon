@@ -14,8 +14,8 @@ ion_cannon_targeter.folded_animation =
 	layers =
 	{
 		{
-			filename = "__Orbital Ion Cannon__/graphics/null.png",
-			priority = "medium",
+			filename = "__core__/graphics/empty.png",
+			priority = "low",
 			width = 32,
 			height = 32,
 			frame_count = 1,
@@ -181,7 +181,7 @@ data:extend({
 		light = {intensity = 0, size = 0},
 		animation =
 		{
-			filename = "__Orbital Ion Cannon__/graphics/null.png",
+			filename = "__core__/graphics/empty.png",
 			priority = "low",
 			width = 32,
 			height = 32,
@@ -189,7 +189,7 @@ data:extend({
 		},
 		shadow =
 		{
-			filename = "__Orbital Ion Cannon__/graphics/null.png",
+			filename = "__core__/graphics/empty.png",
 			priority = "low",
 			width = 32,
 			height = 32,
@@ -242,7 +242,7 @@ data:extend({
 		light = {intensity = 0, size = 0},
 		animation =
 		{
-			filename = "__Orbital Ion Cannon__/graphics/null.png",
+			filename = "__core__/graphics/empty.png",
 			priority = "low",
 			width = 32,
 			height = 32,
@@ -250,7 +250,7 @@ data:extend({
 		},
 		shadow =
 		{
-			filename = "__Orbital Ion Cannon__/graphics/null.png",
+			filename = "__core__/graphics/empty.png",
 			priority = "low",
 			width = 32,
 			height = 32,
@@ -446,11 +446,6 @@ if not settings.startup["ion-cannon-flames"].value then
 				type = "instant",
 				target_effects =
 				{
-					-- {
-						-- type = "create-entity",
-						-- entity_name = "dead-tree-desert",
-						-- check_buildability = true
-					-- },
 					{
 						type = "create-entity",
 						entity_name = "huge-explosion"
