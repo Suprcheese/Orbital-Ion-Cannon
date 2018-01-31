@@ -273,6 +273,8 @@ data:extend({
 	{
 		type = "simple-entity",
 		name = "ion-cannon-target",
+		icon = "__Orbital Ion Cannon__/graphics/crosshairs64.png",
+		icon_size = 64,
 		flags = {"placeable-off-grid", "not-on-map"},
 		max_health = 1,
 		render_layer = "air-object",
