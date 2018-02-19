@@ -75,7 +75,7 @@ function On_Init()
 		force.reset_recipes()
 		if global.forces_ion_cannon_table[force.name] and #global.forces_ion_cannon_table[force.name] > 0 then
 			global.IonCannonLaunched = true
-			script.on_event(defines.events.on_tick, process_tick)
+			script.on_nth_tick(60, process_60_ticks)
 		end
 	end
 	global.forces_ion_cannon_table["Queue"] = global.forces_ion_cannon_table["Queue"] or {}
@@ -84,7 +84,7 @@ end
 function On_Load()
 	generateEvents()
 	if global.IonCannonLaunched then
-		script.on_event(defines.events.on_tick, process_tick)
+		script.on_nth_tick(60, process_60_ticks)
 	end
 end
 
@@ -247,7 +247,7 @@ script.on_event(defines.events.on_gui_click, function(event)
 	elseif name == "add-ion-cannon" then
 		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
 		global.IonCannonLaunched = true
-		script.on_event(defines.events.on_tick, process_tick)
+		script.on_nth_tick(60, process_60_ticks)
 		for i, player in pairs(force.connected_players) do
 			init_GUI(player)
 			playSoundForPlayer("ion-cannon-charging", player)
@@ -261,7 +261,7 @@ script.on_event(defines.events.on_gui_click, function(event)
 		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
 		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
 		global.IonCannonLaunched = true
-		script.on_event(defines.events.on_tick, process_tick)
+		script.on_nth_tick(60, process_60_ticks)
 		for i, player in pairs(force.connected_players) do
 			init_GUI(player)
 			playSoundForPlayer("ion-cannon-charging", player)
@@ -315,32 +315,30 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 	end
 end)
 
-function process_tick()
-	local current_tick = game.tick
+function process_60_ticks(NthTickEvent)
+	local current_tick = NthTickEvent.tick
 	for i = #global.markers, 1, -1 do -- Loop over table backwards because some entries get removed within the loop
 		local marker = global.markers[i]
-		if marker[2] == current_tick then
+		if marker[2] <= current_tick then
 			if marker[1] and marker[1].valid then
 				marker[1].destroy()
 			end
 			table.remove(global.markers, i)
 		end
 	end
-	if current_tick % 60 == 47 then
-		ReduceIonCannonCooldowns()
-		for i, force in pairs(game.forces) do
-			if global.forces_ion_cannon_table[force.name] and isIonCannonReady(force) then
-				for i, player in pairs(force.connected_players) do
-					if global.readyTick[player.index] < current_tick then
-						global.readyTick[player.index] = current_tick + settings.get_player_settings(player)["ion-cannon-ready-ticks"].value
-						playSoundForPlayer("ion-cannon-ready", player)
-					end
+	ReduceIonCannonCooldowns()
+	for i, force in pairs(game.forces) do
+		if global.forces_ion_cannon_table[force.name] and isIonCannonReady(force) then
+			for i, player in pairs(force.connected_players) do
+				if global.readyTick[player.index] < current_tick then
+					global.readyTick[player.index] = current_tick + settings.get_player_settings(player)["ion-cannon-ready-ticks"].value
+					playSoundForPlayer("ion-cannon-ready", player)
 				end
 			end
 		end
-		for i, player in pairs(game.connected_players) do
-			update_GUI(player)
-		end
+	end
+	for i, player in pairs(game.connected_players) do
+		update_GUI(player)
 	end
 end
 
@@ -405,7 +403,7 @@ function targetIonCannon(force, position, surface, player)
 		targeterName = player.name
 		if player.cheat_mode == true then
 			cannonNum = "Cheat"
-			script.on_event(defines.events.on_tick, process_tick)
+			script.on_nth_tick(60, process_60_ticks)
 		end
 	end
 	if cannonNum == 0 then
@@ -453,7 +451,7 @@ script.on_event(defines.events.on_rocket_launched, function(event)
 	if event.rocket.get_item_count("orbital-ion-cannon") > 0 then
 		table.insert(global.forces_ion_cannon_table[force.name], {settings.global["ion-cannon-cooldown-seconds"].value, 0})
 		global.IonCannonLaunched = true
-		script.on_event(defines.events.on_tick, process_tick)
+		script.on_nth_tick(60, process_60_ticks)
 		for i, player in pairs(force.connected_players) do
 			init_GUI(player)
 			playSoundForPlayer("ion-cannon-charging", player)
