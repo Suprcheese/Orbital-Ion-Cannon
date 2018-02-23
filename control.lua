@@ -44,6 +44,7 @@ function On_Init()
 	end
 	global.goToFull = global.goToFull or {}
 	global.markers = global.markers or {}
+	global.holding_targeter = global.holding_targeter or {}
 	global.klaxonTick = global.klaxonTick or 0
 	global.auto_tick = global.auto_tick or 0
 	global.readyTick = {}
@@ -309,9 +310,11 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 				return player.cursor_stack.clear()
 			end
 		end
-		if player.cheat_mode or (#global.forces_ion_cannon_table[player.force.name] > 0 and not isAllIonCannonOnCooldown(player)) then
+		if (player.cheat_mode or (#global.forces_ion_cannon_table[player.force.name] > 0 and not isAllIonCannonOnCooldown(player))) and not global.holding_targeter[index] then
 			playSoundForPlayer("select-target", player)
 		end
+	else
+		global.holding_targeter[index] = false
 	end
 end)
 
@@ -501,6 +504,9 @@ script.on_event(defines.events.on_put_item, function(event)
 	local player = game.players[event.player_index]
 	if isHolding({name = "ion-cannon-targeter", count = 1}, player) and player.force.is_chunk_charted(player.surface, Chunk.from_position(event.position)) then
 		targetIonCannon(player.force, event.position, player.surface, player)
+		player.cursor_stack.clear()
+		global.holding_targeter[event.player_index] = true
+		player.cursor_stack.set_stack({name = "ion-cannon-targeter", count = 1})
 	end
 end)
 
