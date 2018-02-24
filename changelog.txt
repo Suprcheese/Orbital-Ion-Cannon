@@ -1,8 +1,13 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.6.3
-Date: 0. 2. 2018
+Date: 24. 2. 2018
+  Minor Features:
+    - Ion cannon strikes now show up on the minimap akin to vanilla artillery strikes.
   Changes:
+    - Added an icon to the "Number of times an ion cannon was fired" entry in the Kills graph.
     - Switch to new "on_nth_tick" event, rather than on_tick.
+  Bugfixes:
+    - Fixed "Select Target" announcement being played much more often than intended if using a "Long Reach"-style mod.
 ---------------------------------------------------------------------------------------------------
 Version: 1.6.2
 Date: 19. 1. 2018
