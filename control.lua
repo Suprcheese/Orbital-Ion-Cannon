@@ -49,7 +49,6 @@ function On_Init()
 	global.auto_tick = global.auto_tick or 0
 	global.readyTick = {}
 	if remote.interfaces["silo_script"] then
-		remote.call("silo_script", "set_show_launched_without_satellite", false) -- FINALLY!
 		remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
 	end
 	if not global.permissions then
@@ -412,6 +411,7 @@ function targetIonCannon(force, position, surface, player)
 	if cannonNum == 0 then
 		if player then
 			player.print({"unable-to-fire"})
+			playSoundForPlayer("unable-to-comply", player)
 		end
 		return false
 	else
