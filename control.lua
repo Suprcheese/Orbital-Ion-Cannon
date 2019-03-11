@@ -49,12 +49,15 @@ function On_Init()
 	global.auto_tick = global.auto_tick or 0
 	global.readyTick = {}
 	if remote.interfaces["silo_script"] then
-		remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
+		local tracked_items = remote.call("silo_script", "get_tracked_items")
+		if not tracked_items["orbital-ion-cannon"] then
+			remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
+		end
 	end
 	if not global.permissions then
 		global.permissions = {}
-		global.permissions[-2] = false
-		global.permissions[-1] = true
+		global.permissions[-2] = settings.global["ion-cannon-auto-targeting"].value
+		global.permissions[-1] = false
 		global.permissions[0] = false
 	end
 	for i, player in pairs(game.players) do
@@ -103,7 +106,7 @@ script.on_event(defines.events.on_forces_merging, function(event)
 end)
 
 function init_GUI(player)
-	if #global.forces_ion_cannon_table[player.force.name] == 0 then
+	if #global.forces_ion_cannon_table[player.force.name] == 0 and not player.cheat_mode then
 		local frame = player.gui.left["ion-cannon-stats"]
 		if frame then
 			frame.destroy()
@@ -153,9 +156,9 @@ function open_GUI(player)
 				frame.add{type = "table", column_count = 2, name = "ion-cannon-admin-panel-header"}
 				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-admin-panel-show"}}
 				frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-1], name = "show"}
-				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-cheat-menu-show"}}
-				if global.permissions[-2] == nil then global.permissions[-2] = false end
-				frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-2], name = "cheats"}
+				-- frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-cheat-menu-show"}}
+				if global.permissions[-2] == nil then global.permissions[-2] = settings.global["ion-cannon-auto-targeting"].value end
+				-- frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-2], name = "cheats"}
 				if frame["ion-cannon-admin-panel-header"]["show"].state then
 					frame.add{type = "table", column_count = 2, name = "ion-cannon-admin-panel-table"}
 					frame["ion-cannon-admin-panel-table"].add{type = "label", caption = {"player-names"}}
@@ -167,12 +170,15 @@ function open_GUI(player)
 						frame["ion-cannon-admin-panel-table"].add{type = "checkbox", state = global.permissions[player.index], name = player.index .. ""}
 					end
 				end
-				if frame["ion-cannon-admin-panel-header"]["cheats"].state then
+				-- if frame["ion-cannon-admin-panel-header"]["cheats"].state then
+				if settings.global["ion-cannon-cheat-menu"].value then
 					frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-cheat-one"}}
 					frame["ion-cannon-admin-panel-header"].add{type = "button", name = "add-ion-cannon", style = "ion-cannon-button-style"}
 					frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-cheat-five"}}
 					frame["ion-cannon-admin-panel-header"].add{type = "button", name = "add-five-ion-cannon", style = "ion-cannon-button-style"}
 				end
+				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"mod-setting-name.ion-cannon-auto-targeting"}}
+				frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-2], name = "ion-cannon-auto-target-enabled"}
 			end
 			frame.add{type = "table", column_count = 1, name = "ion-cannon-table"}
 			frame["ion-cannon-table"].add{type = "label", caption = {"ion-cannons-in-orbit", #global.forces_ion_cannon_table[forceName]}}
@@ -516,10 +522,14 @@ script.on_event(defines.events.on_gui_checked_state_changed, function(event)
 		global.goToFull[event.player_index] = false
 		global.permissions[-1] = checkbox.state
 		open_GUI(game.players[event.player_index])
-	elseif checkbox.name == "cheats" then
+	elseif checkbox.name == "ion-cannon-auto-target-enabled" then
 		global.goToFull[event.player_index] = false
 		global.permissions[-2] = checkbox.state
 		open_GUI(game.players[event.player_index])
+	-- elseif checkbox.name == "cheats" then
+		-- global.goToFull[event.player_index] = false
+		-- global.permissions[-2] = checkbox.state
+		-- open_GUI(game.players[event.player_index])
 	else
 		local index = tonumber(checkbox.name)
 		if checkbox.parent.name == "ion-cannon-admin-panel-table" then

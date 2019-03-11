@@ -94,6 +94,13 @@ data:extend({
 		default_value = 2,
 		minimum_value = 0
 	},
+	{
+		type = "bool-setting",
+		name = "ion-cannon-cheat-menu",
+		setting_type = "runtime-global",
+		order = "g",
+		default_value = false
+	},
 	-- Runtime (per player)
 	{
 		type = "bool-setting",
