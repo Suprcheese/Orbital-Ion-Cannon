@@ -1,8 +1,12 @@
 ---------------------------------------------------------------------------------------------------
-Version: 1.6.4
-Date: 7. 3. 2019
+Version: 1.7.0
+Date: 11. 3. 2019
   Changes:
-    - Updated for Factorio 0.17.
+    - Updated for Factorio 0.17 (thanks emperorjimmy!)
+	- Updated Russian translation (courtesy of badway)
+	- Show Admin Panel is no longer checked by default.
+	- Show Cheat Menu moved to a Mod Setting rather than a checkbox option in top dialog. Disabled by default, this should reduce the visibility of the cheats significantly, as they were a bit too readily accessible before.
+	- Added a new checkbox in the top dialog to toggle Auto-Targeting. This is exactly the same function as the Mod Setting, just more easily accessible. As with the Mod Setting, only Admins (or single-player, of course) can access this toggle. Toggling this setting takes priority over the Mod Setting.
 ---------------------------------------------------------------------------------------------------
 Version: 1.6.3
 Date: 24. 2. 2018
