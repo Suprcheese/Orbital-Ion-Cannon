@@ -1,7 +1,7 @@
-Orbital Ion Cannon 1.6.3
+Orbital Ion Cannon 1.7.0
 ========================
 
-Version 1.6.3 was released February 24, 2018, was tested using Factorio v0.16.25, and was authored by Supercheese, with contributions from madmaxoft, bNarFProfCrazy, Danielv123, Yousei9, WPettersson, and Martok88.
+Version 1.7.0 was released March 11, 2019, was tested using Factorio v0.17.9, and was authored by Supercheese, with contributions from emperorjimmy, badway, madmaxoft, bNarFProfCrazy, Danielv123, Yousei9, WPettersson, and Martok88.
 
 Do you have a large, late-game megabase and wish there were more cool things you could build? Do you wish you could do more with the rockets you launch? Do you really hate biters? If so, then this mod is for you!
 Build a giant ion cannon and launch it into orbit with a rocket, wait for it to charge up, and then you're ready to call down the thunder on those pesky aliens.

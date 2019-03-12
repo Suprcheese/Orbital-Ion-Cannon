@@ -39,7 +39,7 @@ script.on_event(defines.events.on_sector_scanned, function(event)
 			table.remove(global.forces_ion_cannon_table["Queue"], 1)
 		end
 	end
-	if settings.global["ion-cannon-auto-targeting"].value then
+	if global.permissions[-2]  then
 		local radar = event.radar
 		local force = radar.force
 		if force.technologies["auto-targeting"].researched == true and settings.global["ion-cannon-min-cannons-ready"].value < countIonCannonsReady(force) then
