@@ -1,6 +1,9 @@
 require "util"
-require "stdlib/area/chunk"
-require "stdlib/area/position"
+-- require("__stdlib__/stdlib/core")
+local Chunk = require("__stdlib__/stdlib/area/chunk")
+local Position = require("__stdlib__/stdlib/area/position")
+-- require "stdlib/area/chunk"
+-- require "stdlib/area/position"
 require "autotargeter"
 
 script.on_init(function() On_Init() end)
@@ -526,10 +529,6 @@ script.on_event(defines.events.on_gui_checked_state_changed, function(event)
 		global.goToFull[event.player_index] = false
 		global.permissions[-2] = checkbox.state
 		open_GUI(game.players[event.player_index])
-	-- elseif checkbox.name == "cheats" then
-		-- global.goToFull[event.player_index] = false
-		-- global.permissions[-2] = checkbox.state
-		-- open_GUI(game.players[event.player_index])
 	else
 		local index = tonumber(checkbox.name)
 		if checkbox.parent.name == "ion-cannon-admin-panel-table" then
