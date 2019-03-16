@@ -179,6 +179,8 @@ function open_GUI(player)
 					frame["ion-cannon-admin-panel-header"].add{type = "button", name = "add-ion-cannon", style = "ion-cannon-button-style"}
 					frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-cheat-five"}}
 					frame["ion-cannon-admin-panel-header"].add{type = "button", name = "add-five-ion-cannon", style = "ion-cannon-button-style"}
+					frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"ion-cannon-remove-one"}}
+					frame["ion-cannon-admin-panel-header"].add{type = "button", name = "remove-ion-cannon", style = "ion-cannon-remove-button-style"}
 				end
 				frame["ion-cannon-admin-panel-header"].add{type = "label", caption = {"mod-setting-name.ion-cannon-auto-targeting"}}
 				frame["ion-cannon-admin-panel-header"].add{type = "checkbox", state = global.permissions[-2], name = "ion-cannon-auto-target-enabled"}
@@ -277,6 +279,24 @@ script.on_event(defines.events.on_gui_click, function(event)
 		end
 		force.print({"ion-cannons-in-orbit" , #global.forces_ion_cannon_table[force.name]})
 		return
+	elseif name == "remove-ion-cannon" then
+		if #global.forces_ion_cannon_table[force.name] > 0 then
+			table.remove(global.forces_ion_cannon_table[force.name])
+			for i, player in pairs(force.connected_players) do
+				update_GUI(player)
+			end
+			force.print({"ion-cannon-removed"})
+		else
+			player.print({"no-ion-cannons"})
+		end
+		return
+	end
+end)
+
+script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
+	local player = game.players[event.player_index]
+	if global.IonCannonLaunched or player.cheat_mode or player.admin then
+		open_GUI(player)
 	end
 end)
 
