@@ -60,13 +60,13 @@ data:extend({
 })
 
 if data.raw["item"]["bob-laser-turret-5"] and settings.startup["ion-cannon-bob-updates"].value then
-	data.raw["technology"]["orbital-ion-cannon"].prerequisites = {"rocket-silo", "energy-weapons-damage-7", "bob-laser-turrets-5"}
+	data.raw["technology"]["orbital-ion-cannon"].prerequisites = {"rocket-silo", "energy-weapons-damage-6", "bob-laser-turrets-5"}
 end
 
 if data.raw["item"]["fast-accumulator-3"] and data.raw["item"]["solar-panel-large-3"] and settings.startup["ion-cannon-bob-updates"].value then
-	data.raw["technology"]["orbital-ion-cannon"].prerequisites = {"rocket-silo", "energy-weapons-damage-7",	"bob-solar-energy-4", "bob-electric-energy-accumulators-4"}
+	data.raw["technology"]["orbital-ion-cannon"].prerequisites = {"rocket-silo", "energy-weapons-damage-6",	"bob-solar-energy-4", "bob-electric-energy-accumulators-4"}
 end
 
 if data.raw["item"]["fast-accumulator-3"] and data.raw["item"]["solar-panel-large-3"] and data.raw["item"]["bob-laser-turret-5"] and settings.startup["ion-cannon-bob-updates"].value then
-	data.raw["technology"]["orbital-ion-cannon"].prerequisites = {"rocket-silo", "energy-weapons-damage-7", "bob-solar-energy-4", "bob-electric-energy-accumulators-4", "bob-laser-turrets-5"}
+	data.raw["technology"]["orbital-ion-cannon"].prerequisites = {"rocket-silo", "energy-weapons-damage-6", "bob-solar-energy-4", "bob-electric-energy-accumulators-4", "bob-laser-turrets-5"}
 end
