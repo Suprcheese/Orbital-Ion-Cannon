@@ -1,9 +1,10 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.7.1
-Date: 1X. 3. 2019
+Date: 20. 3. 2019
   Changes:
     - Factorio Standard Library is no longer directly bundled with this mod, but rather cross-referenced, and is now a required dependency.
     - Added the ability to remove ion cannons via cheat.
+    - Fixed a bug with Bob's mods compatibility (research prereqs).
 ---------------------------------------------------------------------------------------------------
 Version: 1.7.0
 Date: 11. 3. 2019
