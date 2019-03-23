@@ -2,8 +2,6 @@ require "util"
 -- require("__stdlib__/stdlib/core")
 local Chunk = require("__stdlib__/stdlib/area/chunk")
 local Position = require("__stdlib__/stdlib/area/position")
--- require "stdlib/area/chunk"
--- require "stdlib/area/position"
 require "autotargeter"
 
 script.on_init(function() On_Init() end)
