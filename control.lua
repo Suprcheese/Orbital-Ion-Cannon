@@ -333,7 +333,7 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 			if not global.permissions[index] then
 				player.print({"ion-permission-denied"})
 				playSoundForPlayer("unable-to-comply", player)
-				return player.cursor_stack.clear()
+				return player.clean_cursor()
 			end
 		end
 		if (player.cheat_mode or (#global.forces_ion_cannon_table[player.force.name] > 0 and not isAllIonCannonOnCooldown(player))) and not global.holding_targeter[index] then
