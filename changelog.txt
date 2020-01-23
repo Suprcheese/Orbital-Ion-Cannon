@@ -2,7 +2,7 @@
 Version: 1.8.0
 Date: 24. 1. 2020
   Changes:
-    - Updated for Factorio 0.17
+    - Updated for Factorio 0.18
     - Don't forget to update/change this as necessary Suprcheese!
 ---------------------------------------------------------------------------------------------------
 Version: 1.7.2
@@ -155,7 +155,7 @@ Date: 7. 8. 2016
     - All entities within 100% of the blast radius (25 by default) will be instantly set on fire; even if something survives the initial blast, it will continue to burn.
     - If also playing with my Swarm mod, this makes ion cannon blasts significantly more effective at killing the sub-enemies that spawn after spawners/large enemies die, since they will now catch fire and burn.
     - Black plumes of smoke will be emitted from ion cannon blast sites, similar to the smoke emitted by forest fires... and indeed, the blast can now ignite forest fires!
-    - (Note: Cheese Orbital Industries™ is not responsible for any property damage and/or pollution caused by rampaging forest fires ignited by ion blasts.)
+    - (Note: Cheese Orbital IndustriesÂ™ is not responsible for any property damage and/or pollution caused by rampaging forest fires ignited by ion blasts.)
     - The "Ion Cannons" text-button at the top of the screen has been changed to an icon-button. Upon first update, the icon will shift position slightly; simply click it a couple times to reset the GUI positions.
     - Added a custom hotkey that you can press to toggle the Ion Cannon GUI rather than click the button. The keybinding is "I" by default; you can edit this in the game controls options.
     - Auto-targeting stations now scan for targets on a chunk-by-chunk basis, which should vastly improve performance while also eliminating the tendency for multiple stations to needlessly fire on the same target.
