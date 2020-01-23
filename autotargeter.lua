@@ -1,3 +1,5 @@
+local Chunk = require("__stdlib__/stdlib/area/chunk")
+
 function findNestNear(entity, chunk_position)
 	local search = Chunk.to_area(chunk_position)
 	local spawners = entity.surface.find_entities_filtered{area = search, type = "unit-spawner"}
