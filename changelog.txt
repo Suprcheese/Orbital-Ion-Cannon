@@ -1,8 +1,9 @@
 ---------------------------------------------------------------------------------------------------
-Version: 1.7.3
-Date: X. X. 2019
-  Bugfixes:
-    - Players who are denied ion cannon permissions will now simply have the targeting device returned to inventory rather than removed entirely.
+Version: 1.8.0
+Date: 24. 1. 2020
+  Changes:
+    - Updated for Factorio 0.17
+    - Don't forget to update/change this as necessary Suprcheese!
 ---------------------------------------------------------------------------------------------------
 Version: 1.7.2
 Date: 23. 3. 2019
