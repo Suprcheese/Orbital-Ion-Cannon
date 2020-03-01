@@ -414,6 +414,13 @@ local yuge_crater = util.table.deepcopy(data.raw["corpse"]["small-scorchmark"])
 
 yuge_crater.name = "enormous-scorchmark"
 yuge_crater.order = "d[remnants]-b[scorchmark]-b[yuge]"
+yuge_crater.animation = {
+	width = 110,
+	height = 90,
+	frame_count = 1,
+	direction_count = 1,
+	filename = "__base__/graphics/entity/scorchmark/small-scorchmark.png"
+}
 yuge_crater.animation.scale = settings.startup["ion-cannon-radius"].value / 4
 yuge_crater.ground_patch.sheet.scale = settings.startup["ion-cannon-radius"].value / 4
 yuge_crater.ground_patch_higher.sheet.scale = settings.startup["ion-cannon-radius"].value / 4,
