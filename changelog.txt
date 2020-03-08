@@ -1,10 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.8.1
+Date: 9. 3. 2020
+  Changes:
+    - Updated German locale (Vainock)
+  Bugfixes:
+    - Fixed a startup error concerning mipmaps (flexoo)
+    - Fixed another critical error (Bellicosity)
+---------------------------------------------------------------------------------------------------
 Version: 1.8.0
 Date: 26. 1. 2020
   Changes:
     - Updated for Factorio 0.18
   Bugfixes:
-    - Players who are denied ion cannon permissions will now simply have the targeting device returned to inventory rather than removed entirely.	
+    - Players who are denied ion cannon permissions will now simply have the targeting device returned to inventory rather than removed entirely.
 ---------------------------------------------------------------------------------------------------
 Version: 1.7.2
 Date: 23. 3. 2019
