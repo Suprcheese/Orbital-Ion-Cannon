@@ -49,12 +49,12 @@ function On_Init()
 	global.klaxonTick = global.klaxonTick or 0
 	global.auto_tick = global.auto_tick or 0
 	global.readyTick = {}
-	if remote.interfaces["silo_script"] then
-		local tracked_items = remote.call("silo_script", "get_tracked_items")
-		if not tracked_items["orbital-ion-cannon"] then
-			remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
-		end
-	end
+	-- if remote.interfaces["silo_script"] then
+	-- 	local tracked_items = remote.call("silo_script", "get_tracked_items")
+	-- 	if not tracked_items["orbital-ion-cannon"] then
+	-- 		remote.call("silo_script", "add_tracked_item", "orbital-ion-cannon")
+	-- 	end
+	-- end
 	if not global.permissions then
 		global.permissions = {}
 		global.permissions[-2] = settings.global["ion-cannon-auto-targeting"].value
@@ -333,7 +333,7 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 			if not global.permissions[index] then
 				player.print({"ion-permission-denied"})
 				playSoundForPlayer("unable-to-comply", player)
-				return player.clean_cursor()
+				return player.clear_cursor()
 			end
 		end
 		if (player.cheat_mode or (#global.forces_ion_cannon_table[player.force.name] > 0 and not isAllIonCannonOnCooldown(player))) and not global.holding_targeter[index] then
@@ -522,7 +522,7 @@ script.on_event(defines.events.on_trigger_created_entity, function(event)
 	end
 end)
 
-script.on_event(defines.events.on_put_item, function(event)
+script.on_event(defines.events.on_pre_build, function(event)
 	local current_tick = event.tick
 	if global.tick and global.tick > current_tick then
 		return
